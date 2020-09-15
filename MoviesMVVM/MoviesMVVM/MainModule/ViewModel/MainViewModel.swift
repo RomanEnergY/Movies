@@ -8,31 +8,33 @@
 
 import Foundation
 
-protocol MainPresenterProtocol: AnyObject {
+protocol MainViewModelProtocol: AnyObject {
     var movies: [Movie] { get }
+    var collectionViewReloadData: (() -> Void)? { get set }
 //    var modelData: ModelData { get }
     
     func beginBatchFetch()
 }
 
-class MainPresenter: MainPresenterProtocol {
+class MainViewModel: MainViewModelProtocol {
     //MARK: -public variable
     public var movies: [Movie] { modelData.allMovies }
+    public var collectionViewReloadData: (() -> Void)?
     
     //MARK: -private variable
-    private weak var view: MainViewProtocol?
     private var fetchingMorePage = false
     private var modelData: ModelData
     
-    required init(mainViewProtocol: MainViewProtocol) {
-        view = mainViewProtocol
+    init() {
         modelData = ModelData()
         getData()
     }
     
     private func getData() {
         modelData.getTrending(page: 1) { [weak self] in
-            self?.beginBatchFetch()
+            DispatchQueue.main.async {
+                self?.collectionViewReloadData?()
+            }
         }
     }
     
@@ -44,7 +46,7 @@ class MainPresenter: MainPresenterProtocol {
                     self?.fetchingMorePage = false
                     
                     DispatchQueue.main.async {
-                        self?.view?.collectionViewReloadData()
+                        self?.collectionViewReloadData?()
                     }
             }
         }

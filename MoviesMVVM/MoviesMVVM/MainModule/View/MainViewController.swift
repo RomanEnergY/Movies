@@ -8,8 +8,12 @@
 
 import UIKit
 
-protocol MainViewProtocol: AnyObject {
-    func collectionViewReloadData()
+enum SegueConst {
+    static var descriptionView = "descriptionViewController"
+}
+
+enum CellConst {
+    static var menuCell = "menuCollectionViewCell"
 }
 
 final class MainViewController: UIViewController {
@@ -18,18 +22,25 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     //MARK: - privar var
-    private var presenter: MainPresenterProtocol?
+    private var viewModel: MainViewModelProtocol?
     
     //MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
-        presenter = MainPresenter(mainViewProtocol: self)
+        bind()
+    }
+    
+    private func bind() {
+        viewModel = MainViewModel()
+        viewModel?.collectionViewReloadData = { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "descriptionViewController" { //
+        if segue.identifier == SegueConst.descriptionView { //
             if let descriptionViewController = segue.destination as? DescriptionViewController {
                 if let movie = sender as? Movie {
                     
@@ -50,22 +61,16 @@ final class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: MainViewProtocol {
-    func collectionViewReloadData() {
-        collectionView.reloadData()
-    }
-}
-
 //MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter?.movies.count ?? 0
+        return viewModel?.movies.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let menuCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "menuCollectionViewCell", for: indexPath) as? MenuCollectionViewCell {
+        if let menuCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConst.menuCell, for: indexPath) as? MenuCollectionViewCell {
             
-            guard let movies = presenter?.movies else { return UICollectionViewCell() }
+            guard let movies = viewModel?.movies else { return UICollectionViewCell() }
             
             let movie = movies[indexPath.row]
             
@@ -80,8 +85,8 @@ extension MainViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = presenter?.movies[indexPath.item]
-        self.performSegue(withIdentifier: "descriptionViewController", sender: movie)
+        let movie = viewModel?.movies[indexPath.item]
+        self.performSegue(withIdentifier: SegueConst.descriptionView, sender: movie)
         
     }
     
@@ -90,7 +95,7 @@ extension MainViewController: UICollectionViewDelegate {
         let contentHeight = scrollView.contentSize.height
         
         if (contentHeight - offsetY) / contentHeight  < 0.3 {
-            presenter?.beginBatchFetch()
+            viewModel?.beginBatchFetch()
         }
     }
 }
