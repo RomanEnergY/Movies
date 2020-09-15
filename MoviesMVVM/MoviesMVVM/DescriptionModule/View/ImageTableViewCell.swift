@@ -9,7 +9,6 @@
 import UIKit
 
 class ImageTableViewCell: UITableViewCell {
-    
     //MARK: - IBOutlet
     @IBOutlet weak var imgView: UIImageView!
 

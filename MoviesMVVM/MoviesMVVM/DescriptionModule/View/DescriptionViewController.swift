@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol DescriptionViewProtocol: AnyObject {
-    func tableViewReloadData()
+enum DescriptionViewCellConst {
+    static let imageCell = "ImageTableViewCell"
+    static let overviewCell = "OverviewTableViewCell"
 }
 
 class DescriptionViewController: UIViewController {
-    
     //MARK: - Types
     enum TypeCell {
         case image
@@ -26,20 +26,29 @@ class DescriptionViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Public Properties
-    var presenter: DescriptionPresenterProtocol?
+    public var idMovie: Int?
+    public var posterPath: String?
     
     //MARK: - Private Properties
     private var arrayTypeCell: [TypeCell] = [.title, .image, .tagline, .overview]
+    private var viewModel: DescriptionViewModelProtocol?
     
     //MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        bind()
     }
-}
-
-extension DescriptionViewController: DescriptionViewProtocol {
-    func tableViewReloadData() {
-        tableView.reloadData()
+    
+    //MARK: - private func
+    private func bind() {
+        guard let idMovie = idMovie,
+            let posterPath = posterPath else { return }
+        
+        viewModel = DescriptionViewModel(idMovie: idMovie, posterPath: posterPath)
+        viewModel?.tableViewReloadData = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -52,8 +61,8 @@ extension DescriptionViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch arrayTypeCell[indexPath.item] {
         case .image:
-            if let imageCell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath) as? ImageTableViewCell {
-                if let dataIcon = presenter?.dataIcon {
+            if let imageCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.imageCell, for: indexPath) as? ImageTableViewCell {
+                if let dataIcon = viewModel?.dataIcon {
                     imageCell.imgView.image = UIImage(data: dataIcon)
                 }
                 
@@ -61,17 +70,17 @@ extension DescriptionViewController: UITableViewDataSource {
             }
         case .title:
             let titleCell = UITableViewCell()
-            titleCell.textLabel?.text = presenter?.descriptionMovie?.title
+            titleCell.textLabel?.text = viewModel?.descriptionMovie?.title
             return titleCell
             
         case .tagline:
             let taglineCell = UITableViewCell()
-            taglineCell.textLabel?.text = presenter?.descriptionMovie?.tagline
+            taglineCell.textLabel?.text = viewModel?.descriptionMovie?.tagline
             return taglineCell
             
         case .overview:
-            if let overviewCell = tableView.dequeueReusableCell(withIdentifier: "overviewCell", for: indexPath) as? OverviewTableViewCell {
-                guard let overview = presenter?.descriptionMovie?.overview else { return UITableViewCell() }
+            if let overviewCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.overviewCell, for: indexPath) as? OverviewTableViewCell {
+                guard let overview = viewModel?.descriptionMovie?.overview else { return UITableViewCell() }
                 overviewCell.overviewLabel.text = overview
                 
                 return overviewCell

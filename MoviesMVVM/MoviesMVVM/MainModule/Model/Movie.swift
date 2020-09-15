@@ -8,30 +8,7 @@
 
 import Foundation
 
-struct MovieApiResponse { // разбить на файлы
-    let currentPage: Int
-    let totalPage: Int
-    let movies: [Movie]
-}
-
-extension MovieApiResponse: Decodable {
-    
-    private enum MovieApiResponseCodingKeys: String, CodingKey {
-        case currentPage = "page"
-        case totalPage = "total_pages"
-        case movies = "results"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: MovieApiResponseCodingKeys.self)
-        
-        currentPage = try container.decode(Int.self, forKey: .currentPage)
-        totalPage = try container.decode(Int.self, forKey: .totalPage)
-        movies = try container.decode([Movie].self, forKey: .movies)
-    }
-}
-
-struct Movie { // разбить на файлы
+struct Movie {
     let id: Int
     let posterPath: String
     let title: String

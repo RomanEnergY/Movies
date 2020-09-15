@@ -9,7 +9,6 @@
 import UIKit
 
 class OverviewTableViewCell: UITableViewCell {
-
     //MARK: - IBOutlet
     @IBOutlet weak var overviewLabel: UILabel!
 }

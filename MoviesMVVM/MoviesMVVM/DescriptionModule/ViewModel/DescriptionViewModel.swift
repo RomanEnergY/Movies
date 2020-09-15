@@ -8,23 +8,25 @@
 
 import Foundation
 
-protocol DescriptionPresenterProtocol: AnyObject {
+protocol DescriptionViewModelProtocol {
     var descriptionMovie: DescriptionMovie? { get }
     var dataIcon: Data? { get }
+    var tableViewReloadData: (() -> Void)? { get set }
 }
 
-class DescriptionPresenter: DescriptionPresenterProtocol {
-    var descriptionMovie: DescriptionMovie?
-    var dataIcon: Data?
+final class DescriptionViewModel: DescriptionViewModelProtocol {
+    //MARK: -public var
+    public var descriptionMovie: DescriptionMovie?
+    public var dataIcon: Data?
+    public var tableViewReloadData: (() -> Void)?
     
-    private weak var view: DescriptionViewProtocol?
+    //MARK: -private var
     private var modelData: ModelData?
     private var idMovie: Int
     private var posterPath: String
     
-    
-    required init(descriptionViewProtocol: DescriptionViewProtocol, idMovie: Int, posterPath: String) {
-        view = descriptionViewProtocol
+    //MARK: -required init
+    required init(idMovie: Int, posterPath: String) {
         self.modelData = ModelData()
         self.idMovie = idMovie
         self.posterPath = posterPath
@@ -34,6 +36,7 @@ class DescriptionPresenter: DescriptionPresenterProtocol {
         initIconMovie(modelData: modelData)
     }
     
+    //MARK: -private func
     private func initDescriptionMovie(modelData: ModelData) {
         modelData.getMovieId(id: idMovie) { [weak self] result in
             guard let self = self else { return }
@@ -41,7 +44,7 @@ class DescriptionPresenter: DescriptionPresenterProtocol {
             switch result {
             case .success(let descriptionMovie):
                 self.descriptionMovie = descriptionMovie
-                self.view?.tableViewReloadData()
+                self.tableViewReloadData?()
                 
             case .failure(let error):
                 print(error)
@@ -56,7 +59,7 @@ class DescriptionPresenter: DescriptionPresenterProtocol {
             switch result {
             case .success(let data):
                 self.dataIcon = data
-                self.view?.tableViewReloadData()
+                self.tableViewReloadData?()
                 
             case .failure(let error):
                 print(error)

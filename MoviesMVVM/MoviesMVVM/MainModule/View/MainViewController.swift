@@ -8,12 +8,12 @@
 
 import UIKit
 
-enum SegueConst {
-    static var descriptionView = "descriptionViewController"
+enum MainViewSegueConst {
+    static let descriptionView = "descriptionViewController"
 }
 
-enum CellConst {
-    static var menuCell = "menuCollectionViewCell"
+enum MainViewCellConst {
+    static let menuCell = "menuCollectionViewCell"
 }
 
 final class MainViewController: UIViewController {
@@ -40,15 +40,15 @@ final class MainViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueConst.descriptionView { //
+        if segue.identifier == MainViewSegueConst.descriptionView { //
             if let descriptionViewController = segue.destination as? DescriptionViewController {
                 if let movie = sender as? Movie {
                     
-                    let presenter = DescriptionPresenter(descriptionViewProtocol: descriptionViewController,
-                                                         idMovie: movie.id,
-                                                         posterPath: movie.posterPath)
+                    descriptionViewController.idMovie = movie.id
+                    descriptionViewController.posterPath = movie.posterPath
                     
-                    descriptionViewController.presenter = presenter
+//                    let viewModel = DescriptionViewModel(idMovie: movie.id, posterPath: movie.posterPath)
+                    
                 }
             }
         }
@@ -68,7 +68,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let menuCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConst.menuCell, for: indexPath) as? MenuCollectionViewCell {
+        if let menuCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellConst.menuCell, for: indexPath) as? MenuCollectionViewCell {
             
             guard let movies = viewModel?.movies else { return UICollectionViewCell() }
             
@@ -86,7 +86,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = viewModel?.movies[indexPath.item]
-        self.performSegue(withIdentifier: SegueConst.descriptionView, sender: movie)
+        self.performSegue(withIdentifier: MainViewSegueConst.descriptionView, sender: movie)
         
     }
     

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Сущность модели данных описания фмльма
 struct DescriptionMovie {
     let id: Int
     let title: String
@@ -44,39 +45,5 @@ extension DescriptionMovie: Decodable {
         
         productionCountries = try container.decode([ProductionCountrie].self, forKey: .productionCountries)
         genres = try container.decode([Genre].self, forKey: .genres)
-    }
-}
-
-struct Genre {
-    let name: String
-}
-
-extension Genre: Decodable {
-    
-    enum GenreCodingKeys: String, CodingKey {
-        case name
-    }
-    
-    init(from decoder: Decoder) throws {
-        let genreContainer = try decoder.container(keyedBy: GenreCodingKeys.self)
-        
-        name = try genreContainer.decode(String.self, forKey: .name)
-    }
-}
-
-struct ProductionCountrie {
-    let name: String
-}
-
-extension ProductionCountrie: Decodable {
-    
-    enum ProductionCountrieCodingKeys: String, CodingKey {
-        case name
-    }
-    
-    init(from decoder: Decoder) throws {
-        let genreContainer = try decoder.container(keyedBy: ProductionCountrieCodingKeys.self)
-        
-        name = try genreContainer.decode(String.self, forKey: .name)
     }
 }
