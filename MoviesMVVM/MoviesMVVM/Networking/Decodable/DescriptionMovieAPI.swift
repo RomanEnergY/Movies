@@ -9,18 +9,18 @@
 import Foundation
 
 // Сущность модели данных описания фмльма
-struct DescriptionMovie {
+struct DescriptionMovieAPI {
     let id: Int
     let title: String
     let tagline: String
     let posterPath: String
     let budget: Int
     let overview: String
-    let productionCountries: [ProductionCountrie]
-    let genres: [Genre]
+    let productionCountries: [ProductionCountrieAPI]
+    let genres: [GenreAPI]
 }
 
-extension DescriptionMovie: Decodable {
+extension DescriptionMovieAPI: Decodable {
     
     private enum DescriptionMovieCodingKeys: String, CodingKey {
         case id
@@ -43,7 +43,7 @@ extension DescriptionMovie: Decodable {
         budget = try container.decode(Int.self, forKey: .budget)
         overview = try container.decode(String.self, forKey: .overview)
         
-        productionCountries = try container.decode([ProductionCountrie].self, forKey: .productionCountries)
-        genres = try container.decode([Genre].self, forKey: .genres)
+        productionCountries = try container.decode([ProductionCountrieAPI].self, forKey: .productionCountries)
+        genres = try container.decode([GenreAPI].self, forKey: .genres)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol EndPointType {
+protocol EndPointProtocol {
     var baseURL: String { get }
     var path: String { get }
     var httpMethod: HTTPMethod { get }

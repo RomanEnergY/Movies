@@ -8,14 +8,20 @@
 
 import Foundation
 
-class Router<EndPoint: EndPointType>: NetworkRouter {
-    private var task: URLSessionTask?
+protocol NetworkServiceProtocol: class {
+    associatedtype EndPoint: EndPointProtocol
+    func request(route: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ())
+    func cancel()
+}
+
+final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
+    private var urlSessionTask: URLSessionTask?
     
-    func request(route: EndPoint, completion: @escaping NetworkRouterCompletion) {
+    func request(route: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
         let session = URLSession.shared
         do {
             if let request = try self.buildRequest(from: route) {
-                task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+                urlSessionTask = session.dataTask(with: request, completionHandler: { (data, response, error) in
                     completion(data, response, error)
                 })
             }
@@ -24,11 +30,11 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
             completion(nil, nil, error)
         }
         
-        self.task?.resume()
+        self.urlSessionTask?.resume()
     }
     
     func cancel() {
-        self.task?.cancel()
+        self.urlSessionTask?.cancel()
     }
     
     private func buildRequest(from route: EndPoint) throws -> URLRequest? {
@@ -42,22 +48,15 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
             
             do {
                 switch route.task {
-                case .request:
+                case .requesNotParameters:
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                     
-                case .requestParameters(let bodyPatameters,
-                                        let urlParameters):
-                    try self.configureParameters(bodyPatameters: bodyPatameters,
-                                                 urlParameters: urlParameters,
-                                                 request: &request)
+                case .requestParameters(let bodyPatameters, let urlParameters):
+                    try self.configureParameters(bodyPatameters: bodyPatameters, urlParameters: urlParameters, request: &request)
                     
-                case .requestParametersAndHeaders(let bodyPatameters,
-                                                  let urlParameters,
-                                                  let additionHeaders):
+                case .requestParametersAndHeaders(let bodyPatameters, let urlParameters, let additionHeaders):
                     self.addAdditionalHeaders(additionHeaders, request: &request)
-                    try self.configureParameters(bodyPatameters: bodyPatameters,
-                                                 urlParameters: urlParameters,
-                                                 request: &request)
+                    try self.configureParameters(bodyPatameters: bodyPatameters, urlParameters: urlParameters, request: &request)
                 }
                 
                 return request

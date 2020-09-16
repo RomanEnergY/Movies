@@ -8,20 +8,24 @@
 
 import Foundation
 
-struct NetworkManager {
+enum MovieNetworkServiceConst {
+    static let baseURL = "https://api.themoviedb.org/3/"
     static let movieAPIKey = "794a530f52335c4139ed740dcd55a4ac"
     static let language = "ru-RU"
-    private let routerMovieApi = Router<MovieApi>()
-    private let routerImageMovie = Router<ImageMovie>()
+}
+
+struct NetworkManager {
+    private let routerMovieApi = NetworkService<MovieDataEndPoint>()
+    private let routerImageMovie = NetworkService<MovieImageEndPoint>()
     
-    func getTrending(timeWindows: TimeWindows, page: Int, completion: @escaping (Result<MovieApiResponse?, Error>) -> ()) {
+    func getTrending(timeWindows: MovieDataEndPoint.TimeWindows, page: Int, completion: @escaping (Result<MovieResponseAPI?, Error>) -> ()) {
         routerMovieApi.request(route: .trending(timeWindows: timeWindows, page: page)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
             }
             
             do {
-                let dataDecode = try JSONDecoder().decode(MovieApiResponse.self, from: data!)
+                let dataDecode = try JSONDecoder().decode(MovieResponseAPI.self, from: data!)
                 completion(.success(dataDecode))
                 
             } catch {
@@ -30,7 +34,7 @@ struct NetworkManager {
         }
     }
     
-    func getMovieId(id: Int, completion: @escaping (Result<DescriptionMovie?, Error>) -> ()) {
+    func getMovieId(id: Int, completion: @escaping (Result<DescriptionMovieAPI?, Error>) -> ()) {
         routerMovieApi.request(route: .movieId(id: id)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
@@ -38,7 +42,7 @@ struct NetworkManager {
             }
             
             do {
-                let dataDecode = try JSONDecoder().decode(DescriptionMovie.self, from: data!)
+                let dataDecode = try JSONDecoder().decode(DescriptionMovieAPI.self, from: data!)
                 completion(.success(dataDecode))
                 
             } catch {
@@ -47,7 +51,7 @@ struct NetworkManager {
         }
     }
     
-    func getMovieNowPlaying(page: Int, completion: @escaping (Result<Movie?, Error>) -> ()) {
+    func getMovieNowPlaying(page: Int, completion: @escaping (Result<MovieAPI?, Error>) -> ()) {
         routerMovieApi.request(route: .movieNowPlaying(page: page)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
@@ -55,7 +59,7 @@ struct NetworkManager {
             }
             
             do {
-                let dataDecode = try JSONDecoder().decode(Movie.self, from: data!)
+                let dataDecode = try JSONDecoder().decode(MovieAPI.self, from: data!)
                 completion(.success(dataDecode))
                 
             } catch {
@@ -65,7 +69,7 @@ struct NetworkManager {
     }
     
     func getImage(whith: Int, posterPath: String, completion: @escaping (Result<Data?, Error>) -> ()) {
-        routerImageMovie.request(route: .imageTmBD(whith: whith, posterPath: posterPath)) { (data, response, error) in
+        routerImageMovie.request(route: .image(whith: whith, posterPath: posterPath)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
                 return

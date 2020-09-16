@@ -13,7 +13,7 @@ import Foundation
 /// Вы можете добавить в него столько различных вариантов запросов, сколько потребуется
 
 public enum HTTPTask {
-    case request
+    case requesNotParameters
     case requestParameters(bodyParameters: Parameters?, urlParameters: Parameters?)
     case requestParametersAndHeaders(bodyParameters: Parameters?, urlParameters: Parameters?, additionHeaders: HTTPHeaders?)
 }

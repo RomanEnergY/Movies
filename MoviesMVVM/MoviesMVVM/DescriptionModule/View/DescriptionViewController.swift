@@ -8,12 +8,15 @@
 
 import UIKit
 
+//MARK: - enum
 enum DescriptionViewCellConst {
     static let imageCell = "ImageTableViewCell"
     static let overviewCell = "OverviewTableViewCell"
 }
 
+//MARK: - DescriptionViewController: UIViewController
 class DescriptionViewController: UIViewController {
+    
     //MARK: - Types
     enum TypeCell {
         case image
@@ -25,7 +28,7 @@ class DescriptionViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Public Properties
+    //MARK: - Public Properties
     public var idMovie: Int?
     public var posterPath: String?
     
@@ -59,28 +62,32 @@ extension DescriptionViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let descriptionMovie = viewModel?.descriptionMovie
+        
         switch arrayTypeCell[indexPath.item] {
         case .image:
-            if let imageCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.imageCell, for: indexPath) as? ImageTableViewCell {
-                if let dataIcon = viewModel?.dataIcon {
-                    imageCell.imgView.image = UIImage(data: dataIcon)
-                }
-                
-                return imageCell
+            if let imageCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.imageCell,
+                                                             for: indexPath) as? ImageTableViewCell {
+            if let dataIcon = viewModel?.dataIcon {
+                imageCell.imgView.image = UIImage(data: dataIcon)
+            }
+            
+            return imageCell
             }
         case .title:
             let titleCell = UITableViewCell()
-            titleCell.textLabel?.text = viewModel?.descriptionMovie?.title
+            titleCell.textLabel?.text = descriptionMovie?.title
             return titleCell
             
         case .tagline:
             let taglineCell = UITableViewCell()
-            taglineCell.textLabel?.text = viewModel?.descriptionMovie?.tagline
+            taglineCell.textLabel?.text = descriptionMovie?.tagline
             return taglineCell
             
         case .overview:
-            if let overviewCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.overviewCell, for: indexPath) as? OverviewTableViewCell {
-                guard let overview = viewModel?.descriptionMovie?.overview else { return UITableViewCell() }
+            if let overviewCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.overviewCell,
+                                                                for: indexPath) as? OverviewTableViewCell {
+                guard let overview = descriptionMovie?.overview else { return UITableViewCell() }
                 overviewCell.overviewLabel.text = overview
                 
                 return overviewCell

@@ -8,47 +8,81 @@
 
 import Foundation
 
+//MARK: - MainViewModelProtocol
 protocol MainViewModelProtocol: AnyObject {
-    var movies: [Movie] { get }
+    //MARK: - public variable
+    var movies: [MainMovieProtocol]? { get }
     var collectionViewReloadData: (() -> Void)? { get set }
-//    var modelData: ModelData { get }
     
-    func beginBatchFetch()
+    //MARK: - public func
+    func beginBatchFetch(complition: @escaping () -> Void)
+    func getIcon(whith: Int, posterPath: String, complition: @escaping ((Data) -> Void))
 }
 
+//MARK: - MainViewModel: MainViewModelProtocol
 class MainViewModel: MainViewModelProtocol {
-    //MARK: -public variable
-    public var movies: [Movie] { modelData.allMovies }
+    
+    //MARK: - public variable MainViewModelProtocol
+    public var movies: [MainMovieProtocol]? {
+        mainModel?.movies
+    }
     public var collectionViewReloadData: (() -> Void)?
     
-    //MARK: -private variable
-    private var fetchingMorePage = false
-    private var modelData: ModelData
+    //MARK: - private variable
+    private var movieDataService: MovieDataServiceProtocol?
+    private var movieImageService: MovieImageServiceProtocol?
+    private var mainModel: MainModelProtocol?
     
-    init() {
-        modelData = ModelData()
-        getData()
+    //MARK: - init
+    init(mainModel: MainModelProtocol = MainModel(),
+         movieDataService: MovieDataServiceProtocol = MovieDataService(),
+         movieImageService: MovieImageServiceProtocol = MovieImageService()) {
+        
+        self.mainModel = mainModel
+        self.movieDataService = movieDataService
+        self.movieImageService = movieImageService
+        
+        initialStartData()
     }
     
-    private func getData() {
-        modelData.getTrending(page: 1) { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionViewReloadData?()
-            }
-        }
-    }
-    
-    public func beginBatchFetch() {
-        if !fetchingMorePage {
-            self.fetchingMorePage = true
+    //MARK: - public func MainViewModelProtocol
+    public func beginBatchFetch(complition: @escaping () -> Void) {
+        movieDataService?.nextPage(completion: { [weak self] mainMovies in
+            if let mainMovies = mainMovies {
+                self?.mainModel?.movies.append(contentsOf: mainMovies)
                 
-                self.modelData.addDataNextPage() { [weak self] in
-                    self?.fetchingMorePage = false
+                DispatchQueue.main.async {
+                    self?.collectionViewReloadData?()
                     
-                    DispatchQueue.main.async {
-                        self?.collectionViewReloadData?()
-                    }
+                }
+            }
+        })
+    }
+    
+    public func getIcon(whith: Int, posterPath: String, complition: @escaping ((Data) -> Void)) {
+        movieImageService?.getIcon(whith: whith, posterPath: posterPath) { result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+            case .success(let data):
+                guard let data = data else { return }
+                complition(data)
+                
             }
         }
+    }
+    
+    //MARK: - private func
+    private func initialStartData() {
+        movieDataService?.getTrending(completion: { [weak self] mainMovies in
+            guard let self = self,
+                let mainMovies = mainMovies else { return }
+            self.mainModel?.movies.append(contentsOf: mainMovies)
+            
+            DispatchQueue.main.async {
+                self.collectionViewReloadData?()
+            }
+        })
     }
 }

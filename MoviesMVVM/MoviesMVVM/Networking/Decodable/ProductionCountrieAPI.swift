@@ -1,5 +1,5 @@
 //
-//  Genre.swift
+//  ProductionCountrie.swift
 //  MoviesMVVM
 //
 //  Created by 1234 on 15.09.2020.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct Genre {
+struct ProductionCountrieAPI {
     let name: String
 }
 
-extension Genre: Decodable {
+extension ProductionCountrieAPI: Decodable {
     
-    enum GenreCodingKeys: String, CodingKey {
+    enum ProductionCountrieCodingKeys: String, CodingKey {
         case name
     }
     
     init(from decoder: Decoder) throws {
-        let genreContainer = try decoder.container(keyedBy: GenreCodingKeys.self)
+        let genreContainer = try decoder.container(keyedBy: ProductionCountrieCodingKeys.self)
         
         name = try genreContainer.decode(String.self, forKey: .name)
     }

@@ -8,43 +8,54 @@
 
 import Foundation
 
+//MARK: - DescriptionViewModelProtocol
 protocol DescriptionViewModelProtocol {
-    var descriptionMovie: DescriptionMovie? { get }
+    var descriptionMovie: DescriptionMovieProtocol? { get }
     var dataIcon: Data? { get }
     var tableViewReloadData: (() -> Void)? { get set }
 }
 
+//MARK: - DescriptionViewModel: DescriptionViewModelProtocol
 final class DescriptionViewModel: DescriptionViewModelProtocol {
-    //MARK: -public var
-    public var descriptionMovie: DescriptionMovie?
+    
+    //MARK: - public var DescriptionViewModelProtocol
+    public var descriptionMovie: DescriptionMovieProtocol? {
+        descriptionModel?.descriptionMovie
+    }
     public var dataIcon: Data?
     public var tableViewReloadData: (() -> Void)?
     
     //MARK: -private var
-    private var modelData: ModelData?
-    private var idMovie: Int
-    private var posterPath: String
+    private var movieDesctiptionService: MovieDesctiptionServiceProtocol?
+    private var movieImageService: MovieImageServiceProtocol?
+    private var descriptionModel: DescriptionModelProtocol?
     
-    //MARK: -required init
-    required init(idMovie: Int, posterPath: String) {
-        self.modelData = ModelData()
-        self.idMovie = idMovie
-        self.posterPath = posterPath
+    //MARK: - init
+    init(idMovie: Int,
+         posterPath: String,
+         movieDesctiptionService: MovieDesctiptionServiceProtocol = MovieDesctiptionService(),
+         movieImageService: MovieImageServiceProtocol = MovieImageService()) {
         
-        guard let modelData = modelData else { return }
-        initDescriptionMovie(modelData: modelData)
-        initIconMovie(modelData: modelData)
+        self.movieDesctiptionService = movieDesctiptionService
+        self.movieImageService = movieImageService
+        
+        initDescriptionMovie(idMovie)
+        initIconMovie(posterPath)
     }
     
-    //MARK: -private func
-    private func initDescriptionMovie(modelData: ModelData) {
-        modelData.getMovieId(id: idMovie) { [weak self] result in
+    //MARK: - private func
+    private func initDescriptionMovie(_ idMovie: Int) {
+        movieDesctiptionService?.getMovieId(id: idMovie) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let descriptionMovie):
-                self.descriptionMovie = descriptionMovie
-                self.tableViewReloadData?()
+                guard let descriptionMovie = descriptionMovie else { return }
+                self.descriptionModel = DescriptionModel(descriptionMovie: descriptionMovie)
+                
+                DispatchQueue.main.async {
+                    self.tableViewReloadData?()
+                }
                 
             case .failure(let error):
                 print(error)
@@ -52,19 +63,21 @@ final class DescriptionViewModel: DescriptionViewModelProtocol {
         }
     }
     
-    private func initIconMovie(modelData: ModelData) {
-        modelData.getIcon(whith: 300, posterPath: posterPath, completion: { [weak self] result in
+    private func initIconMovie(_ posterPath: String) {
+        movieImageService?.getIcon(whith: 300, posterPath: posterPath, completion: { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let data):
                 self.dataIcon = data
-                self.tableViewReloadData?()
+                
+                DispatchQueue.main.async {
+                    self.tableViewReloadData?()
+                }
                 
             case .failure(let error):
                 print(error)
             }
         })
     }
-    
 }

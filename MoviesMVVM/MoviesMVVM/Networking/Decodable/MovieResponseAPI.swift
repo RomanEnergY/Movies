@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct MovieApiResponse {
+struct MovieResponseAPI {
     let currentPage: Int
     let totalPage: Int
-    let movies: [Movie]
+    let movies: [MovieAPI]
 }
 
-extension MovieApiResponse: Decodable {
+extension MovieResponseAPI: Decodable {
     
     private enum MovieApiResponseCodingKeys: String, CodingKey {
         case currentPage = "page"
@@ -27,6 +27,6 @@ extension MovieApiResponse: Decodable {
         
         currentPage = try container.decode(Int.self, forKey: .currentPage)
         totalPage = try container.decode(Int.self, forKey: .totalPage)
-        movies = try container.decode([Movie].self, forKey: .movies)
+        movies = try container.decode([MovieAPI].self, forKey: .movies)
     }
 }
