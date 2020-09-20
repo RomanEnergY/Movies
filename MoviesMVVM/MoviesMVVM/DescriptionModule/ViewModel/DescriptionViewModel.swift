@@ -25,22 +25,26 @@ final class DescriptionViewModel: DescriptionViewModelProtocol {
     public var dataIcon: Data?
     public var tableViewReloadData: (() -> Void)?
     
+    
     //MARK: -private var
     private var movieDesctiptionService: MovieDesctiptionServiceProtocol?
     private var movieImageService: MovieImageServiceProtocol?
     private var descriptionModel: DescriptionModelProtocol?
+    private var router: ModuleRouterProtocol
     
     //MARK: - init
-    init(idMovie: Int,
-         posterPath: String,
+    init(router: ModuleRouterProtocol,
+         movie: MainMovieProtocol,
          movieDesctiptionService: MovieDesctiptionServiceProtocol = MovieDesctiptionService(),
          movieImageService: MovieImageServiceProtocol = MovieImageService()) {
         
         self.movieDesctiptionService = movieDesctiptionService
         self.movieImageService = movieImageService
         
-        initDescriptionMovie(idMovie)
-        initIconMovie(posterPath)
+        self.router = router
+        initDescriptionMovie(movie.id)
+        guard let iconString = movie.iconString else { return }
+        initIconMovie(iconString)
     }
     
     //MARK: - private func
@@ -64,7 +68,7 @@ final class DescriptionViewModel: DescriptionViewModelProtocol {
     }
     
     private func initIconMovie(_ posterPath: String) {
-        movieImageService?.getIcon(whith: 300, posterPath: posterPath, completion: { [weak self] result in
+        movieImageService?.getIcon(posterPath: posterPath, completion: { [weak self] result in
             guard let self = self else { return }
             
             switch result {

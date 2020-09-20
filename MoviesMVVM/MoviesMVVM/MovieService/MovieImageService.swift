@@ -10,7 +10,12 @@ import Foundation
 
 //MARK: - MovieImageServiceProtocol
 protocol MovieImageServiceProtocol {
-    func getIcon(whith: Int, posterPath: String, completion: @escaping (Result<Data?, Error>) -> Void)
+    func getIcon(posterPath: String, completion: @escaping (Result<Data?, Error>) -> Void)
+}
+
+//MARK: - MovieImageServiceConst
+enum MovieImageServiceConst {
+    static let whith = 300
 }
 
 //MARK: - class MovieImageService: MovieImageServiceProtocol
@@ -19,8 +24,8 @@ final class MovieImageService: MovieImageServiceProtocol {
     private let routerImageMovie = NetworkService<MovieImageEndPoint>()
 
     //MARK: - public func MovieImageServiceProtocol
-    public func getIcon(whith: Int, posterPath: String, completion: @escaping (Result<Data?, Error>) -> Void) {
-        routerImageMovie.request(route: .image(whith: whith, posterPath: posterPath)) { (data, response, error) in
+    public func getIcon(posterPath: String, completion: @escaping (Result<Data?, Error>) -> Void) {
+        routerImageMovie.request(route: .image(whith: MovieImageServiceConst.whith, posterPath: posterPath)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
                 return

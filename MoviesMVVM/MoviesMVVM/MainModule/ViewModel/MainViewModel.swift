@@ -16,7 +16,8 @@ protocol MainViewModelProtocol: AnyObject {
     
     //MARK: - public func
     func beginBatchFetch(complitionBatchFetch: @escaping () -> Void)
-    func getIcon(whith: Int, posterPath: String, complition: @escaping ((Data) -> Void))
+    func getIcon(posterPath: String, complition: @escaping ((Data) -> Void))
+    func showeDetail(movie: MainMovieProtocol)
 }
 
 //MARK: - MainViewModel: MainViewModelProtocol
@@ -32,12 +33,15 @@ class MainViewModel: MainViewModelProtocol {
     private var movieDataService: MovieDataServiceProtocol?
     private var movieImageService: MovieImageServiceProtocol?
     private var mainModel: MainModelProtocol?
+    private var router: ModuleRouterProtocol
     
     //MARK: - init
-    init(mainModel: MainModelProtocol = MainModel(),
+    init(router: ModuleRouterProtocol,
+         mainModel: MainModelProtocol = MainModel(),
          movieDataService: MovieDataServiceProtocol = MovieDataService(),
          movieImageService: MovieImageServiceProtocol = MovieImageService()) {
         
+        self.router = router
         self.mainModel = mainModel
         self.movieDataService = movieDataService
         self.movieImageService = movieImageService
@@ -59,8 +63,8 @@ class MainViewModel: MainViewModelProtocol {
         })
     }
     
-    public func getIcon(whith: Int, posterPath: String, complition: @escaping ((Data) -> Void)) {
-        movieImageService?.getIcon(whith: whith, posterPath: posterPath) { result in
+    public func getIcon(posterPath: String, complition: @escaping ((Data) -> Void)) {
+        movieImageService?.getIcon(posterPath: posterPath) { result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -72,11 +76,15 @@ class MainViewModel: MainViewModelProtocol {
         }
     }
     
+    public func showeDetail(movie: MainMovieProtocol) {
+        router.showeDetail(movie: movie)
+    }
+    
     //MARK: - private func
     private func initialStartData() {
         movieDataService?.getTrending(completion: { [weak self] mainMovies in
             guard let self = self,
-                let mainMovies = mainMovies else { return }
+                  let mainMovies = mainMovies else { return }
             self.mainModel?.movies.append(contentsOf: mainMovies)
             
             DispatchQueue.main.async {

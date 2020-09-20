@@ -9,13 +9,8 @@
 import UIKit
 
 //MARK: - Enum
-enum MainViewSegueConst {
-    static let descriptionView = "descriptionViewController"
-}
-
 enum MainViewCellConst {
     static let menuCell = "MenuCollectionViewCell"
-    static let whithCell = 300
 }
 
 //MARK: - MainView: UIViewController
@@ -25,6 +20,7 @@ class MainView: UIViewController {
     
     //MARK: - public var
     public var viewModel: MainViewModelProtocol?
+    public var router: ModuleRouterProtocol?
     
     //MARK: - privar var
     private var cachingIndexPathImage: [String: UIImage] = [:]
@@ -34,9 +30,10 @@ class MainView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Movies"
+        
         setupCollectionView()
         bind()
-        print("UIScreen.main.bounds", UIScreen.main.bounds)
     }
     
     //MARK: - private func
@@ -88,7 +85,7 @@ extension MainView: UICollectionViewDataSource {
     }
     
     private func initialImage(_ iconString: String, _ indexPath: IndexPath, _ cell: MenuCollectionViewCell) {
-        viewModel?.getIcon(whith: MainViewCellConst.whithCell, posterPath: iconString) { [weak self] data in
+        viewModel?.getIcon(posterPath: iconString) { [weak self] data in
             if let image = UIImage(data: data) {
                 // кэшируем картинку
                 self?.cachingIndexPathImage[iconString] = UIImage(data: data)
@@ -104,13 +101,10 @@ extension MainView: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension MainView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = viewModel?.movies?[indexPath.item]
-        print("movie:", movie ?? "nil")
-        
-//        self.performSegue(withIdentifier: MainViewSegueConst.descriptionView, sender: movie)
+        if let movie = viewModel?.movies?[indexPath.item] {
+            viewModel?.showeDetail(movie: movie)
+        }
     }
-    
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y

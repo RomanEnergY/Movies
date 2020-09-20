@@ -10,24 +10,26 @@ import UIKit
 
 protocol AssemblyBuilderProtocol {
     func createModuleMain(router: ModuleRouterProtocol) -> UIViewController
-    func createModuleDescription(router: ModuleRouterProtocol, name: String?) -> UIViewController
+    func createModuleDescription(router: ModuleRouterProtocol, movie: MainMovieProtocol) -> UIViewController
 }
 
 class AssemblyBuilder: AssemblyBuilderProtocol {
     func createModuleMain(router: ModuleRouterProtocol) -> UIViewController {
-        let viewModel = MainViewModel()
+        let viewModel = MainViewModel(router: router)
         let view = MainView()
         view.viewModel = viewModel
         
         return view
     }
     
-    func createModuleDescription(router: ModuleRouterProtocol, name: String?) -> UIViewController {
-//        let view = DetailViewController()
-//        let presenter = DetailPresenter(view: view, router: router, name: name)
-//
-//        view.presenter = presenter
-//        return view
+    func createModuleDescription(router: ModuleRouterProtocol, movie: MainMovieProtocol) -> UIViewController {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "DescriptionViewController") as? DescriptionView {
+            
+            let viewModel = DescriptionViewModel(router: router, movie: movie)
+            vc.viewModel = viewModel
+            
+            return vc
+        }
         
         return UIViewController()
     }

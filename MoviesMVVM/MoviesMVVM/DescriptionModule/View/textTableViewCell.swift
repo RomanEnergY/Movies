@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OverviewTableViewCell: UITableViewCell {
+class textTableViewCell: UITableViewCell {
     //MARK: - IBOutlet
-    @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var label: UILabel!
 }

@@ -15,7 +15,7 @@ enum DescriptionViewCellConst {
 }
 
 //MARK: - DescriptionViewController: UIViewController
-class DescriptionViewController: UIViewController {
+class DescriptionView: UIViewController {
     
     //MARK: - Types
     enum TypeCell {
@@ -28,13 +28,11 @@ class DescriptionViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
-    //MARK: - Public Properties
-    public var idMovie: Int?
-    public var posterPath: String?
-    
     //MARK: - Private Properties
-    private var arrayTypeCell: [TypeCell] = [.title, .image, .tagline, .overview]
-    private var viewModel: DescriptionViewModelProtocol?
+    private var arrayTypeCell: [TypeCell] = [.image, .title, .tagline, .overview]
+    
+    //MARK: - public var
+    public var viewModel: DescriptionViewModelProtocol?
     
     //MARK: - override func
     override func viewDidLoad() {
@@ -45,10 +43,6 @@ class DescriptionViewController: UIViewController {
     
     //MARK: - private func
     private func bind() {
-        guard let idMovie = idMovie,
-            let posterPath = posterPath else { return }
-        
-        viewModel = DescriptionViewModel(idMovie: idMovie, posterPath: posterPath)
         viewModel?.tableViewReloadData = { [weak self] in
             self?.tableView.reloadData()
         }
@@ -56,7 +50,7 @@ class DescriptionViewController: UIViewController {
 }
 
 //MARK: - UITableViewDataSource
-extension DescriptionViewController: UITableViewDataSource {
+extension DescriptionView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayTypeCell.count
     }
@@ -76,19 +70,25 @@ extension DescriptionViewController: UITableViewDataSource {
             }
         case .title:
             let titleCell = UITableViewCell()
+            titleCell.backgroundColor = UIColor.clear
+            titleCell.textLabel?.textAlignment = .center
+            
             titleCell.textLabel?.text = descriptionMovie?.title
             return titleCell
             
         case .tagline:
             let taglineCell = UITableViewCell()
+            taglineCell.backgroundColor = UIColor.clear
+            taglineCell.textLabel?.textAlignment = .center
+            
             taglineCell.textLabel?.text = descriptionMovie?.tagline
             return taglineCell
             
         case .overview:
             if let overviewCell = tableView.dequeueReusableCell(withIdentifier: DescriptionViewCellConst.overviewCell,
-                                                                for: indexPath) as? OverviewTableViewCell {
+                                                                for: indexPath) as? textTableViewCell {
                 guard let overview = descriptionMovie?.overview else { return UITableViewCell() }
-                overviewCell.overviewLabel.text = overview
+                overviewCell.label.text = overview
                 
                 return overviewCell
             }

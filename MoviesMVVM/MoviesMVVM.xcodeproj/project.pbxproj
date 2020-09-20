@@ -17,8 +17,8 @@
 		7C2C05FA251079B500F3A238 /* DescriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05DB251079B400F3A238 /* DescriptionViewModel.swift */; };
 		7C2C05FB251079B500F3A238 /* DescriptionMovieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05DD251079B400F3A238 /* DescriptionMovieAPI.swift */; };
 		7C2C05FC251079B500F3A238 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05DF251079B400F3A238 /* ImageTableViewCell.swift */; };
-		7C2C05FD251079B500F3A238 /* DescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E0251079B400F3A238 /* DescriptionViewController.swift */; };
-		7C2C05FE251079B500F3A238 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E1251079B400F3A238 /* OverviewTableViewCell.swift */; };
+		7C2C05FD251079B500F3A238 /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E0251079B400F3A238 /* DescriptionView.swift */; };
+		7C2C05FE251079B500F3A238 /* textTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E1251079B400F3A238 /* textTableViewCell.swift */; };
 		7C2C0600251079B500F3A238 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E6251079B400F3A238 /* ParameterEncoding.swift */; };
 		7C2C0601251079B500F3A238 /* URLParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E7251079B400F3A238 /* URLParameterEncoder.swift */; };
 		7C2C0602251079B500F3A238 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C05E8251079B400F3A238 /* JSONParameterEncoder.swift */; };
@@ -76,8 +76,8 @@
 		7C2C05DB251079B400F3A238 /* DescriptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionViewModel.swift; sourceTree = "<group>"; };
 		7C2C05DD251079B400F3A238 /* DescriptionMovieAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionMovieAPI.swift; sourceTree = "<group>"; };
 		7C2C05DF251079B400F3A238 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
-		7C2C05E0251079B400F3A238 /* DescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionViewController.swift; sourceTree = "<group>"; };
-		7C2C05E1251079B400F3A238 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
+		7C2C05E0251079B400F3A238 /* DescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
+		7C2C05E1251079B400F3A238 /* textTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = textTableViewCell.swift; sourceTree = "<group>"; };
 		7C2C05E6251079B400F3A238 /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
 		7C2C05E7251079B400F3A238 /* URLParameterEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameterEncoder.swift; sourceTree = "<group>"; };
 		7C2C05E8251079B400F3A238 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
@@ -240,9 +240,9 @@
 		7C2C05DE251079B400F3A238 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7C2C05E0251079B400F3A238 /* DescriptionViewController.swift */,
+				7C2C05E0251079B400F3A238 /* DescriptionView.swift */,
 				7C2C05DF251079B400F3A238 /* ImageTableViewCell.swift */,
-				7C2C05E1251079B400F3A238 /* OverviewTableViewCell.swift */,
+				7C2C05E1251079B400F3A238 /* textTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -445,7 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CCC4B352514CED700DCD015 /* MainView.swift in Sources */,
-				7C2C05FE251079B500F3A238 /* OverviewTableViewCell.swift in Sources */,
+				7C2C05FE251079B500F3A238 /* textTableViewCell.swift in Sources */,
 				7C2C06142510A00200F3A238 /* MovieResponseAPI.swift in Sources */,
 				7C2C060B251079B500F3A238 /* EndPointProtocol.swift in Sources */,
 				7C2C05FA251079B500F3A238 /* DescriptionViewModel.swift in Sources */,
@@ -466,7 +466,7 @@
 				7C2C0601251079B500F3A238 /* URLParameterEncoder.swift in Sources */,
 				7C2C05F7251079B500F3A238 /* MovieAPI.swift in Sources */,
 				7C2C06282512AB6800F3A238 /* DescriptionModel.swift in Sources */,
-				7C2C05FD251079B500F3A238 /* DescriptionViewController.swift in Sources */,
+				7C2C05FD251079B500F3A238 /* DescriptionView.swift in Sources */,
 				7C2C05AD251078D300F3A238 /* AppDelegate.swift in Sources */,
 				7C2C0600251079B500F3A238 /* ParameterEncoding.swift in Sources */,
 				7C2C0604251079B500F3A238 /* MovieImageEndPoint.swift in Sources */,

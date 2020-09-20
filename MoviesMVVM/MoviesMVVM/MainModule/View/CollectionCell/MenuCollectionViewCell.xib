@@ -22,14 +22,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="207"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e9M-Bg-but">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="207"/>
+                                <rect key="frame" x="0.0" y="0.0" width="130" height="207"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="f5b-Vc-ww7"/>
+                                    <constraint firstAttribute="width" constant="130" id="f5b-Vc-ww7"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="$nameMovie" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPG-vc-ucO">
-                                <rect key="frame" x="158" y="8" width="248" height="20.5"/>
+                                <rect key="frame" x="138" y="8" width="268" height="20.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -41,12 +41,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oUg-F5-dba">
-                                <rect key="frame" x="108.5" y="171" width="36.5" height="31"/>
+                                <rect key="frame" x="88.5" y="171" width="36.5" height="31"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68U-Zf-ten">
                                         <rect key="frame" x="0.0" y="0.0" width="36.5" height="31"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nLh-xp-rBW">
-                                            <rect key="frame" x="0.0" y="0.0" width="36" height="31"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="36.5" height="31"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <blurEffect style="regular"/>
@@ -71,7 +71,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="748" text="$overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAI-dU-weu">
-                                <rect key="frame" x="158" y="28.5" width="248" height="141.5"/>
+                                <rect key="frame" x="138" y="28.5" width="268" height="141.5"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
