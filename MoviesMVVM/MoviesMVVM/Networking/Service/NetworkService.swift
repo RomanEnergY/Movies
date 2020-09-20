@@ -17,7 +17,7 @@ protocol NetworkServiceProtocol: class {
 final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
     private var urlSessionTask: URLSessionTask?
     
-    func request(route: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
+    public func request(route: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
         let session = URLSession.shared
         do {
             if let request = try self.buildRequest(from: route) {
@@ -33,7 +33,7 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
         self.urlSessionTask?.resume()
     }
     
-    func cancel() {
+    public func cancel() {
         self.urlSessionTask?.cancel()
     }
     

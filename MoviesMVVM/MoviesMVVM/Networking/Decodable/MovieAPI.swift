@@ -14,7 +14,7 @@ struct MovieAPI {
     let voteCount: Int
     let voteAverage: Double
     let title: String
-    let releaseDate: String
+    let releaseDateFromString: String
     let originalLanguage: String
     let originalTitle: String
     let genreIds: [Int]
@@ -34,7 +34,7 @@ extension MovieAPI: Decodable {
         case voteCount = "vote_count"
         case voteAverage = "vote_average"
         case title
-        case releaseDate = "release_date"
+        case releaseDateFromString = "release_date"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
         case genreIds = "genre_ids"
@@ -53,7 +53,7 @@ extension MovieAPI: Decodable {
         voteCount = try movieContainer.decode(Int.self, forKey: .voteCount)
         voteAverage = try movieContainer.decode(Double.self, forKey: .voteAverage)
         title = try movieContainer.decode(String.self, forKey: .title)
-        releaseDate = try movieContainer.decode(String.self, forKey: .releaseDate)
+        releaseDateFromString = try movieContainer.decode(String.self, forKey: .releaseDateFromString)
         originalLanguage = try movieContainer.decode(String.self, forKey: .originalLanguage)
         originalTitle = try movieContainer.decode(String.self, forKey: .originalTitle)
         genreIds = try movieContainer.decode([Int].self, forKey: .genreIds)

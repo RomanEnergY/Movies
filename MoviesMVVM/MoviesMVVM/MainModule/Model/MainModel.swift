@@ -13,8 +13,9 @@ protocol MainMovieProtocol {
     var id: Int { get }
     var title: String { get }
     var rating: Double { get }
-    var releaseDate: String { get }
+    var releaseDate: Date? { get }
     var iconString: String? { get }
+    var overview: String { get }
 }
 
 //MARK: - MainModelProtocol

@@ -27,10 +27,18 @@ final class MovieDataService: MovieDataServiceProtocol {
             if let error = error {
                 print("Error networkService.request:", error.localizedDescription)
                 completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                print("Error data: nil")
+                completion(nil)
+                
+                return
             }
             
             do {
-                let movieApiResponse = try JSONDecoder().decode(MovieResponseAPI.self, from: data!)
+                let movieApiResponse = try JSONDecoder().decode(MovieResponseAPI.self, from: data)
                 completion(movieApiResponse.movies)
                 
             } catch {
@@ -42,6 +50,8 @@ final class MovieDataService: MovieDataServiceProtocol {
     
     public func nextPage(completion: @escaping ([MainMovieProtocol]?) -> ()) {
         currentPage += 1
-        getTrending { completion($0) }
+        getTrending {
+            completion($0)
+        }
     }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainView" customModule="MoviesMVVM" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="HS1-aL-ihY" id="GDF-05-h8Q"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundMainView" translatesAutoresizingMaskIntoConstraints="NO" id="qxx-oB-YFy">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                </imageView>
+                <visualEffectView opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.69999999999999996" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="1TN-BS-cBu">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Fmb-B5-x2Y">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="regular"/>
+                </visualEffectView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HS1-aL-ihY">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="frQ-I4-0CP">
+                        <size key="itemSize" width="200" height="200"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qxx-oB-YFy" secondAttribute="trailing" id="7Mx-h6-6jc"/>
+                <constraint firstItem="qxx-oB-YFy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ces-be-OvM"/>
+                <constraint firstItem="HS1-aL-ihY" firstAttribute="leading" secondItem="qxx-oB-YFy" secondAttribute="leading" id="DyQ-Od-VJz"/>
+                <constraint firstItem="1TN-BS-cBu" firstAttribute="trailing" secondItem="qxx-oB-YFy" secondAttribute="trailing" id="EYn-8r-lLf"/>
+                <constraint firstItem="HS1-aL-ihY" firstAttribute="trailing" secondItem="qxx-oB-YFy" secondAttribute="trailing" id="K1G-FY-32C"/>
+                <constraint firstItem="qxx-oB-YFy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="MHE-PM-EgS"/>
+                <constraint firstItem="1TN-BS-cBu" firstAttribute="leading" secondItem="qxx-oB-YFy" secondAttribute="leading" id="P2p-WH-gNr"/>
+                <constraint firstItem="1TN-BS-cBu" firstAttribute="top" secondItem="qxx-oB-YFy" secondAttribute="top" id="TD9-gG-qZM"/>
+                <constraint firstItem="qxx-oB-YFy" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="TeJ-NM-edx"/>
+                <constraint firstItem="1TN-BS-cBu" firstAttribute="bottom" secondItem="qxx-oB-YFy" secondAttribute="bottom" id="WsK-pg-iQ1"/>
+                <constraint firstItem="HS1-aL-ihY" firstAttribute="bottom" secondItem="qxx-oB-YFy" secondAttribute="bottom" id="mw8-l9-UDI"/>
+                <constraint firstItem="HS1-aL-ihY" firstAttribute="top" secondItem="qxx-oB-YFy" secondAttribute="top" id="z41-J9-cmf"/>
+            </constraints>
+            <point key="canvasLocation" x="-43.478260869565219" y="51.5625"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="backgroundMainView" width="414" height="896"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

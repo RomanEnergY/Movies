@@ -15,7 +15,7 @@ protocol MainViewModelProtocol: AnyObject {
     var collectionViewReloadData: (() -> Void)? { get set }
     
     //MARK: - public func
-    func beginBatchFetch(complition: @escaping () -> Void)
+    func beginBatchFetch(complitionBatchFetch: @escaping () -> Void)
     func getIcon(whith: Int, posterPath: String, complition: @escaping ((Data) -> Void))
 }
 
@@ -46,15 +46,15 @@ class MainViewModel: MainViewModelProtocol {
     }
     
     //MARK: - public func MainViewModelProtocol
-    public func beginBatchFetch(complition: @escaping () -> Void) {
+    public func beginBatchFetch(complitionBatchFetch: @escaping () -> Void) {
         movieDataService?.nextPage(completion: { [weak self] mainMovies in
             if let mainMovies = mainMovies {
                 self?.mainModel?.movies.append(contentsOf: mainMovies)
-                
-                DispatchQueue.main.async {
-                    self?.collectionViewReloadData?()
-                    
-                }
+            }
+            
+            DispatchQueue.main.async {
+                self?.collectionViewReloadData?()
+                complitionBatchFetch()
             }
         })
     }
@@ -68,7 +68,6 @@ class MainViewModel: MainViewModelProtocol {
             case .success(let data):
                 guard let data = data else { return }
                 complition(data)
-                
             }
         }
     }

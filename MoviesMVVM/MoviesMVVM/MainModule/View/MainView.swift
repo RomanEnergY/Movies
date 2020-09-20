@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  MainView.swift
 //  MoviesMVVM
 //
-//  Created by 1234 on 15.09.2020.
+//  Created by 1234 on 18.09.2020.
 //  Copyright © 2020 ZRS. All rights reserved.
 //
 
@@ -14,49 +14,41 @@ enum MainViewSegueConst {
 }
 
 enum MainViewCellConst {
-    static let menuCell = "menuCollectionViewCell"
+    static let menuCell = "MenuCollectionViewCell"
     static let whithCell = 300
 }
 
-//MARK: MainViewController: UIViewController
-final class MainViewController: UIViewController {
-    
+//MARK: - MainView: UIViewController
+class MainView: UIViewController {
     //MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
     
+    //MARK: - public var
+    public var viewModel: MainViewModelProtocol?
+    
     //MARK: - privar var
-    private var viewModel: MainViewModelProtocol?
     private var cachingIndexPathImage: [String: UIImage] = [:]
     private var fetchingMorePage = false
-    
+
     //MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
         bind()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == MainViewSegueConst.descriptionView { //
-            if let descriptionViewController = segue.destination as? DescriptionViewController {
-                if let movie = sender as? MovieAPI {
-                    
-                    descriptionViewController.idMovie = movie.id
-                    descriptionViewController.posterPath = movie.posterPath
-                }
-            }
-        }
+        print("UIScreen.main.bounds", UIScreen.main.bounds)
     }
     
     //MARK: - private func
     private func setupCollectionView() {
+        let nib = UINib(nibName: "MenuCollectionViewCell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "MenuCollectionViewCell")
+        
         collectionView.delegate = self
         collectionView.dataSource = self
     }
     
     private func bind() {
-        viewModel = MainViewModel()
         viewModel?.collectionViewReloadData = { [weak self] in
             self?.collectionView.reloadData()
         }
@@ -64,32 +56,32 @@ final class MainViewController: UIViewController {
 }
 
 //MARK: - UICollectionViewDataSource
-extension MainViewController: UICollectionViewDataSource {
+extension MainView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.movies?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let menuCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellConst.menuCell, for: indexPath) as? MenuCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellConst.menuCell, for: indexPath) as? MenuCollectionViewCell {
             
             if let movies = viewModel?.movies {
                 // устанавливаем данные в ячейку
                 let movie = movies[indexPath.row]
-                menuCollectionViewCell.setupDataCell(movie: movie)
+                cell.setupDataCell(movie: movie)
                 
                 // устанавливаем картинку в ячейку
                 if let iconString = movie.iconString {
                     // проверяем наличие кэшированной картинки
                     if let cachingImage = cachingIndexPathImage[iconString] {
-                        menuCollectionViewCell.setupImageCell(image: cachingImage)
+                        cell.setupImageCell(image: cachingImage)
                         
                     } else {
-                        initialImage(iconString, indexPath, menuCollectionViewCell)
+                        initialImage(iconString, indexPath, cell)
                     }
                 }
             }
             
-            return menuCollectionViewCell
+            return cell
         }
         
         return UICollectionViewCell()
@@ -110,25 +102,48 @@ extension MainViewController: UICollectionViewDataSource {
 }
 
 //MARK: - UICollectionViewDelegate
-extension MainViewController: UICollectionViewDelegate {
+extension MainView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = viewModel?.movies?[indexPath.item]
-        self.performSegue(withIdentifier: MainViewSegueConst.descriptionView, sender: movie)
+        print("movie:", movie ?? "nil")
+        
+//        self.performSegue(withIdentifier: MainViewSegueConst.descriptionView, sender: movie)
     }
+    
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if (contentHeight - offsetY) / contentHeight  < 0.4 {
-            
+        if (contentHeight - offsetY) < collectionView.bounds.height * 2 {
             if !fetchingMorePage {
                 fetchingMorePage = true
-                
+
                 viewModel?.beginBatchFetch { [weak self] in
                     self?.fetchingMorePage = false
+                    print("movies.count", self?.viewModel?.movies?.count ?? 0)
                 }
             }
         }
+    }
+}
+
+//MARK: -MainView: UICollectionViewDelegateFlowLayout
+extension MainView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let width = UIScreen.main.bounds.width - 10
+        let height = width/2
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
     }
 }

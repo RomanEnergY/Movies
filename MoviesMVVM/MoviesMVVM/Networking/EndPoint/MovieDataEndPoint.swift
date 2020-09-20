@@ -22,7 +22,7 @@ enum MovieDataEndPoint: EndPointProtocol {
     
     //MARK: - public var EndPointProtocol
     public var baseURL: String {
-        return MovieNetworkServiceConst.baseURL
+        return NetworkData.baseURL
     }
     
     public var path: String {
@@ -42,19 +42,19 @@ enum MovieDataEndPoint: EndPointProtocol {
         case .trending(_ , let page):
             return .requestParameters(bodyParameters: nil,
                                       urlParameters: [ "page": page,
-                                                       "api_key": MovieNetworkServiceConst.movieAPIKey,
-                                                       "language": MovieNetworkServiceConst.language])
+                                                       "api_key": NetworkData.APIKey,
+                                                       "language": NetworkData.language])
             
         case .movieId:
             return .requestParameters(bodyParameters: nil,
-                                      urlParameters: [ "api_key": MovieNetworkServiceConst.movieAPIKey,
-                                                       "language": MovieNetworkServiceConst.language])
+                                      urlParameters: [ "api_key": NetworkData.APIKey,
+                                                       "language": NetworkData.language])
             
         case .movieNowPlaying(let page):
             return .requestParameters(bodyParameters: nil,
                                       urlParameters: [ "page": page,
-                                                       "api_key": MovieNetworkServiceConst.movieAPIKey,
-                                                       "language": MovieNetworkServiceConst.language])
+                                                       "api_key": NetworkData.APIKey,
+                                                       "language": NetworkData.language])
         }
     }
     
