@@ -17,7 +17,7 @@ class MenuCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var viewCell: UIView! {
         didSet {
-            viewCell.layer.cornerRadius = 25
+            viewCell.layer.cornerRadius = 15
             viewCell.layer.masksToBounds = true
         }
     }

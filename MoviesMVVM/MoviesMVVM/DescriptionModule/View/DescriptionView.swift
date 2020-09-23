@@ -28,11 +28,11 @@ class DescriptionView: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
-    //MARK: - Private Properties
-    private var arrayTypeCell: [TypeCell] = [.image, .title, .tagline, .overview]
-    
     //MARK: - public var
     public var viewModel: DescriptionViewModelProtocol?
+    
+    //MARK: - Private Properties
+    private var arrayTypeCell: [TypeCell] = [.image, .title, .tagline, .overview]
     
     //MARK: - override func
     override func viewDidLoad() {

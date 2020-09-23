@@ -49,6 +49,10 @@
 		7CCC4B362514CED700DCD015 /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CCC4B342514CED700DCD015 /* MainView.xib */; };
 		7CCC4B3D2514E21D00DCD015 /* NetworkData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B3C2514E21D00DCD015 /* NetworkData.swift */; };
 		7CCC4B4B2517CD9400DCD015 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CCC4B4A2517CD9400DCD015 /* Assets.xcassets */; };
+		7CCC4B592518F2DC00DCD015 /* MainViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B582518F2DC00DCD015 /* MainViewModelTest.swift */; };
+		7CCC4B60251A8D6A00DCD015 /* MockMainMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B5F251A8D6A00DCD015 /* MockMainMovie.swift */; };
+		7CCC4B64251A8DE500DCD015 /* MockMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B63251A8DE500DCD015 /* MockMainViewModel.swift */; };
+		7CCC4B6A251A8E7C00DCD015 /* MockAssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B69251A8E7C00DCD015 /* MockAssemblyBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +112,10 @@
 		7CCC4B342514CED700DCD015 /* MainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
 		7CCC4B3C2514E21D00DCD015 /* NetworkData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkData.swift; sourceTree = "<group>"; };
 		7CCC4B4A2517CD9400DCD015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7CCC4B582518F2DC00DCD015 /* MainViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTest.swift; sourceTree = "<group>"; };
+		7CCC4B5F251A8D6A00DCD015 /* MockMainMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainMovie.swift; sourceTree = "<group>"; };
+		7CCC4B63251A8DE500DCD015 /* MockMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainViewModel.swift; sourceTree = "<group>"; };
+		7CCC4B69251A8E7C00DCD015 /* MockAssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAssemblyBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +177,7 @@
 		7C2C05C5251078D500F3A238 /* MoviesMVVMTests */ = {
 			isa = PBXGroup;
 			children = (
+				7CCC4B5C2518FE7700DCD015 /* MainModuleTests */,
 				7C2C05C6251078D500F3A238 /* MoviesMVVMTests.swift */,
 				7C2C05C8251078D500F3A238 /* Info.plist */,
 			);
@@ -340,6 +349,17 @@
 			path = CollectionCell;
 			sourceTree = "<group>";
 		};
+		7CCC4B5C2518FE7700DCD015 /* MainModuleTests */ = {
+			isa = PBXGroup;
+			children = (
+				7CCC4B582518F2DC00DCD015 /* MainViewModelTest.swift */,
+				7CCC4B69251A8E7C00DCD015 /* MockAssemblyBuilder.swift */,
+				7CCC4B63251A8DE500DCD015 /* MockMainViewModel.swift */,
+				7CCC4B5F251A8D6A00DCD015 /* MockMainMovie.swift */,
+			);
+			path = MainModuleTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -385,7 +405,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1170;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = ZRS;
 				TargetAttributes = {
 					7C2C05A8251078D300F3A238 = {
@@ -486,7 +506,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CCC4B6A251A8E7C00DCD015 /* MockAssemblyBuilder.swift in Sources */,
 				7C2C05C7251078D500F3A238 /* MoviesMVVMTests.swift in Sources */,
+				7CCC4B64251A8DE500DCD015 /* MockMainViewModel.swift in Sources */,
+				7CCC4B60251A8D6A00DCD015 /* MockMainMovie.swift in Sources */,
+				7CCC4B592518F2DC00DCD015 /* MainViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +562,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -598,6 +623,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

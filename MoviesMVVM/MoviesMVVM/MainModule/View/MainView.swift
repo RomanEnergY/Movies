@@ -20,9 +20,9 @@ class MainView: UIViewController {
     
     //MARK: - public var
     public var viewModel: MainViewModelProtocol?
-    public var router: ModuleRouterProtocol?
     
     //MARK: - privar var
+    private var router: ModuleRouterProtocol?
     private var cachingIndexPathImage: [String: UIImage] = [:]
     private var fetchingMorePage = false
 
@@ -34,12 +34,13 @@ class MainView: UIViewController {
         
         setupCollectionView()
         bind()
+        viewModel?.initialStartData()
     }
     
     //MARK: - private func
     private func setupCollectionView() {
-        let nib = UINib(nibName: "MenuCollectionViewCell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "MenuCollectionViewCell")
+        let nib = UINib(nibName: MainViewCellConst.menuCell, bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: MainViewCellConst.menuCell)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -84,6 +85,7 @@ extension MainView: UICollectionViewDataSource {
         return UICollectionViewCell()
     }
     
+    //MARK: - private func
     private func initialImage(_ iconString: String, _ indexPath: IndexPath, _ cell: MenuCollectionViewCell) {
         viewModel?.getIcon(posterPath: iconString) { [weak self] data in
             if let image = UIImage(data: data) {
@@ -110,14 +112,17 @@ extension MainView: UICollectionViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if (contentHeight - offsetY) < collectionView.bounds.height * 2 {
-            if !fetchingMorePage {
-                fetchingMorePage = true
+        if (contentHeight - offsetY) < collectionView.frame.height * 2 {
+            beginBatchFetch()
+        }
+    }
+    
+    public func beginBatchFetch() {
+        if !fetchingMorePage {
+            fetchingMorePage = true
 
-                viewModel?.beginBatchFetch { [weak self] in
-                    self?.fetchingMorePage = false
-                    print("movies.count", self?.viewModel?.movies?.count ?? 0)
-                }
+            viewModel?.beginBatchFetch { [weak self] in
+                self?.fetchingMorePage = false
             }
         }
     }
@@ -134,10 +139,10 @@ extension MainView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
 }

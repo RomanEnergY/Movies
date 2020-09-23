@@ -9,13 +9,15 @@
 import Foundation
 
 //MARK: - MainViewModelProtocol
-protocol MainViewModelProtocol: AnyObject {
+protocol MainViewModelProtocol {
+    
     //MARK: - public variable
     var movies: [MainMovieProtocol]? { get }
     var collectionViewReloadData: (() -> Void)? { get set }
     
     //MARK: - public func
-    func beginBatchFetch(complitionBatchFetch: @escaping () -> Void)
+    func initialStartData()
+    func beginBatchFetch(complition: @escaping () -> Void)
     func getIcon(posterPath: String, complition: @escaping ((Data) -> Void))
     func showeDetail(movie: MainMovieProtocol)
 }
@@ -24,9 +26,7 @@ protocol MainViewModelProtocol: AnyObject {
 class MainViewModel: MainViewModelProtocol {
     
     //MARK: - public variable MainViewModelProtocol
-    public var movies: [MainMovieProtocol]? {
-        mainModel?.movies
-    }
+    public var movies: [MainMovieProtocol]? { mainModel?.movies }
     public var collectionViewReloadData: (() -> Void)?
     
     //MARK: - private variable
@@ -45,12 +45,22 @@ class MainViewModel: MainViewModelProtocol {
         self.mainModel = mainModel
         self.movieDataService = movieDataService
         self.movieImageService = movieImageService
-        
-        initialStartData()
     }
     
     //MARK: - public func MainViewModelProtocol
-    public func beginBatchFetch(complitionBatchFetch: @escaping () -> Void) {
+    public func initialStartData() {
+        movieDataService?.getTrending() { [weak self] mainMovies in
+            guard let self = self,
+                  let mainMovies = mainMovies else { return }
+            self.addMovie(mainMovies)
+            
+            DispatchQueue.main.async {
+                self.collectionViewReloadData?()
+            }
+        }
+    }
+    
+    public func beginBatchFetch(complition: @escaping () -> Void) {
         movieDataService?.nextPage(completion: { [weak self] mainMovies in
             if let mainMovies = mainMovies {
                 self?.mainModel?.movies.append(contentsOf: mainMovies)
@@ -58,7 +68,7 @@ class MainViewModel: MainViewModelProtocol {
             
             DispatchQueue.main.async {
                 self?.collectionViewReloadData?()
-                complitionBatchFetch()
+                complition()
             }
         })
     }
@@ -80,16 +90,8 @@ class MainViewModel: MainViewModelProtocol {
         router.showeDetail(movie: movie)
     }
     
-    //MARK: - private func
-    private func initialStartData() {
-        movieDataService?.getTrending(completion: { [weak self] mainMovies in
-            guard let self = self,
-                  let mainMovies = mainMovies else { return }
-            self.mainModel?.movies.append(contentsOf: mainMovies)
-            
-            DispatchQueue.main.async {
-                self.collectionViewReloadData?()
-            }
-        })
+    //MARK: - fileprivate func
+    internal func addMovie(_ mainMovies: [MainMovieProtocol]) {
+        mainModel?.movies.append(contentsOf: mainMovies)
     }
 }
