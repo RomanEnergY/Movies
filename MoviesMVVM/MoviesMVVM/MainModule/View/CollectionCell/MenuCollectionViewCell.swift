@@ -26,7 +26,7 @@ class MenuCollectionViewCell: UICollectionViewCell {
             retingView.layer.borderColor = UIColor.yellow.cgColor
             retingView.layer.borderWidth = 1
             retingView.layer.cornerRadius = 10
-            retingView.layer.masksToBounds = true
+//            retingView.layer.masksToBounds = true
         }
     }
     

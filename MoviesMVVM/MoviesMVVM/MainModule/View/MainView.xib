@@ -20,17 +20,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundMainView" translatesAutoresizingMaskIntoConstraints="NO" id="qxx-oB-YFy">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundMainView" translatesAutoresizingMaskIntoConstraints="NO" id="qxx-oB-YFy">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                 </imageView>
-                <visualEffectView opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.69999999999999996" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="1TN-BS-cBu">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Fmb-B5-x2Y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <blurEffect style="regular"/>
-                </visualEffectView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HS1-aL-ihY">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -49,13 +41,9 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qxx-oB-YFy" secondAttribute="trailing" id="7Mx-h6-6jc"/>
                 <constraint firstItem="qxx-oB-YFy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ces-be-OvM"/>
                 <constraint firstItem="HS1-aL-ihY" firstAttribute="leading" secondItem="qxx-oB-YFy" secondAttribute="leading" id="DyQ-Od-VJz"/>
-                <constraint firstItem="1TN-BS-cBu" firstAttribute="trailing" secondItem="qxx-oB-YFy" secondAttribute="trailing" id="EYn-8r-lLf"/>
                 <constraint firstItem="HS1-aL-ihY" firstAttribute="trailing" secondItem="qxx-oB-YFy" secondAttribute="trailing" id="K1G-FY-32C"/>
                 <constraint firstItem="qxx-oB-YFy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="MHE-PM-EgS"/>
-                <constraint firstItem="1TN-BS-cBu" firstAttribute="leading" secondItem="qxx-oB-YFy" secondAttribute="leading" id="P2p-WH-gNr"/>
-                <constraint firstItem="1TN-BS-cBu" firstAttribute="top" secondItem="qxx-oB-YFy" secondAttribute="top" id="TD9-gG-qZM"/>
                 <constraint firstItem="qxx-oB-YFy" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="TeJ-NM-edx"/>
-                <constraint firstItem="1TN-BS-cBu" firstAttribute="bottom" secondItem="qxx-oB-YFy" secondAttribute="bottom" id="WsK-pg-iQ1"/>
                 <constraint firstItem="HS1-aL-ihY" firstAttribute="bottom" secondItem="qxx-oB-YFy" secondAttribute="bottom" id="mw8-l9-UDI"/>
                 <constraint firstItem="HS1-aL-ihY" firstAttribute="top" secondItem="qxx-oB-YFy" secondAttribute="top" id="z41-J9-cmf"/>
             </constraints>

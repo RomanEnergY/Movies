@@ -79,6 +79,7 @@ extension MainView: UICollectionViewDataSource {
                 }
             }
             
+            configureCell(cell)
             return cell
         }
         
@@ -97,6 +98,14 @@ extension MainView: UICollectionViewDataSource {
                 }
             }
         }
+    }
+    
+    private func configureCell(_ cell: UICollectionViewCell) {
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = .zero
+        cell.layer.shadowRadius = 10.0
+        cell.layer.shadowOpacity = 0.4
+        cell.layer.masksToBounds = false
     }
 }
 
@@ -132,17 +141,17 @@ extension MainView: UICollectionViewDelegate {
 extension MainView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = UIScreen.main.bounds.width - 10
+        let width = UIScreen.main.bounds.width - 20
         let height = width/2
         
         return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
 }
