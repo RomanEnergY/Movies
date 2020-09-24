@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  ModuleRouter.swift
 //  MoviesMVVM
 //
 //  Created by 1234 on 17.09.2020.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-protocol ModuleMainRouterProtocol {
+protocol MainRouterProtocol {
     var navigationController: UINavigationController? { get set }
     var assemblyBuilderProtocol: AssemblyBuilderProtocol? { get set }
 }
 
-protocol ModuleRouterProtocol: ModuleMainRouterProtocol {
+protocol RouterProtocol: MainRouterProtocol {
     func initialViewController()
     func showeDetail(movie: MainMovieProtocol)
     func popToRoot()
 }
 
-class ModuleRouter: ModuleRouterProtocol {
+class Router: RouterProtocol {
     var navigationController: UINavigationController?
     var assemblyBuilderProtocol: AssemblyBuilderProtocol?
     

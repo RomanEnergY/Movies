@@ -30,10 +30,10 @@ final class DescriptionViewModel: DescriptionViewModelProtocol {
     private var movieDesctiptionService: MovieDesctiptionServiceProtocol?
     private var movieImageService: MovieImageServiceProtocol?
     private var descriptionModel: DescriptionModelProtocol?
-    private var router: ModuleRouterProtocol
+    private var router: RouterProtocol
     
     //MARK: - init
-    init(router: ModuleRouterProtocol,
+    init(router: RouterProtocol,
          movie: MainMovieProtocol,
          movieDesctiptionService: MovieDesctiptionServiceProtocol = MovieDesctiptionService(),
          movieImageService: MovieImageServiceProtocol = MovieImageService()) {

@@ -11,7 +11,7 @@ import UIKit
 @testable import MoviesMVVM
 
 class MockAssemblyBuilder: AssemblyBuilder {
-    override func createModuleMain(router: ModuleRouterProtocol) -> UIViewController {
+    override func createModuleMain(router: RouterProtocol) -> UIViewController {
         let mainModel = MainModel()
         let viewModel = MockMainViewModel(router: router, mainModel: mainModel)
         let view = MainView()

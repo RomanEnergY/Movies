@@ -159,8 +159,8 @@
 			children = (
 				7C2C05AC251078D300F3A238 /* AppDelegate.swift */,
 				7C2C05AE251078D300F3A238 /* SceneDelegate.swift */,
-				7C2C06302513C47300F3A238 /* ModuleRouter */,
-				7C2C062D2513C45D00F3A238 /* ModuleBuilder */,
+				7C2C06302513C47300F3A238 /* Router */,
+				7C2C062D2513C45D00F3A238 /* AssemblyBuilder */,
 				7C2C05D1251079B400F3A238 /* MainModule */,
 				7C2C05D9251079B400F3A238 /* DescriptionModule */,
 				7C2C0615251110F900F3A238 /* MovieService */,
@@ -324,20 +324,20 @@
 			path = Decodable;
 			sourceTree = "<group>";
 		};
-		7C2C062D2513C45D00F3A238 /* ModuleBuilder */ = {
+		7C2C062D2513C45D00F3A238 /* AssemblyBuilder */ = {
 			isa = PBXGroup;
 			children = (
 				7C2C062E2513C45D00F3A238 /* AssemblyBuilder.swift */,
 			);
-			path = ModuleBuilder;
+			path = AssemblyBuilder;
 			sourceTree = "<group>";
 		};
-		7C2C06302513C47300F3A238 /* ModuleRouter */ = {
+		7C2C06302513C47300F3A238 /* Router */ = {
 			isa = PBXGroup;
 			children = (
 				7C2C06312513C47300F3A238 /* Router.swift */,
 			);
-			path = ModuleRouter;
+			path = Router;
 			sourceTree = "<group>";
 		};
 		7CCC4B392514DBD800DCD015 /* CollectionCell */ = {

@@ -22,7 +22,7 @@ class MainView: UIViewController {
     public var viewModel: MainViewModelProtocol?
     
     //MARK: - privar var
-    private var router: ModuleRouterProtocol?
+    private var router: RouterProtocol?
     private var cachingIndexPathImage: [String: UIImage] = [:]
     private var fetchingMorePage = false
 

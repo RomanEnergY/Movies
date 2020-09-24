@@ -33,10 +33,10 @@ class MainViewModel: MainViewModelProtocol {
     private var movieDataService: MovieDataServiceProtocol?
     private var movieImageService: MovieImageServiceProtocol?
     private var mainModel: MainModelProtocol?
-    private var router: ModuleRouterProtocol
+    private var router: RouterProtocol
     
     //MARK: - init
-    init(router: ModuleRouterProtocol,
+    init(router: RouterProtocol,
          mainModel: MainModelProtocol = MainModel(),
          movieDataService: MovieDataServiceProtocol = MovieDataService(),
          movieImageService: MovieImageServiceProtocol = MovieImageService()) {

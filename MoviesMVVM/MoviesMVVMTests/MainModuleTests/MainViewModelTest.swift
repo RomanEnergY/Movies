@@ -11,12 +11,12 @@ import XCTest
 
 class MainViewModelTest: XCTestCase {
     var assemblyBuilder: AssemblyBuilderProtocol?
-    var router: ModuleRouterProtocol?
+    var router: RouterProtocol?
     var mainView: MainView?
     
     override func setUpWithError() throws {
         assemblyBuilder = MockAssemblyBuilder()
-        router = ModuleRouter(navigationController: UINavigationController(), assemblyBuilderProtocol: assemblyBuilder)
+        router = Router(navigationController: UINavigationController(), assemblyBuilderProtocol: assemblyBuilder)
         router?.initialViewController()
         
         if let router = router,
@@ -35,7 +35,7 @@ class MainViewModelTest: XCTestCase {
         XCTAssertTrue(assemblyBuilder is MockAssemblyBuilder)
         
         XCTAssertNotNil(router)
-        XCTAssertTrue(router is ModuleRouter)
+        XCTAssertTrue(router is Router)
         
         XCTAssertNotNil(mainView)
         
