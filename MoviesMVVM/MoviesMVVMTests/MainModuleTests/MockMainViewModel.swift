@@ -32,7 +32,7 @@ class MockMainViewModel: MainViewModel {
         complition()
     }
     
-    override func showeDetail(movie: MainMovieProtocol) {
+    override func showeDetail(movie: MainModelMovieProtocol) {
         checkShoweDetail = true
         super.showeDetail(movie: movie)
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 //MARK: - MainMovieProtocol
-protocol MainMovieProtocol {
+protocol MainModelMovieProtocol {
     var id: Int { get }
     var title: String { get }
     var rating: Double { get }
@@ -20,10 +20,10 @@ protocol MainMovieProtocol {
 
 //MARK: - MainModelProtocol
 protocol MainModelProtocol {
-    var movies: [MainMovieProtocol] { get set }
+    var movies: [MainModelMovieProtocol] { get set }
 }
 
 //MARK: - MainModel: MainModelProtocol
 class MainModel: MainModelProtocol {
-    var movies: [MainMovieProtocol] = []
+    var movies: [MainModelMovieProtocol] = []
 }

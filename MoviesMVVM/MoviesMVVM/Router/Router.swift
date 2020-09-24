@@ -15,7 +15,7 @@ protocol MainRouterProtocol {
 
 protocol RouterProtocol: MainRouterProtocol {
     func initialViewController()
-    func showeDetail(movie: MainMovieProtocol)
+    func showeDetail(movie: MainModelMovieProtocol)
     func popToRoot()
 }
 
@@ -36,7 +36,7 @@ class Router: RouterProtocol {
         navigationController.viewControllers = [mainViewController]
     }
     
-    func showeDetail(movie: MainMovieProtocol) {
+    func showeDetail(movie: MainModelMovieProtocol) {
         guard let navigationController = navigationController,
               let detailViewController = assemblyBuilderProtocol?.createModuleDescription(router: self, movie: movie)
             else { return }

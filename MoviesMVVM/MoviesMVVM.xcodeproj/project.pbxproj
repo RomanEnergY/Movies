@@ -136,6 +136,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C04CBE0251D1DAD005D3F2C /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				7C2C06292512BC8000F3A238 /* MovieAPI + Extention.swift */,
+				7C2C062B2512BCAF00F3A238 /* DescriptionMovieAPI + Extention.swift */,
+			);
+			path = Extention;
+			sourceTree = "<group>";
+		};
 		7C2C05A0251078D200F3A238 = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +173,7 @@
 				7C2C05D1251079B400F3A238 /* MainModule */,
 				7C2C05D9251079B400F3A238 /* DescriptionModule */,
 				7C2C0615251110F900F3A238 /* MovieService */,
+				7C2C06202511743000F3A238 /* Decodable */,
 				7C2C05E4251079B400F3A238 /* Networking */,
 				7C2C060D251079C900F3A238 /* Main.storyboard */,
 				7CCC4B4A2517CD9400DCD015 /* Assets.xcassets */,
@@ -260,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				7CCC4B3C2514E21D00DCD015 /* NetworkData.swift */,
-				7C2C06202511743000F3A238 /* Decodable */,
 				7C2C05E5251079B400F3A238 /* Encoding */,
 				7C2C05EB251079B400F3A238 /* EndPoint */,
 				7C2C05EE251079B400F3A238 /* Service */,
@@ -313,11 +322,10 @@
 		7C2C06202511743000F3A238 /* Decodable */ = {
 			isa = PBXGroup;
 			children = (
+				7C04CBE0251D1DAD005D3F2C /* Extention */,
 				7C2C06132510A00200F3A238 /* MovieResponseAPI.swift */,
 				7C2C05D5251079B400F3A238 /* MovieAPI.swift */,
-				7C2C06292512BC8000F3A238 /* MovieAPI + Extention.swift */,
 				7C2C05DD251079B400F3A238 /* DescriptionMovieAPI.swift */,
-				7C2C062B2512BCAF00F3A238 /* DescriptionMovieAPI + Extention.swift */,
 				7C2C060F25109F8100F3A238 /* GenreAPI.swift */,
 				7C2C061125109F9F00F3A238 /* ProductionCountrieAPI.swift */,
 			);

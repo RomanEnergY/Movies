@@ -8,6 +8,6 @@
 
 import Foundation
 
-extension DescriptionMovieAPI: DescriptionMovieProtocol {
+extension DescriptionMovieAPI: DescriptionModelMovieProtocol {
     
 }

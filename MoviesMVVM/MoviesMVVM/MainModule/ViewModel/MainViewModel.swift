@@ -12,21 +12,21 @@ import Foundation
 protocol MainViewModelProtocol {
     
     //MARK: - public variable
-    var movies: [MainMovieProtocol]? { get }
+    var movies: [MainModelMovieProtocol]? { get }
     var collectionViewReloadData: (() -> Void)? { get set }
     
     //MARK: - public func
     func initialStartData()
     func beginBatchFetch(complition: @escaping () -> Void)
     func getIcon(posterPath: String, complition: @escaping ((Data) -> Void))
-    func showeDetail(movie: MainMovieProtocol)
+    func showeDetail(movie: MainModelMovieProtocol)
 }
 
 //MARK: - MainViewModel: MainViewModelProtocol
 class MainViewModel: MainViewModelProtocol {
     
     //MARK: - public variable MainViewModelProtocol
-    public var movies: [MainMovieProtocol]? { mainModel?.movies }
+    public var movies: [MainModelMovieProtocol]? { mainModel?.movies }
     public var collectionViewReloadData: (() -> Void)?
     
     //MARK: - private variable
@@ -86,12 +86,12 @@ class MainViewModel: MainViewModelProtocol {
         }
     }
     
-    public func showeDetail(movie: MainMovieProtocol) {
+    public func showeDetail(movie: MainModelMovieProtocol) {
         router.showeDetail(movie: movie)
     }
     
     //MARK: - fileprivate func
-    internal func addMovie(_ mainMovies: [MainMovieProtocol]) {
+    internal func addMovie(_ mainMovies: [MainModelMovieProtocol]) {
         mainModel?.movies.append(contentsOf: mainMovies)
     }
 }

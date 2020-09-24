@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: - DescriptionViewModelProtocol
 protocol DescriptionViewModelProtocol {
-    var descriptionMovie: DescriptionMovieProtocol? { get }
+    var descriptionMovie: DescriptionModelMovieProtocol? { get }
     var dataIcon: Data? { get }
     var tableViewReloadData: (() -> Void)? { get set }
 }
@@ -19,7 +19,7 @@ protocol DescriptionViewModelProtocol {
 final class DescriptionViewModel: DescriptionViewModelProtocol {
     
     //MARK: - public var DescriptionViewModelProtocol
-    public var descriptionMovie: DescriptionMovieProtocol? {
+    public var descriptionMovie: DescriptionModelMovieProtocol? {
         descriptionModel?.descriptionMovie
     }
     public var dataIcon: Data?
@@ -34,7 +34,7 @@ final class DescriptionViewModel: DescriptionViewModelProtocol {
     
     //MARK: - init
     init(router: RouterProtocol,
-         movie: MainMovieProtocol,
+         movie: MainModelMovieProtocol,
          movieDesctiptionService: MovieDesctiptionServiceProtocol = MovieDesctiptionService(),
          movieImageService: MovieImageServiceProtocol = MovieImageService()) {
         

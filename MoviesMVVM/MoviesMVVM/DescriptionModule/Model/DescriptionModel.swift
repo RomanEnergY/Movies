@@ -9,7 +9,7 @@
 import Foundation
 
 //MARK: - DescriptionMovieProtocol
-protocol DescriptionMovieProtocol {
+protocol DescriptionModelMovieProtocol {
     var title: String { get }
     var tagline: String { get }
     var overview: String { get }
@@ -17,10 +17,10 @@ protocol DescriptionMovieProtocol {
 
 //MARK: - DescriptionModelProtocol
 protocol DescriptionModelProtocol {
-    var descriptionMovie: DescriptionMovieProtocol { get set }
+    var descriptionMovie: DescriptionModelMovieProtocol { get set }
 }
 
 //MARK: - DescriptionModel: DescriptionModelProtocol
 struct DescriptionModel: DescriptionModelProtocol {
-    var descriptionMovie: DescriptionMovieProtocol
+    var descriptionMovie: DescriptionModelMovieProtocol
 }

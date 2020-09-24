@@ -10,8 +10,8 @@ import Foundation
 
 //MARK: - MovieDataServiceProtocol
 protocol MovieDataServiceProtocol {
-    func getTrending(completion: @escaping ([MainMovieProtocol]?) -> ()) -> Void
-    func nextPage(completion: @escaping ([MainMovieProtocol]?) -> ()) -> Void
+    func getTrending(completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void
+    func nextPage(completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void
 }
 
 //MARK: - class MovieDataService: MovieDataServiceProtocol
@@ -22,7 +22,7 @@ final class MovieDataService: MovieDataServiceProtocol {
     private var currentPage: Int = 1
     
     //MARK: - public func MovieDataServiceProtocol
-    public func getTrending(completion: @escaping ([MainMovieProtocol]?) -> ()) -> Void {
+    public func getTrending(completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void {
         networkService.request(route: .trending(timeWindows: timeWindows, page: currentPage)) { (data, response, error) in
             if let error = error {
                 print("Error networkService.request:", error.localizedDescription)
@@ -48,7 +48,7 @@ final class MovieDataService: MovieDataServiceProtocol {
         }
     }
     
-    public func nextPage(completion: @escaping ([MainMovieProtocol]?) -> ()) {
+    public func nextPage(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
         currentPage += 1
         getTrending {
             completion($0)

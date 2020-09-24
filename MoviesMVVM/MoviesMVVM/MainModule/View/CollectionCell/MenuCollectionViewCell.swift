@@ -46,7 +46,7 @@ class MenuCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: - public func
-    public func setupDataCell(movie: MainMovieProtocol) {
+    public func setupDataCell(movie: MainModelMovieProtocol) {
         nameMovieLabel.text = movie.title
         overviewLabel.text = "\t\(movie.overview)"
         ratingLabel.text = "\(movie.rating)"

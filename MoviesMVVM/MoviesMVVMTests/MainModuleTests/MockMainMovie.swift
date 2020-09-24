@@ -9,7 +9,7 @@
 import Foundation
 @testable import MoviesMVVM
 
-struct MockMainMovie: MainMovieProtocol {
+struct MockMainMovie: MainModelMovieProtocol {
     var id: Int
     var title: String
     var rating: Double

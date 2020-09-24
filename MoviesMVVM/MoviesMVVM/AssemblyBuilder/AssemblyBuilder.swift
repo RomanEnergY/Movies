@@ -10,7 +10,7 @@ import UIKit
 
 protocol AssemblyBuilderProtocol {
     func createModuleMain(router: RouterProtocol) -> UIViewController
-    func createModuleDescription(router: RouterProtocol, movie: MainMovieProtocol) -> UIViewController
+    func createModuleDescription(router: RouterProtocol, movie: MainModelMovieProtocol) -> UIViewController
 }
 
 enum AssemblyBuilderConst {
@@ -26,7 +26,7 @@ class AssemblyBuilder: AssemblyBuilderProtocol {
         return view
     }
     
-    func createModuleDescription(router: RouterProtocol, movie: MainMovieProtocol) -> UIViewController {
+    func createModuleDescription(router: RouterProtocol, movie: MainModelMovieProtocol) -> UIViewController {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: AssemblyBuilderConst.descriptionView) as? DescriptionView {
             
             let viewModel = DescriptionViewModel(router: router, movie: movie)

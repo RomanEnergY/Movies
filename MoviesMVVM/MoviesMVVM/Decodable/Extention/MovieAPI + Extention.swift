@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension MovieAPI: MainMovieProtocol {
+extension MovieAPI: MainModelMovieProtocol {
     var releaseDate: Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
