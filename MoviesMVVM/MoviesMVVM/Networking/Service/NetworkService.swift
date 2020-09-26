@@ -10,17 +10,17 @@ import Foundation
 
 protocol NetworkServiceProtocol: class {
     associatedtype EndPoint: EndPointProtocol
-    func request(route: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ())
+    func request(endPoint: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ())
     func cancel()
 }
 
 final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
     private var urlSessionTask: URLSessionTask?
     
-    public func request(route: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
+    public func request(endPoint: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
         let session = URLSession.shared
         do {
-            if let request = try self.buildRequest(from: route) {
+            if let request = try self.buildRequest(from: endPoint) {
                 urlSessionTask = session.dataTask(with: request, completionHandler: { (data, response, error) in
                     completion(data, response, error)
                 })
@@ -37,17 +37,17 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
         self.urlSessionTask?.cancel()
     }
     
-    private func buildRequest(from route: EndPoint) throws -> URLRequest? {
-        if let url = URL(string: route.baseURL) {
+    private func buildRequest(from endPoint: EndPoint) throws -> URLRequest? {
+        if let url = URL(string: endPoint.baseURL) {
             
-            var request = URLRequest(url: url.appendingPathComponent(route.path),
+            var request = URLRequest(url: url.appendingPathComponent(endPoint.path),
                                      cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                                      timeoutInterval: 10.0)
             
-            request.httpMethod = route.httpMethod.rawValue
+            request.httpMethod = endPoint.httpMethod.rawValue
             
             do {
-                switch route.task {
+                switch endPoint.task {
                 case .requesNotParameters:
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                     
@@ -59,6 +59,7 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
                     try self.configureParameters(bodyPatameters: bodyPatameters, urlParameters: urlParameters, request: &request)
                 }
                 
+                print("request", request)
                 return request
                 
             } catch {

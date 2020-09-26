@@ -26,6 +26,6 @@ protocol MainModelProtocol {
 
 //MARK: - MainModel: MainModelProtocol
 class MainModel: MainModelProtocol {
-    let groups: [Group] = [.latest, .nowPlaying, .popular, .topRated, .upcoming]
+    let groups: [Group] = [.trending, .nowPlaying, .popular, .topRated, .upcoming]
     var movies: [MainModelMovieProtocol] = []
 }

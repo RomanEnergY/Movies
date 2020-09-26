@@ -10,9 +10,8 @@ import Foundation
 
 enum Group: String {
     case trending = "В тренде"
-    case latest = "Самые последние"
     case nowPlaying = "Смотрят сейчас"
     case popular = "Популярные"
     case topRated = "Высокий рейтинг"
-    case upcoming = "Предстоящий"
+    case upcoming = "Предстоящие"
 }

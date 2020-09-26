@@ -23,7 +23,6 @@ struct MovieAPI {
     let overview: String
     let posterPath: String?
     let popularity: Double
-    let mediaType: String
 }
 
 extension MovieAPI: Decodable {
@@ -43,7 +42,6 @@ extension MovieAPI: Decodable {
         case overview
         case posterPath = "poster_path"
         case popularity
-        case mediaType = "media_type"
     }
     
     init(from decoder: Decoder) throws {
@@ -57,12 +55,10 @@ extension MovieAPI: Decodable {
         originalLanguage = try movieContainer.decode(String.self, forKey: .originalLanguage)
         originalTitle = try movieContainer.decode(String.self, forKey: .originalTitle)
         genreIds = try movieContainer.decode([Int].self, forKey: .genreIds)
-        backdropPath = try movieContainer.decode(String.self, forKey: .backdropPath)
+        backdropPath = try movieContainer.decode(String?.self, forKey: .backdropPath)
         adult = try movieContainer.decode(Bool.self, forKey: .adult)
         overview = try movieContainer.decode(String.self, forKey: .overview)
-        posterPath = try movieContainer.decode(String.self, forKey: .posterPath)
+        posterPath = try movieContainer.decode(String?.self, forKey: .posterPath)
         popularity = try movieContainer.decode(Double.self, forKey: .popularity)
-        mediaType = try movieContainer.decode(String.self, forKey: .mediaType)
     }
 }
-

@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: - MovieDataServiceProtocol
 protocol MovieDataServiceProtocol {
-    func getTrending(completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void
+    func getDataNewGroup(group: Group, completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void
     func nextPage(completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void
 }
 
@@ -19,11 +19,27 @@ final class MovieDataService: MovieDataServiceProtocol {
     //MARK: - private var
     private let timeWindows: MovieDataEndPoint.TimeWindows = .week
     private let networkService = NetworkService<MovieDataEndPoint>()
+    private var currentGroup: Group?
     private var currentPage: Int = 1
     
     //MARK: - public func MovieDataServiceProtocol
-    public func getTrending(completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void {
-        networkService.request(route: .trending(timeWindows: timeWindows, page: currentPage)) { (data, response, error) in
+    public func getDataNewGroup(group: Group, completion: @escaping ([MainModelMovieProtocol]?) -> ()) -> Void {
+        currentPage = 1
+        currentGroup = group
+        getDataGroup { completion($0) }
+    }
+    
+    public func nextPage(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
+        currentPage += 1
+        getDataGroup { completion($0) }
+    }
+    
+    //MARK: - private func
+    private func getDataGroup(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
+        guard let group = currentGroup else { return }
+        let endPoint = AdapterGroupToEndPoint.get(group, page: currentPage)
+        
+        networkService.request(endPoint: endPoint) { (data, response, error) in
             if let error = error {
                 print("Error networkService.request:", error.localizedDescription)
                 completion(nil)
@@ -45,13 +61,6 @@ final class MovieDataService: MovieDataServiceProtocol {
                 print("Error JSONDecoder().decode:", error.localizedDescription)
                 completion(nil)
             }
-        }
-    }
-    
-    public func nextPage(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
-        currentPage += 1
-        getTrending {
-            completion($0)
         }
     }
 }

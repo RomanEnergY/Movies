@@ -21,7 +21,7 @@ final class  MovieDesctiptionService: MovieDesctiptionServiceProtocol {
     
     //MARK: - public func MovieDesctiptionServiceProtocol
     public func getMovieId(id: Int, completion: @escaping (Result<DescriptionMovieAPI?, Error>) -> ()) {
-        networkService.request(route: .movieId(id: id)) { (data, response, error) in
+        networkService.request(endPoint: .movieId(id: id)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
                 return

@@ -45,11 +45,15 @@ class MainView: UIViewController {
     
     private func bind() {
         viewModel?.menuCollectionViewReloadData = { [weak self] in
-            self?.menuCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.menuCollectionView.reloadData()
+            }
         }
         
         viewModel?.groupCollectionViewReloadData = { [weak self] in
-            self?.groupCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.groupCollectionView.reloadData()
+            }
         }
     }
 }

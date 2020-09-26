@@ -28,5 +28,7 @@ extension MovieResponseAPI: Decodable {
         currentPage = try container.decode(Int.self, forKey: .currentPage)
         totalPage = try container.decode(Int.self, forKey: .totalPage)
         movies = try container.decode([MovieAPI].self, forKey: .movies)
+        
+        print("MovieResponseAPI ok")
     }
 }

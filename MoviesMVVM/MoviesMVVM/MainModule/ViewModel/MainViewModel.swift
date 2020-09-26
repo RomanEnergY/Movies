@@ -32,8 +32,11 @@ class MainViewModel: MainViewModelProtocol {
     public var groups: [Group]? { mainModel?.groups }
     public var selectedGroup: Group? {
         didSet {
-            if selectedGroup != nil {
-                groupCollectionViewReloadData?()
+            if self.selectedGroup != nil && oldValue != selectedGroup {
+                selectedNewGroup()
+                
+            } else {
+                selectedGroup = oldValue
             }
         }
     }
@@ -62,16 +65,6 @@ class MainViewModel: MainViewModelProtocol {
     //MARK: - public func MainViewModelProtocol
     public func initialStartData() {
         selectedGroup = groups?.first
-        
-        movieDataService?.getTrending() { [weak self] mainMovies in
-            guard let self = self,
-                  let mainMovies = mainMovies else { return }
-            self.addMovie(mainMovies)
-            
-            DispatchQueue.main.async {
-                self.menuCollectionViewReloadData?()
-            }
-        }
     }
     
     public func beginBatchFetch(complition: @escaping () -> Void) {
@@ -104,8 +97,25 @@ class MainViewModel: MainViewModelProtocol {
         router.showeDetail(movie: movie)
     }
     
-    //MARK: - fileprivate func
+    //MARK: - internal func
     internal func addMovie(_ mainMovies: [MainModelMovieProtocol]) {
         mainModel?.movies.append(contentsOf: mainMovies)
+    }
+    
+    //MARK: - private func
+    private func selectedNewGroup() {
+        guard let selectedGroup = self.selectedGroup else { return }
+        
+        self.mainModel?.movies = []
+        self.menuCollectionViewReloadData?()
+        
+        movieDataService?.getDataNewGroup(group: selectedGroup) { [weak self] mainMovies in
+            guard let self = self,
+                  let mainMovies = mainMovies else { return }
+            self.addMovie(mainMovies)
+            
+            self.menuCollectionViewReloadData?()
+            self.groupCollectionViewReloadData?()
+        }
     }
 }
