@@ -8,6 +8,11 @@
 
 import UIKit
 
+//MARK: - Enum
+enum MenuCollectionViewCellConst {
+    static let name = "MenuCollectionViewCell"
+}
+
 class MenuCollectionViewCell: UICollectionViewCell {
     //MARK: - IBOutlet
     @IBOutlet weak var imageView: UIImageView!
@@ -26,15 +31,10 @@ class MenuCollectionViewCell: UICollectionViewCell {
             retingView.layer.borderColor = UIColor.yellow.cgColor
             retingView.layer.borderWidth = 1
             retingView.layer.cornerRadius = 10
-//            retingView.layer.masksToBounds = true
         }
     }
     
     //MARK: - override func
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         

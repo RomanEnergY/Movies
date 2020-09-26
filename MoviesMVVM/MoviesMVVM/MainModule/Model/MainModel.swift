@@ -20,10 +20,12 @@ protocol MainModelMovieProtocol {
 
 //MARK: - MainModelProtocol
 protocol MainModelProtocol {
+    var groups: [Group] { get }
     var movies: [MainModelMovieProtocol] { get set }
 }
 
 //MARK: - MainModel: MainModelProtocol
 class MainModel: MainModelProtocol {
+    let groups: [Group] = [.latest, .nowPlaying, .popular, .topRated, .upcoming]
     var movies: [MainModelMovieProtocol] = []
 }

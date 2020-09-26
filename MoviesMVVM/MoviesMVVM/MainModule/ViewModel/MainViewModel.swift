@@ -12,8 +12,11 @@ import Foundation
 protocol MainViewModelProtocol {
     
     //MARK: - public variable
+    var groups: [Group]? { get }
     var movies: [MainModelMovieProtocol]? { get }
-    var collectionViewReloadData: (() -> Void)? { get set }
+    var menuCollectionViewReloadData: (() -> Void)? { get set }
+    var groupCollectionViewReloadData: (() -> Void)? { get set }
+    var selectedGroup: Group? { get set }
     
     //MARK: - public func
     func initialStartData()
@@ -26,8 +29,17 @@ protocol MainViewModelProtocol {
 class MainViewModel: MainViewModelProtocol {
     
     //MARK: - public variable MainViewModelProtocol
+    public var groups: [Group]? { mainModel?.groups }
+    public var selectedGroup: Group? {
+        didSet {
+            if selectedGroup != nil {
+                groupCollectionViewReloadData?()
+            }
+        }
+    }
     public var movies: [MainModelMovieProtocol]? { mainModel?.movies }
-    public var collectionViewReloadData: (() -> Void)?
+    public var menuCollectionViewReloadData: (() -> Void)?
+    public var groupCollectionViewReloadData: (() -> Void)?
     
     //MARK: - private variable
     private var movieDataService: MovieDataServiceProtocol?
@@ -49,13 +61,15 @@ class MainViewModel: MainViewModelProtocol {
     
     //MARK: - public func MainViewModelProtocol
     public func initialStartData() {
+        selectedGroup = groups?.first
+        
         movieDataService?.getTrending() { [weak self] mainMovies in
             guard let self = self,
                   let mainMovies = mainMovies else { return }
             self.addMovie(mainMovies)
             
             DispatchQueue.main.async {
-                self.collectionViewReloadData?()
+                self.menuCollectionViewReloadData?()
             }
         }
     }
@@ -67,7 +81,7 @@ class MainViewModel: MainViewModelProtocol {
             }
             
             DispatchQueue.main.async {
-                self?.collectionViewReloadData?()
+                self?.menuCollectionViewReloadData?()
                 complition()
             }
         })

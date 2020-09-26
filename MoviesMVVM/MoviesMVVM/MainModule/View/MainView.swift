@@ -8,47 +8,48 @@
 
 import UIKit
 
-//MARK: - Enum
-enum MainViewCellConst {
-    static let menuCell = "MenuCollectionViewCell"
-}
-
 //MARK: - MainView: UIViewController
 class MainView: UIViewController {
     //MARK: - IBOutlet
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var groupCollectionView: UICollectionView!
+    @IBOutlet weak var menuCollectionView: UICollectionView!
     
     //MARK: - public var
     public var viewModel: MainViewModelProtocol?
     
     //MARK: - privar var
-    private var router: RouterProtocol?
     private var cachingIndexPathImage: [String: UIImage] = [:]
     private var fetchingMorePage = false
-
+    
     //MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Movies"
         
-        setupCollectionView()
+        setupCollectionView(collectionView: groupCollectionView, identifier: GroupCollectionViewCellConst.name)
+        setupCollectionView(collectionView: menuCollectionView, identifier: MenuCollectionViewCellConst.name)
+        
         bind()
         viewModel?.initialStartData()
     }
     
     //MARK: - private func
-    private func setupCollectionView() {
-        let nib = UINib(nibName: MainViewCellConst.menuCell, bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: MainViewCellConst.menuCell)
+    private func setupCollectionView(collectionView: UICollectionView, identifier: String) {
+        let nib = UINib(nibName: identifier, bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
         
         collectionView.delegate = self
         collectionView.dataSource = self
     }
     
     private func bind() {
-        viewModel?.collectionViewReloadData = { [weak self] in
-            self?.collectionView.reloadData()
+        viewModel?.menuCollectionViewReloadData = { [weak self] in
+            self?.menuCollectionView.reloadData()
+        }
+        
+        viewModel?.groupCollectionViewReloadData = { [weak self] in
+            self?.groupCollectionView.reloadData()
         }
     }
 }
@@ -56,11 +57,52 @@ class MainView: UIViewController {
 //MARK: - UICollectionViewDataSource
 extension MainView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.movies?.count ?? 0
+        var numberOfItems = 0
+        
+        if collectionView == groupCollectionView {
+            numberOfItems = viewModel?.groups?.count ?? 0
+            
+        } else if collectionView == menuCollectionView {
+            numberOfItems = viewModel?.movies?.count ?? 0
+            
+        }
+        
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellConst.menuCell, for: indexPath) as? MenuCollectionViewCell {
+        var cellForItem = UICollectionViewCell()
+        
+        if collectionView == groupCollectionView {
+            cellForItem = createGroupCollectionViewCell(indexPath)
+            
+        } else if collectionView == menuCollectionView {
+            cellForItem = createMenuCollectionViewCell(indexPath)
+            
+        }
+        
+        return cellForItem
+    }
+    
+    //MARK: - private func
+    private func createGroupCollectionViewCell(_ indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = groupCollectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCellConst.name, for: indexPath) as? GroupCollectionViewCell {
+            
+            // устанавливаем данные в ячейку
+            if let group = viewModel?.groups?[indexPath.row] {
+                cell.config(title: group.rawValue, isSelected: viewModel?.selectedGroup == group)
+                
+                return cell
+            }
+        } else {
+            print("Error createGroupCollectionViewCell")
+        }
+        
+        return UICollectionViewCell()
+    }
+    
+    private func createMenuCollectionViewCell(_ indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = menuCollectionView.dequeueReusableCell(withReuseIdentifier: MenuCollectionViewCellConst.name, for: indexPath) as? MenuCollectionViewCell {
             
             if let movies = viewModel?.movies {
                 // устанавливаем данные в ячейку
@@ -81,12 +123,14 @@ extension MainView: UICollectionViewDataSource {
             
             configureCell(cell)
             return cell
+            
+        } else {
+            print("Error createCellForItemMenuCollectionView")
         }
         
         return UICollectionViewCell()
     }
     
-    //MARK: - private func
     private func initialImage(_ iconString: String, _ indexPath: IndexPath, _ cell: MenuCollectionViewCell) {
         viewModel?.getIcon(posterPath: iconString) { [weak self] data in
             if let image = UIImage(data: data) {
@@ -112,17 +156,31 @@ extension MainView: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension MainView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let movie = viewModel?.movies?[indexPath.item] {
-            viewModel?.showeDetail(movie: movie)
+        if collectionView == groupCollectionView {
+            
+            if var viewModel = viewModel {
+                viewModel.selectedGroup = viewModel.groups?[indexPath.row]
+                groupCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            }
+
+        } else if collectionView == menuCollectionView {
+            if let movie = viewModel?.movies?[indexPath.item] {
+                viewModel?.showeDetail(movie: movie)
+            }
         }
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        if (contentHeight - offsetY) < collectionView.frame.height * 2 {
-            beginBatchFetch()
+        if scrollView === groupCollectionView {
+            
+        } else if scrollView === menuCollectionView {
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+            
+            if (contentHeight - offsetY) < menuCollectionView.frame.height * 2 {
+                beginBatchFetch()
+            }
         }
     }
     
@@ -140,18 +198,45 @@ extension MainView: UICollectionViewDelegate {
 //MARK: -MainView: UICollectionViewDelegateFlowLayout
 extension MainView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var size = CGSize()
         
-        let width = UIScreen.main.bounds.width - 20
-        let height = width/2
+        if collectionView == groupCollectionView {
+            if let title = viewModel?.groups?[indexPath.row].rawValue {
+                let width = title.widthOfString(usingFont: UIFont.systemFont(ofSize: 17))
+                size = CGSize(width: width + 20, height: 30)
+            }
+
+        } else if collectionView == menuCollectionView {
+            let width = UIScreen.main.bounds.width - 20.0
+            size = CGSize(width: width, height: width/2)
+        }
         
-        return CGSize(width: width, height: height)
+        return size
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        var minimumLine = 0
+        
+        if collectionView == groupCollectionView {
+            
+            
+        } else if collectionView == menuCollectionView {
+            minimumLine = 10
+        }
+        
+        return CGFloat(minimumLine)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        var edgeInsets = UIEdgeInsets()
+        
+        if collectionView == groupCollectionView {
+            edgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+
+        } else if collectionView == menuCollectionView {
+            edgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        }
+        
+        return edgeInsets
     }
 }
