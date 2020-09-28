@@ -47,7 +47,7 @@
 		7C2C579A251DFAB300CF32A1 /* GroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C2C5798251DFAB300CF32A1 /* GroupCollectionViewCell.xib */; };
 		7C2C57A8251E34EC00CF32A1 /* String+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57A7251E34EC00CF32A1 /* String+Extention.swift */; };
 		7C2C57AC251E3A8900CF32A1 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AB251E3A8900CF32A1 /* Group.swift */; };
-		7C2C57B0251F25FC00CF32A1 /* AdapterGroupToEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AF251F25FC00CF32A1 /* AdapterGroupToEndPoint.swift */; };
+		7C2C57B0251F25FC00CF32A1 /* GroupToEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */; };
 		7CCC4B1B2514BE3300DCD015 /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B192514BE3300DCD015 /* MenuCollectionViewCell.swift */; };
 		7CCC4B1C2514BE3300DCD015 /* MenuCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CCC4B1A2514BE3300DCD015 /* MenuCollectionViewCell.xib */; };
 		7CCC4B352514CED700DCD015 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B332514CED700DCD015 /* MainView.swift */; };
@@ -115,7 +115,7 @@
 		7C2C5798251DFAB300CF32A1 /* GroupCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupCollectionViewCell.xib; sourceTree = "<group>"; };
 		7C2C57A7251E34EC00CF32A1 /* String+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extention.swift"; sourceTree = "<group>"; };
 		7C2C57AB251E3A8900CF32A1 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
-		7C2C57AF251F25FC00CF32A1 /* AdapterGroupToEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterGroupToEndPoint.swift; sourceTree = "<group>"; };
+		7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupToEndPoint.swift; sourceTree = "<group>"; };
 		7CCC4B192514BE3300DCD015 /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewCell.swift; sourceTree = "<group>"; };
 		7CCC4B1A2514BE3300DCD015 /* MenuCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCollectionViewCell.xib; sourceTree = "<group>"; };
 		7CCC4B332514CED700DCD015 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -282,10 +282,10 @@
 			isa = PBXGroup;
 			children = (
 				7CCC4B3C2514E21D00DCD015 /* NetworkData.swift */,
-				7C2C57AF251F25FC00CF32A1 /* AdapterGroupToEndPoint.swift */,
+				7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */,
+				7C2C05EE251079B400F3A238 /* Service */,
 				7C2C05E5251079B400F3A238 /* Encoding */,
 				7C2C05EB251079B400F3A238 /* EndPoint */,
-				7C2C05EE251079B400F3A238 /* Service */,
 				7C2C05F5251079B400F3A238 /* README.strings */,
 			);
 			path = Networking;
@@ -514,7 +514,7 @@
 				7CCC4B3D2514E21D00DCD015 /* NetworkData.swift in Sources */,
 				7C2C061225109F9F00F3A238 /* ProductionCountrieAPI.swift in Sources */,
 				7C2C05FC251079B500F3A238 /* ImageTableViewCell.swift in Sources */,
-				7C2C57B0251F25FC00CF32A1 /* AdapterGroupToEndPoint.swift in Sources */,
+				7C2C57B0251F25FC00CF32A1 /* GroupToEndPoint.swift in Sources */,
 				7C2C061F251121C400F3A238 /* MovieDesctiptionService.swift in Sources */,
 				7CCC4B1B2514BE3300DCD015 /* MenuCollectionViewCell.swift in Sources */,
 				7C2C5799251DFAB300CF32A1 /* GroupCollectionViewCell.swift in Sources */,

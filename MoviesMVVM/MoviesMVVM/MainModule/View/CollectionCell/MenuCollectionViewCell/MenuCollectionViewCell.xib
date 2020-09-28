@@ -77,7 +77,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="hwP-AU-vFn" firstAttribute="top" secondItem="WAI-dU-weu" secondAttribute="bottom" id="1DS-IP-f3n"/>
                             <constraint firstAttribute="trailing" secondItem="hwP-AU-vFn" secondAttribute="trailing" constant="16" id="3DW-Xo-Qol"/>
@@ -114,15 +114,12 @@
                 <outlet property="retingView" destination="oUg-F5-dba" id="Hbf-OU-r1I"/>
                 <outlet property="viewCell" destination="wsy-Kc-jlN" id="bPw-o2-16T"/>
             </connections>
-            <point key="canvasLocation" x="221.73913043478262" y="100.78125"/>
+            <point key="canvasLocation" x="1" y="-20"/>
         </collectionViewCell>
     </objects>
     <resources>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

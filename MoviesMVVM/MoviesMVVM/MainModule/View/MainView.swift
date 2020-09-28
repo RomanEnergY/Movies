@@ -150,9 +150,9 @@ extension MainView: UICollectionViewDataSource {
     
     private func configureCell(_ cell: UICollectionViewCell) {
         cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = .zero
+        cell.layer.shadowOffset = CGSize(width: 5, height: 5)
         cell.layer.shadowRadius = 10.0
-        cell.layer.shadowOpacity = 0.4
+        cell.layer.shadowOpacity = 0.9
         cell.layer.masksToBounds = false
     }
 }

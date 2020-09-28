@@ -59,7 +59,6 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
                     try self.configureParameters(bodyPatameters: bodyPatameters, urlParameters: urlParameters, request: &request)
                 }
                 
-                print("request", request)
                 return request
                 
             } catch {

@@ -37,7 +37,7 @@ final class MovieDataService: MovieDataServiceProtocol {
     //MARK: - private func
     private func getDataGroup(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
         guard let group = currentGroup else { return }
-        let endPoint = AdapterGroupToEndPoint.get(group, page: currentPage)
+        let endPoint = GroupToEndPoint.adapter(group, page: currentPage)
         
         networkService.request(endPoint: endPoint) { (data, response, error) in
             if let error = error {

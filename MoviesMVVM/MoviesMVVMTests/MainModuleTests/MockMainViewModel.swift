@@ -23,12 +23,12 @@ class MockMainViewModel: MainViewModel {
     
     override func initialStartData() {
         addMovie([MockMainViewModelConst.movieStartData])
-        collectionViewReloadData?()
+        menuCollectionViewReloadData?()
     }
     
     override func beginBatchFetch(complition: @escaping () -> Void) {
         addMovie(MockMainViewModelConst.moviesData)
-        collectionViewReloadData?()
+        menuCollectionViewReloadData?()
         complition()
     }
     

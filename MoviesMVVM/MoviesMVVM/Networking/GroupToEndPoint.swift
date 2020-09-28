@@ -8,8 +8,8 @@
 
 import Foundation
 
-class AdapterGroupToEndPoint {
-    public static func get(_ group: Group, page: Int) -> MovieDataEndPoint {
+class GroupToEndPoint {
+    public static func adapter(_ group: Group, page: Int) -> MovieDataEndPoint {
         switch group {
         case .trending:
             return MovieDataEndPoint.trending(timeWindows: .day, page: page)
