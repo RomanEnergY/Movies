@@ -25,6 +25,6 @@ If you are a movie fan, welcome to Movies GO
 
 ## Screenshots
 **iPhone 11** <br />
-<img src="./iPhone11_1.png" width="200" height="412" />
-<img src="./iPhone11_2.png" width="200" height="412" />
-<img src="./iPhone11_3.png" width="200" height="412" />
+<img src="./iPhone11_1.png" width="250" height="515" />
+<img src="./iPhone11_2.png" width="250" height="515" />
+<img src="./iPhone11_3.png" width="250" height="515" />
