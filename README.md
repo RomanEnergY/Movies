@@ -34,3 +34,11 @@ If you are a movie fan, welcome to Movies GO
 <img src="./iPhone11_4.png" width="275" height="595" />
 <img src="./iPhone11_5.png" width="275" height="595" />
 <img src="./iPhone11_6.png" width="275" height="595" />
+
+## Improvement plans
+Image caching
+Search string
+Localization app
+
+## Date changes file README.md
+2020/10/15
