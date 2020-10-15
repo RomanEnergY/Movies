@@ -25,15 +25,15 @@ If you are a movie fan, welcome to Movies GO
 
 ## Screenshots MainView
 **iPhone 11** <br />
-<img src="./iPhone11_1.png" width="275" height="595" />
-<img src="./iPhone11_2.png" width="275" height="595" />
-<img src="./iPhone11_3.png" width="275" height="595" />
+<img src="./Screenshots/iPhone11_1.png" width="275" height="595" />
+<img src="./Screenshots/iPhone11_2.png" width="275" height="595" />
+<img src="./Screenshots/iPhone11_3.png" width="275" height="595" />
 
 ## Screenshots DescriptionView
 **iPhone 11** <br />
-<img src="./iPhone11_4.png" width="275" height="595" />
-<img src="./iPhone11_5.png" width="275" height="595" />
-<img src="./iPhone11_6.png" width="275" height="595" />
+<img src="./Screenshots/iPhone11_4.png" width="275" height="595" />
+<img src="./Screenshots/iPhone11_5.png" width="275" height="595" />
+<img src="./Screenshots/iPhone11_6.png" width="275" height="595" />
 
 ## Improvement plans
 - Image caching
