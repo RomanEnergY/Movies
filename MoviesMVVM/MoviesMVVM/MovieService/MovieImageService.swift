@@ -25,6 +25,9 @@ final class MovieImageService: MovieImageServiceProtocol {
 
     //MARK: - public func MovieImageServiceProtocol
     public func getIcon(posterPath: String, completion: @escaping (Result<Data?, Error>) -> Void) {
+        
+        
+        
         routerImageMovie.request(endPoint: .image(whith: MovieImageServiceConst.whith, posterPath: posterPath)) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
