@@ -18,7 +18,7 @@ If you are a movie fan, welcome to Movies GO
 - URLSession
 - Decodable
 - Public API Themoviedb.org
-- Кэширование UIImage in Dictionary to menuCollectionViewCell
+- Data Caching in NSCache for ImageService
 - Continuous scrolling to menuCollectionView
 - SOLID
 - Unit test
