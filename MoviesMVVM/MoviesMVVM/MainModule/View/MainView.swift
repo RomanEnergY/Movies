@@ -18,7 +18,6 @@ class MainView: UIViewController {
     public var viewModel: MainViewModelProtocol?
     
     //MARK: - privar var
-    private var cachingIndexPathImage: [String: UIImage] = [:]
     private var fetchingMorePage = false
     
     //MARK: - override func
@@ -116,12 +115,7 @@ extension MainView: UICollectionViewDataSource {
                 // устанавливаем картинку в ячейку
                 if let iconString = movie.iconString {
                     // проверяем наличие кэшированной картинки
-                    if let cachingImage = cachingIndexPathImage[iconString] {
-                        cell.setupImageCell(image: cachingImage)
-                        
-                    } else {
-                        initialImage(iconString, indexPath, cell)
-                    }
+                    initialImage(iconString, indexPath, cell)
                 }
             }
             
@@ -136,11 +130,8 @@ extension MainView: UICollectionViewDataSource {
     }
     
     private func initialImage(_ iconString: String, _ indexPath: IndexPath, _ cell: MenuCollectionViewCell) {
-        viewModel?.getIcon(posterPath: iconString) { [weak self] data in
+        viewModel?.getIcon(posterPath: iconString) { data in
             if let image = UIImage(data: data) {
-                // кэшируем картинку
-                self?.cachingIndexPathImage[iconString] = UIImage(data: data)
-                
                 DispatchQueue.main.async {
                     cell.setupImageCell(image: image)
                 }
