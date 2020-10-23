@@ -35,14 +35,6 @@ class MenuCollectionView: UICollectionView {
         dataSource = self
         delegate = self
     }
-    
-    private func getIcon(_ iconString: String, complition: @escaping (UIImage) -> Void) -> Void {
-        initialImage?(iconString) { data in
-            if let image = UIImage(data: data) {
-                complition(image)
-            }
-        }
-    }
 }
 
 extension MenuCollectionView: UICollectionViewDataSource {
@@ -60,9 +52,11 @@ extension MenuCollectionView: UICollectionViewDataSource {
                 
                 // устанавливаем картинку в ячейку
                 if let iconString = movie.iconString {
-                    getIcon(iconString) { image in
-                        DispatchQueue.main.async {
-                            cell.setupImageCell(image: image)
+                    initialImage?(iconString) { data in
+                        if let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                cell.setupImageCell(image: image)
+                            }
                         }
                     }
                 }
@@ -75,7 +69,6 @@ extension MenuCollectionView: UICollectionViewDataSource {
         }
         
         return UICollectionViewCell()
-        
     }
 }
 
