@@ -11,7 +11,7 @@ import UIKit
 //MARK: - MainView: UIViewController
 class MainView: UIViewController {
     //MARK: - IBOutlet
-    @IBOutlet weak var groupCollectionView: UICollectionView!
+    @IBOutlet weak var groupCollectionView: GroupCollectionView!
     @IBOutlet weak var menuCollectionView: MenuCollectionView!
     
     //MARK: - public var
@@ -24,20 +24,13 @@ class MainView: UIViewController {
         title = "MoviesGO"
         
         bindViewModel()
-        bindMenuCollectionView()
         bindGroupCollectionView()
+        bindMenuCollectionView()
+        
         viewModel?.initialStartData()
     }
     
     //MARK: - private func
-    private func setupCollectionView(collectionView: UICollectionView, identifier: String) {
-        let nib = UINib(nibName: identifier, bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: identifier)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
     private func bindViewModel() {
         viewModel?.menuCollectionViewReloadData = { [weak self] in
             DispatchQueue.main.async {
@@ -76,61 +69,16 @@ class MainView: UIViewController {
     }
     
     private func bindGroupCollectionView() {
-        let nib = UINib(nibName: GroupCollectionViewCellConst.name, bundle: nil)
-        groupCollectionView.register(nib, forCellWithReuseIdentifier: GroupCollectionViewCellConst.name)
-        
-        groupCollectionView.delegate = self
-        groupCollectionView.dataSource = self
-    }
-}
-
-//MARK: - UICollectionViewDataSource
-extension MainView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.groups?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = groupCollectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCellConst.name, for: indexPath) as? GroupCollectionViewCell {
-            
-            // устанавливаем данные в ячейку
-            if let group = viewModel?.groups?[indexPath.row] {
-                cell.config(title: group.rawValue, isSelected: viewModel?.selectedGroup == group)
-                
-                return cell
-            }
-        } else {
-            print("Error createGroupCollectionViewCell")
+        groupCollectionView.groups = { [weak self] in
+            self?.viewModel?.groups ?? []
         }
         
-        return UICollectionViewCell()
-    }
-}
-
-//MARK: - UICollectionViewDelegate
-extension MainView: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if var viewModel = viewModel {
-            viewModel.selectedGroup = viewModel.groups?[indexPath.row]
-            groupCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
-    }
-}
-
-//MARK: -MainView: UICollectionViewDelegateFlowLayout
-extension MainView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var size = CGSize()
-        
-        if let title = viewModel?.groups?[indexPath.row].rawValue {
-            let width = title.widthOfString(usingFont: UIFont.systemFont(ofSize: 17))
-            size = CGSize(width: width + 20, height: 30)
+        groupCollectionView.setSelectedGroup = { [weak self] group in
+            self?.viewModel?.selectedGroup = group
         }
         
-        return size
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        groupCollectionView.getSelectedGroup = { [weak self] in
+            self?.viewModel?.selectedGroup ?? Group.nowPlaying
+        }
     }
 }
