@@ -43,6 +43,8 @@ class MenuCollectionViewCell: UICollectionViewCell {
         ratingLabel.text = ""
         releaseDateLabel.text = ""
         overviewLabel.text = ""
+        
+        configureCell()
     }
     
     //MARK: - public func
@@ -57,6 +59,14 @@ class MenuCollectionViewCell: UICollectionViewCell {
     
     public func setupImageCell(image: UIImage) {
         imageView.image = image
+    }
+    
+    private func configureCell() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+        layer.shadowRadius = 10.0
+        layer.shadowOpacity = 0.9
+        layer.masksToBounds = false
     }
     
     //MARK: - private func

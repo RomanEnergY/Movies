@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainView" customModule="MoviesMVVM" customModuleProvider="target">
             <connections>
                 <outlet property="groupCollectionView" destination="wr2-a1-XhM" id="7zN-4P-3Mr"/>
-                <outlet property="menuCollectionView" destination="HS1-aL-ihY" id="GDF-05-h8Q"/>
+                <outlet property="menuCollectionView" destination="HS1-aL-ihY" id="szE-Ck-W82"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,7 +37,7 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundMainView" translatesAutoresizingMaskIntoConstraints="NO" id="qxx-oB-YFy">
                     <rect key="frame" x="0.0" y="84" width="414" height="778"/>
                 </imageView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HS1-aL-ihY" userLabel="MenuCollectionView">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HS1-aL-ihY" userLabel="MenuCollectionView" customClass="MenuCollectionView" customModule="MoviesMVVM" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="84" width="414" height="778"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

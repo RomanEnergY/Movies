@@ -21,6 +21,7 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
         let session = URLSession.shared
         do {
             if let request = try self.buildRequest(from: endPoint) {
+                print("endPoint", endPoint)
                 urlSessionTask = session.dataTask(with: request, completionHandler: { (data, response, error) in
                     completion(data, response, error)
                 })
