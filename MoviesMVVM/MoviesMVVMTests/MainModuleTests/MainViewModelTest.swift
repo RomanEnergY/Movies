@@ -59,7 +59,17 @@ class MainViewModelTest: XCTestCase {
     
     func testAddData() {
         mainView?.viewModel?.initialStartData() // add 1 movie
-        mainView?.beginBatchFetch() // add 2 movie, total 3 movie
+        let menuCollectionView = MenuCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+        mainView?.menuCollectionView = menuCollectionView
+        mainView?.menuCollectionView?.beginBatchFetch = { [weak self] complition in
+            self?.mainView?.viewModel?.beginBatchFetch {
+                complition()
+            }
+        }
+        
+        mainView?.menuCollectionView?.beginBatchFetch?() {
+            print("fetchingMorePage")
+        } // add 2 movie, total 3 movie
         
         let moviesData = MockMainViewModelConst.moviesData
         
