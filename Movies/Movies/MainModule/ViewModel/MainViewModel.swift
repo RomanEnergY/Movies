@@ -94,7 +94,7 @@ class MainViewModel: MainViewModelProtocol {
 	}
 	
 	public func showeDetail(movie: MainModelMovieProtocol) {
-		router.showeDetail(movie: movie)
+		router.showDetailViewMovie(movie: movie)
 	}
 	
 	//MARK: - internal func

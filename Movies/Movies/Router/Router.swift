@@ -8,46 +8,78 @@
 
 import UIKit
 
-protocol MainRouterProtocol {
-	var navigationController: UINavigationController? { get set }
-	var assemblyBuilderProtocol: AssemblyBuilderProtocol? { get set }
-}
-
-protocol RouterProtocol: MainRouterProtocol {
+protocol RouterProtocol {
 	func initialViewController()
-	func showeDetail(movie: MainModelMovieProtocol)
+	func showDetailViewMovie(movie: MainModelMovieProtocol)
+	
+	func go(module: ModuleBuilder, mode: RouterPresentationMode)
+	
 	func popToRoot()
 }
 
+protocol LoggerProtocol {
+	func log(_ text: String)
+}
+
+struct LoggerConsole: LoggerProtocol {
+	func log(_ text: String) {
+		print(text)
+	}
+}
+
 class Router: RouterProtocol {
-	var navigationController: UINavigationController?
-	var assemblyBuilderProtocol: AssemblyBuilderProtocol?
+	let logger: LoggerProtocol
+	let navigationController: BaseNavigationController
+	let assemblyBuilderProtocol: AssemblyBuilderProtocol?
 	
-	init(navigationController: UINavigationController? = nil, assemblyBuilderProtocol: AssemblyBuilderProtocol? = nil) {
+	init(logger: LoggerProtocol = DI.container.resolve(LoggerProtocol.self),
+		 navigationController: BaseNavigationController = DI.container.resolve(BaseNavigationController.self),
+		 assemblyBuilderProtocol: AssemblyBuilderProtocol = DI.container.resolve(AssemblyBuilderProtocol.self)
+	) {
+		self.logger = logger
 		self.navigationController = navigationController
 		self.assemblyBuilderProtocol = assemblyBuilderProtocol
 	}
 	
 	func initialViewController() {
-		guard let navigationController = navigationController,
-			  let mainViewController = assemblyBuilderProtocol?.createModuleMain(router: self)
+		guard let mainViewController = assemblyBuilderProtocol?.createModuleMain(router: self)
 		else { return }
 		
 		navigationController.viewControllers = [mainViewController]
 	}
 	
-	func showeDetail(movie: MainModelMovieProtocol) {
-		guard let navigationController = navigationController,
-			  let detailViewController = assemblyBuilderProtocol?.createModuleDescription(router: self, movie: movie)
+	func showDetailViewMovie(movie: MainModelMovieProtocol) {
+		guard let detailViewController = assemblyBuilderProtocol?.createModuleDescription(router: self, movie: movie)
 		else { return }
 		
 		navigationController.pushViewController(detailViewController, animated: true)
 	}
 	
-	func popToRoot() {
-		guard let navigationController = navigationController
-		else { return }
+	
+	func go(module: ModuleBuilder, mode: RouterPresentationMode) {
+		let controller = module.build()
 		
+		switch mode {
+			case .modal(let animated):
+				guard let sourceController = navigationController.viewControllers.last else {
+					logger.log("\(#fileID): \(#function) - navigationController.viewControllers.last == nil")
+					return
+				}
+				
+				sourceController.present(controller, animated: animated)
+				
+			case .modalWithNavigation(let animated):
+				break
+			case .push(let animated):
+				break
+			case let .replaceController(with, animated):
+				break
+			case .replaceAll(let animated):
+				break
+		}
+	}
+	
+	func popToRoot() {
 		navigationController.popToRootViewController(animated: true)
 	}
 }
