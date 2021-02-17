@@ -9,7 +9,7 @@
 import Foundation
 
 /// Перечисление режимов роутера
-public enum RouterPresentationMode {
+enum RouterPresentationMode {
 	
 	///Стандартный *push* переход с анимацией по умолчанию
 	///

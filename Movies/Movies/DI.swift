@@ -16,7 +16,11 @@ public enum ProjectDI {
 
 	/// Регистрация Core - сущностей
 	public static func configureApp() {
-		container.registerSingle(LoggerProtocol.self) { _ in LoggerConsole() }
+		container.registerSingle(LoggerProtocol.self) { _ in
+			LoggerConsole(logLevels: LogLevel.allCases,
+						  contextLevels: [.logLevel, .message, .context])
+		}
+		container.registerSingle(AppUserSettingsProtocol.self) { _ in AppUserDefaultsStorage() }
 		container.registerSingle(AppParameterProtocol.self) { _ in AppParameter() }
 		container.registerSingle(AssemblyBuilderProtocol.self) { _ in AssemblyBuilder() }
 		container.registerSingle(RouterProtocol.self) { _ in Router() }

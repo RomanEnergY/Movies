@@ -19,15 +19,7 @@ final class BeginningInteractor: BeginningBusinessLogic {
 	// MARK: - Private variables
 	
 	private let presenter: BeginningPresentationLogic
-	private let appParameter: AppParameterProtocol
-	private var isAppPreviousVisit: Bool {
-		get {
-			appParameter.get(key: AppParameterKey.isBeginningViewShowedOnce, type: Bool.self) == true
-		}
-		set {
-			appParameter.set(key: AppParameterKey.isBeginningViewShowedOnce, value: newValue)
-		}
-	}
+	private var appParameter: AppParameterProtocol
 	
 	// MARK: - Init
 	
@@ -40,13 +32,13 @@ final class BeginningInteractor: BeginningBusinessLogic {
 	}
 
 	func showInitialState() {
-		if isAppPreviousVisit {
+		if appParameter.isBeginningViewShowedOnce == true {
 			goNextView()
 		}
 	}
 
 	func setBeginningShowedOnce() {
-		isAppPreviousVisit = true
+		appParameter.isBeginningViewShowedOnce = true
 		goNextView()
 	}
 	

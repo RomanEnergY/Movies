@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol ModuleBuilder: class {
+protocol ModuleBuilder: class {
 	init()
 	func build() -> BaseViewController
 }

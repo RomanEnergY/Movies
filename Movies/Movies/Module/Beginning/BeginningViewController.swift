@@ -28,6 +28,7 @@ final class BeginningViewController: BaseViewController {
 	init(interactor: BeginningBusinessLogic) {
 		self.interactor = interactor
 		super.init()
+		isHiddenNavigationBar = true
 	}
 
 	required init?(coder aDecoder: NSCoder) {

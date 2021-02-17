@@ -10,6 +10,9 @@ import UIKit
 
 class BaseViewController: UIViewController {
 	
+	/// Свойство контролирующее видимость навигейшн бара, если true навигейшн бар будет скрыт
+	var isHiddenNavigationBar = false
+	
 	// MARK: - private variable
 	
 	private let logger: LoggerProtocol
@@ -23,5 +26,15 @@ class BaseViewController: UIViewController {
 	
 	required public init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override open func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(isHiddenNavigationBar, animated: true)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		logger.log(.debug, "viewDidAppear: \(self)")
 	}
 }

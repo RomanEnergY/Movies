@@ -14,21 +14,15 @@ protocol RouterProtocol {
 	
 	func go(module: ModuleBuilder, mode: RouterPresentationMode)
 	
+	func create(_ window: UIWindow?)
 	func popToRoot()
 }
 
-protocol LoggerProtocol {
-	func log(_ text: String)
-}
-
-struct LoggerConsole: LoggerProtocol {
-	func log(_ text: String) {
-		print(text)
-	}
-}
-
 class Router: RouterProtocol {
+	private var window: UIWindow?
+	public var currentController: BaseViewController?
 	let logger: LoggerProtocol
+	
 	let navigationController: BaseNavigationController
 	let assemblyBuilderProtocol: AssemblyBuilderProtocol?
 	
@@ -62,7 +56,7 @@ class Router: RouterProtocol {
 		switch mode {
 			case .modal(let animated):
 				guard let sourceController = navigationController.viewControllers.last else {
-					logger.log("\(#fileID): \(#function) - navigationController.viewControllers.last == nil")
+					logger.log(.error, "\(#fileID): \(#function) - navigationController.viewControllers.last == nil")
 					return
 				}
 				
@@ -70,13 +64,35 @@ class Router: RouterProtocol {
 				
 			case .modalWithNavigation(let animated):
 				break
+				
 			case .push(let animated):
-				break
+				guard let navigationController = window?.rootViewController as? BaseNavigationController else {
+					logger.log(.error, "\(#fileID): \(#function) - error not BaseNavigationController")
+					return
+				}
+				
+				currentController = controller
+				navigationController.pushViewController(controller, animated: animated)
+				
 			case let .replaceController(with, animated):
 				break
 			case .replaceAll(let animated):
 				break
 		}
+	}
+	
+	/// Создает инстанс главного окна приложения и инициализирует первичный экран связанный с переданным 'BaseViewController'
+	/// - Parameters:
+	///		- app: инстанс хрянящий экземпляр главного окна приложения. В данной роли выступает AppDelegate
+	public func create(_ window: UIWindow?) {
+		self.window = window
+		self.window?.backgroundColor = UIColor.white
+		
+		let rootViewController = BeginningBuilder().build()
+		self.window?.rootViewController = BaseNavigationController(rootViewController: rootViewController)
+		currentController = rootViewController
+		
+		self.window?.makeKeyAndVisible()
 	}
 	
 	func popToRoot() {

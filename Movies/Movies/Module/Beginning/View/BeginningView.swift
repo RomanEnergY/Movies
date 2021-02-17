@@ -19,6 +19,17 @@ final class BeginningView: BaseView {
 	override func configure() {
 		super.configure()
 		
+		let label =  UILabel()
+		label.text = "BeginningView"
+		label.frame = CGRect(origin: center, size: CGSize(width: 200, height: 20))
+		
+		let button = UIButton(type: .system)
+		button.setTitle("Send", for: .normal)
+		button.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
+		button.frame = CGRect(origin: CGPoint(x: label.frame.minX, y: label.frame.maxY + 10), size: CGSize(width: 100, height: 20))
+		
+		addSubview(label)
+		addSubview(button)
 	}
 
 	override func addSubviews() {
