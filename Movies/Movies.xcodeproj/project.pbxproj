@@ -66,6 +66,10 @@
 		7C50860C25DC5186005ACD25 /* BeginningDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C50860525DC5186005ACD25 /* BeginningDataFlow.swift */; };
 		7C50860D25DC5186005ACD25 /* BeginningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C50860625DC5186005ACD25 /* BeginningViewController.swift */; };
 		7C50860E25DC5186005ACD25 /* BeginningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C50860825DC5186005ACD25 /* BeginningView.swift */; };
+		7C586F1625DEEE1E0079FA9A /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F1525DEEE1E0079FA9A /* BaseButton.swift */; };
+		7C586F1A25DF014D0079FA9A /* Dev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F1925DF014D0079FA9A /* Dev.swift */; };
+		7C586F2025DF035E0079FA9A /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F1F25DF035E0079FA9A /* ColorType.swift */; };
+		7C586F2425DF057C0079FA9A /* UIColor+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F2325DF057C0079FA9A /* UIColor+Extention.swift */; };
 		7C81CF6625DD4FB800AA7790 /* AppParameterStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81CF6525DD4FB800AA7790 /* AppParameterStorage.swift */; };
 		7C81CF6A25DD59E400AA7790 /* AppParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81CF6925DD59E400AA7790 /* AppParameter.swift */; };
 		7CA22F9D25DC1F4C0037CEFF /* RouterPresentationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA22F9C25DC1F4C0037CEFF /* RouterPresentationMode.swift */; };
@@ -163,6 +167,10 @@
 		7C50860525DC5186005ACD25 /* BeginningDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeginningDataFlow.swift; sourceTree = "<group>"; };
 		7C50860625DC5186005ACD25 /* BeginningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeginningViewController.swift; sourceTree = "<group>"; };
 		7C50860825DC5186005ACD25 /* BeginningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeginningView.swift; sourceTree = "<group>"; };
+		7C586F1525DEEE1E0079FA9A /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		7C586F1925DF014D0079FA9A /* Dev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dev.swift; sourceTree = "<group>"; };
+		7C586F1F25DF035E0079FA9A /* ColorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
+		7C586F2325DF057C0079FA9A /* UIColor+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extention.swift"; sourceTree = "<group>"; };
 		7C81CF6525DD4FB800AA7790 /* AppParameterStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppParameterStorage.swift; sourceTree = "<group>"; };
 		7C81CF6925DD59E400AA7790 /* AppParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppParameter.swift; sourceTree = "<group>"; };
 		7CA22F9C25DC1F4C0037CEFF /* RouterPresentationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterPresentationMode.swift; sourceTree = "<group>"; };
@@ -522,17 +530,36 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		7C586F0F25DEECC30079FA9A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7CBA3F1D25DC08EE00B62876 /* BaseViewController.swift */,
+				7C5085E525DC3087005ACD25 /* BaseNavigationController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7C586F1225DEED170079FA9A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7C26447525DC5572002FDBDE /* BaseView.swift */,
+				7C586F1525DEEE1E0079FA9A /* BaseButton.swift */,
+				7C586F1F25DF035E0079FA9A /* ColorType.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7CBA3EBA25DBE1EF00B62876 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7C586F1925DF014D0079FA9A /* Dev.swift */,
+				7CBA3F2A25DC0A0A00B62876 /* ModuleBuilder.swift */,
+				7CBA3EE425DBE55700B62876 /* Extensions */,
 				7C1DB40325DDB130006D3D16 /* Logger */,
 				7C26448125DC5B26002FDBDE /* AppParameter */,
-				7CBA3F2A25DC0A0A00B62876 /* ModuleBuilder.swift */,
-				7CBA3F1D25DC08EE00B62876 /* BaseViewController.swift */,
-				7C26447525DC5572002FDBDE /* BaseView.swift */,
-				7C5085E525DC3087005ACD25 /* BaseNavigationController.swift */,
-				7CBA3EE425DBE55700B62876 /* Extensions */,
 				7CBA3F2725DC096E00B62876 /* AppNavigator */,
+				7C586F0F25DEECC30079FA9A /* Controllers */,
+				7C586F1225DEED170079FA9A /* View */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -552,6 +579,7 @@
 			children = (
 				7CBA3EE525DBE58600B62876 /* Array+Extension.swift */,
 				7C2C57A7251E34EC00CF32A1 /* String+Extention.swift */,
+				7C586F2325DF057C0079FA9A /* UIColor+Extention.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -690,6 +718,7 @@
 				7C1DB40925DDC516006D3D16 /* LoggerConsole.swift in Sources */,
 				7C2C060B251079B500F3A238 /* EndPointProtocol.swift in Sources */,
 				7C2C05FA251079B500F3A238 /* DescriptionViewModel.swift in Sources */,
+				7C586F1A25DF014D0079FA9A /* Dev.swift in Sources */,
 				7C2C05F6251079B500F3A238 /* MainViewModel.swift in Sources */,
 				7C5085FA25DC4C08005ACD25 /* DescriptionViewController.swift in Sources */,
 				7C2C062C2512BCAF00F3A238 /* DescriptionMovieAPI + Extention.swift in Sources */,
@@ -707,6 +736,7 @@
 				7C2C05FB251079B500F3A238 /* DescriptionMovieAPI.swift in Sources */,
 				7C2C05B7251078D300F3A238 /* MoviesMVVM.xcdatamodeld in Sources */,
 				7C50860B25DC5186005ACD25 /* BeginningBuilder.swift in Sources */,
+				7C586F2425DF057C0079FA9A /* UIColor+Extention.swift in Sources */,
 				7C2C57A8251E34EC00CF32A1 /* String+Extention.swift in Sources */,
 				7C2C061025109F8100F3A238 /* GenreAPI.swift in Sources */,
 				7CBA3EB725DBE15500B62876 /* DI.swift in Sources */,
@@ -714,6 +744,7 @@
 				7C2C06192511121A00F3A238 /* MovieDataService.swift in Sources */,
 				7C2C06322513C47300F3A238 /* Router.swift in Sources */,
 				7C2C0601251079B500F3A238 /* URLParameterEncoder.swift in Sources */,
+				7C586F2025DF035E0079FA9A /* ColorType.swift in Sources */,
 				7C2C05F7251079B500F3A238 /* MovieAPI.swift in Sources */,
 				7CBA3F1E25DC08EE00B62876 /* BaseViewController.swift in Sources */,
 				7C2C06282512AB6800F3A238 /* DescriptionModel.swift in Sources */,
@@ -745,6 +776,7 @@
 				7C2C0607251079B500F3A238 /* HTTPTask.swift in Sources */,
 				7CBA3F2425DC095F00B62876 /* RouterDismissionMode.swift in Sources */,
 				7C2C0608251079B500F3A238 /* HTTPMethod.swift in Sources */,
+				7C586F1625DEEE1E0079FA9A /* BaseButton.swift in Sources */,
 				7C26447625DC5572002FDBDE /* BaseView.swift in Sources */,
 				7C2C060A251079B500F3A238 /* HTTPHeaders.swift in Sources */,
 				7C2C0605251079B500F3A238 /* MovieDataEndPoint.swift in Sources */,

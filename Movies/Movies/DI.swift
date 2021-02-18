@@ -18,7 +18,7 @@ public enum ProjectDI {
 	public static func configureApp() {
 		container.registerSingle(LoggerProtocol.self) { _ in
 			LoggerConsole(logLevels: LogLevel.allCases,
-						  contextLevels: [.logLevel, .message, .context])
+						  contextLevels: [.logLevel, .message, .context, .fileAndLine])
 		}
 		container.registerSingle(AppUserSettingsProtocol.self) { _ in AppUserDefaultsStorage() }
 		container.registerSingle(AppParameterProtocol.self) { _ in AppParameter() }

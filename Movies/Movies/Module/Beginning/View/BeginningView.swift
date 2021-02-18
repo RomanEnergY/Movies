@@ -23,7 +23,7 @@ final class BeginningView: BaseView {
 		label.text = "BeginningView"
 		label.frame = CGRect(origin: center, size: CGSize(width: 200, height: 20))
 		
-		let button = UIButton(type: .system)
+		let button = Dev.Button.create(devType: .regular)
 		button.setTitle("Send", for: .normal)
 		button.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
 		button.frame = CGRect(origin: CGPoint(x: label.frame.minX, y: label.frame.maxY + 10), size: CGSize(width: 100, height: 20))

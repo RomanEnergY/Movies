@@ -26,4 +26,18 @@ extension String {
 		let fontAttributes = [NSAttributedString.Key.font: font]
 		return (self as NSString).size(withAttributes: fontAttributes)
 	}
+	
+	func transformToHexCode() -> String? {
+		var hexCode: String = trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+		if (hexCode.hasPrefix("#")) {
+			hexCode.remove(at: hexCode.startIndex)
+		}
+		
+		if ((hexCode.count) != 6) {
+			return nil
+		}
+		return hexCode
+
+	}
 }
