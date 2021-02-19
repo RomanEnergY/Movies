@@ -16,6 +16,12 @@ enum ColorType: String {
 	/// #B8E5FF = rgb(184, 229, 255)
 	case regular = "#B8E5FF"
 	
-	/// 001B43 = rgb(0, 27, 67)
-	case darkBlue = "#001B43"
+	/// #76ACCD = rgb(118,172,205)
+	case regularPressed = "#76ACCD"
+	
+	/// #001B43 = rgb(0, 27, 67)
+	case regularBorder = "#001B43"
+	
+	/// #852323 = rgb(133,35,35)
+	case shadowColorImageCinema = "#1B1412"
 }

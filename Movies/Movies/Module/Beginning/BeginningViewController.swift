@@ -20,9 +20,13 @@ final class BeginningViewController: BaseViewController {
 
 	// MARK: Private variables
 	
-	private var customView = BeginningView(frame: UIScreen.main.bounds)
 	private let interactor: BeginningBusinessLogic
-
+	private var customView: BeginningView {
+		let customView = BeginningView()
+		customView.delegate = self
+		return customView
+	}
+	
 	// MARK: Init
 
 	init(interactor: BeginningBusinessLogic) {
@@ -36,15 +40,16 @@ final class BeginningViewController: BaseViewController {
 	}
 
 	// MARK: - View lifecycle
-
-	override func loadView() {
-		view = customView
-		customView.delegate = self
-	}
-
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		view = customView
 		interactor.showInitialState()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 	}
 }
 
@@ -58,7 +63,7 @@ extension BeginningViewController: BeginningDisplayLogic {
 	func display(viewState: Beginning.ViewControllerState) {
 		switch viewState {
 			case .displayNextView(let animated):
-				print("go to next view")
+				print("go to next view - animated:\(animated)")
 		}
 	}
 }

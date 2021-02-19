@@ -63,6 +63,7 @@ class Router: RouterProtocol {
 				sourceController.present(controller, animated: animated)
 				
 			case .modalWithNavigation(let animated):
+				logger.log(.info, ".modalWithNavigation(animated:\(animated))")
 				break
 				
 			case .push(let animated):
@@ -75,8 +76,10 @@ class Router: RouterProtocol {
 				navigationController.pushViewController(controller, animated: animated)
 				
 			case let .replaceController(with, animated):
+				logger.log(.info, ".replaceController(with:\(with?.description ?? "nil"), animated:\(animated))")
 				break
 			case .replaceAll(let animated):
+				logger.log(.info, ".replaceAll(animated:\(animated))")
 				break
 		}
 	}
