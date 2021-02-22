@@ -22,22 +22,25 @@ final class BeginningItemView: BaseView {
 		stackView.axis = .vertical
 	}
 	
-	func set(title: String, font: UIFont = UIFont.systemFont(ofSize: 14), alignment: NSTextAlignment = .natural) {
-		titleLabel.text = title
-		titleLabel.font = font
-		titleLabel.textAlignment = alignment
+	func set(titleParagraph: TitleParagraphModel) {
+		titleLabel.text = titleParagraph.title
+		titleLabel.font = UIFont.systemFont(ofSize: 16)
+		titleLabel.textAlignment = .natural
 		
-		stackViewBottomConstraint?.update(inset: 0)
-	}
-	
-	func set(items: [String], separate: String) {
-		items.forEach { item in
+		titleParagraph.paragraph.forEach { paragraph in
 			let label = UILabel()
 			label.numberOfLines = 0
-			label.font = UIFont.systemFont(ofSize: 16)
-			label.text = "\(separate) \(item)"
+			label.font = UIFont.italicSystemFont(ofSize: 14)
+			label.text = "\("🔹") \(paragraph)"
 			stackView.addArrangedSubview(label)
 		}
+		
+		stackViewBottomConstraint?.update(offset: 10)
+	}
+	
+	func set(titleParagraphView: TitleParagraphViewModel<WrappreString, WrappreArrayString>) {
+		setTitle(titleParagraphView.title, textAlignment: titleParagraphView.textAlignment)
+		setParagtash(titleParagraphView.paragraph, textAlignment: titleParagraphView.textAlignment)
 		
 		stackViewBottomConstraint?.update(offset: 10)
 	}
@@ -58,9 +61,26 @@ final class BeginningItemView: BaseView {
 		}
 		
 		stackView.snp.makeConstraints { make in
-			make.top.equalTo(titleLabel.snp.bottom).offset(10)
+			make.top.equalTo(titleLabel.snp.bottom).offset(5)
 			make.left.right.equalToSuperview()
 			stackViewBottomConstraint = make.bottom.equalToSuperview().constraint
+		}
+	}
+	
+	private func setTitle(_ fontTypeView: FontTypeViewModel<WrappreString>, textAlignment: NSTextAlignment) {
+		titleLabel.font = fontTypeView.font
+		titleLabel.textAlignment = textAlignment
+		titleLabel.text = fontTypeView.data.text
+	}
+	
+	private func setParagtash(_ fontTypeView: FontTypeViewModel<WrappreArrayString>, textAlignment: NSTextAlignment) {
+		fontTypeView.data.array.forEach { paragraph in
+			let label = UILabel()
+			label.numberOfLines = 0
+			label.font = fontTypeView.font
+			label.textAlignment = textAlignment
+			label.text = "\("🔹") \(paragraph)"
+			stackView.addArrangedSubview(label)
 		}
 	}
 }

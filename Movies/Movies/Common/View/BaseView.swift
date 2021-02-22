@@ -33,7 +33,7 @@ class BaseView: UIView {
 		return statusBarHeight + navigationBarHeight
 	}
 	
-	private let logger: LoggerProtocol
+	private(set) var logger: LoggerProtocol
 	
 	public init(
 		frame: CGRect = CGRect.zero,

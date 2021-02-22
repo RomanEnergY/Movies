@@ -9,18 +9,6 @@
 import UIKit
 import SnapKit
 
-struct BeginningViewCollectorData {
-	var titleText: String = " 👋🤩 Привет!! 😉🤗"
-	var itemFirstText: String = "\tЭто тестовое приложение - так сказать обзор/проработка методик работы на чистом Swift - и вот получилось приложение \"ФИЛЬМЫ\" 🥳"
-	var itemSecondText: String = "\tНе судите строго - я не дизайнер 😅, а разработчик 🤯, но если будет поставлен четкий дизайн - поправим по Figma или Zeplin 😉"
-	var itemThirdText: String = "\tПри разработке использовался стек, фишки и примочки:"
-	var stack: [String] = ["XCode 12", "Swift 5+", "iOS 14.1", "Automatic Reference Count", "Grand Center Dispatch", "UIKit", "Digital integration (DI)", "Logger", "Property Wrapper", "UserDefaults", "SOLID", "YARCH", "Unit test", "CocoaPods", "SmartGit", "ColorSlurp", "Sublime Text", "Pastman", "Coogle Chrome", "NinjaMock", "Figma"]
-	var itemFourthText: String = "\tВ данном проекте использовал следующие паттерны проектирования:"
-	var patterns: [String] = ["Factory method", "Builder", "Singelton", "Adapter", "Bridge", "Delegate", "Decorator", "Facade", "Proxy", "Observer"]
-	var itemFiveText: String = "\tПриложение находится на стадии: \"In development 🤯\" и каждый день оно улучшается и меняется в лучшую сторону - и это круто!!! 😇"
-	var itemSixText: String = "Zverik Roman\nг.Санкт-Петербург\nтел: +7-951-651-25-99\nemail: Zverik.r.s@gmail.com"
-}
-
 protocol BeginningViewDelegate: class {
 	func continueButtonPressed()
 }
@@ -29,20 +17,16 @@ final class BeginningView: BaseView {
 	
 	// MARK: private var
 	
-	private let collectorData = BeginningViewCollectorData()
+	private var data: BeginningDataProtocol {
+		return BeginningData()
+	}
 	private let bacgraundImage = UIImageView()
 	private let blurEffect = UIBlurEffect()
 	private let scrollView = UIScrollView()
 	private let contentView = UIView()
 	private let shadowRoundView = ShadowRoundView(image: UIImage(named: "Cinema"))
 	private let titleLabel = UILabel()
-	private let itemFirst = BeginningItemView()
-	private let itemSecond = BeginningItemView()
-	private let itemThird = BeginningItemView()
-	private let itemFourth = BeginningItemView()
-	private let itemFive = BeginningItemView()
-	private let itemSix = BeginningItemView()
-
+	private let stackView = UIStackView()
 	private let continueButton = Dev.Button.create(devType: .regular)
 	
 	weak var delegate: BeginningViewDelegate?
@@ -57,19 +41,40 @@ final class BeginningView: BaseView {
 		
 		shadowRoundView.shadowColor = Dev.Color.create(colorType: .shadowColorImageCinema)
 		
-		titleLabel.text = collectorData.titleText
+		titleLabel.text = data.title
 		titleLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
 		titleLabel.textAlignment = .center
 		titleLabel.numberOfLines = 0
 		
-		itemFirst.set(title: collectorData.itemFirstText)
-		itemSecond.set(title: collectorData.itemSecondText)
-		itemThird.set(title: collectorData.itemThirdText)
-		itemThird.set(items: collectorData.stack, separate: "🔸")
-		itemFourth.set(title: collectorData.itemFourthText)
-		itemFourth.set(items: collectorData.patterns, separate: "🔹")
-		itemFive.set(title: collectorData.itemFiveText, font: UIFont.boldSystemFont(ofSize: 16))
-		itemSix.set(title: collectorData.itemSixText, font: UIFont.italicSystemFont(ofSize: 12), alignment: .right)
+		stackView.axis = .vertical
+		
+		for i in 0 ... data.paragraphs.count - 1 {
+			var titleFont: UIFont = UIFont.systemFont(ofSize: 16)
+			let paragraphsFont: UIFont = UIFont.italicSystemFont(ofSize: 14)
+			var textAlignment: NSTextAlignment = .natural
+			
+			if i == data.paragraphs.count - 1 {
+				titleFont = UIFont.italicSystemFont(ofSize: 12)
+				textAlignment = .right
+			}
+			
+			let titleFontView = FontTypeViewModel(
+				data: WrappreString(text: data.paragraphs[i].title),
+				font: titleFont)
+			
+			let paragraphsFontView = FontTypeViewModel(
+				data: WrappreArrayString(array: data.paragraphs[i].paragraph),
+				font: paragraphsFont)
+			
+			let titleParagraphFontView = TitleParagraphViewModel(title: titleFontView,
+																 paragraph: paragraphsFontView,
+																 textAlignment: textAlignment)
+			
+			let beginningItemView = BeginningItemView()
+
+			beginningItemView.set(titleParagraphView: titleParagraphFontView)
+			stackView.addArrangedSubview(beginningItemView)
+		}
 		
 		continueButton.setTitle("Send", for: .normal)
 		continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
@@ -84,12 +89,7 @@ final class BeginningView: BaseView {
 		scrollView.addSubview(contentView)
 		contentView.addSubview(shadowRoundView)
 		contentView.addSubview(titleLabel)
-		contentView.addSubview(itemFirst)
-		contentView.addSubview(itemSecond)
-		contentView.addSubview(itemThird)
-		contentView.addSubview(itemFourth)
-		contentView.addSubview(itemFive)
-		contentView.addSubview(itemSix)
+		contentView.addSubview(stackView)
 		contentView.addSubview(continueButton)
 	}
 	
@@ -119,38 +119,13 @@ final class BeginningView: BaseView {
 			make.left.right.equalToSuperview().inset(20)
 		}
 		
-		itemFirst.snp.makeConstraints { make in
+		stackView.snp.makeConstraints { make in
 			make.top.equalTo(titleLabel.snp.bottom).offset(8)
 			make.left.right.equalToSuperview().inset(20)
 		}
 		
-		itemSecond.snp.makeConstraints { make in
-			make.top.equalTo(itemFirst.snp.bottom).offset(8)
-			make.left.right.equalToSuperview().inset(20)
-		}
-		
-		itemThird.snp.makeConstraints { make in
-			make.top.equalTo(itemSecond.snp.bottom).offset(8)
-			make.left.right.equalToSuperview().inset(20)
-		}
-		
-		itemFourth.snp.makeConstraints { make in
-			make.top.equalTo(itemThird.snp.bottom).offset(20)
-			make.left.right.equalToSuperview().inset(20)
-		}
-		
-		itemFive.snp.makeConstraints { make in
-			make.top.equalTo(itemFourth.snp.bottom).offset(20)
-			make.left.right.equalToSuperview().inset(20)
-		}
-		
-		itemSix.snp.makeConstraints { make in
-			make.top.equalTo(itemFive.snp.bottom).offset(50)
-			make.left.right.equalToSuperview().inset(20)
-		}
-		
 		continueButton.snp.makeConstraints { make in
-			make.top.equalTo(itemSix.snp.bottom)
+			make.top.equalTo(stackView.snp.bottom)
 			make.left.right.equalToSuperview().inset(20)
 			make.bottom.equalToSuperview().inset(20)
 			make.height.equalTo(40)
