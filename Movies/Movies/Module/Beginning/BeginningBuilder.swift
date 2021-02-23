@@ -6,7 +6,7 @@
 //  Copyright © 2021 ZRS. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 final class BeginningBuilder: ModuleBuilder {
 	required init() { }

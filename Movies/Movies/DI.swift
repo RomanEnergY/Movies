@@ -23,7 +23,13 @@ public enum ProjectDI {
 		container.registerSingle(AppUserSettingsProtocol.self) { _ in AppUserDefaultsStorage() }
 		container.registerSingle(AppParameterProtocol.self) { _ in AppParameter() }
 		container.registerSingle(AssemblyBuilderProtocol.self) { _ in AssemblyBuilder() }
+		
+		//TODO заменить Router на AppNavigator
 		container.registerSingle(RouterProtocol.self) { _ in Router() }
+		container.registerSingle(AppNavigatorProtocol.self) { _ in AppNavigator() }
+		
 		container.registerSingle(BaseNavigationController.self) { _ in BaseNavigationController() }
+		
+		container.register(PasswordKeyProviderProtocol.self) { _ in PasswordKeyProvider() }
 	}
 }

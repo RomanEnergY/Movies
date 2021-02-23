@@ -22,27 +22,11 @@ final class BeginningItemView: BaseView {
 		stackView.axis = .vertical
 	}
 	
-	func set(titleParagraph: TitleParagraphModel) {
-		titleLabel.text = titleParagraph.title
-		titleLabel.font = UIFont.systemFont(ofSize: 16)
-		titleLabel.textAlignment = .natural
-		
-		titleParagraph.paragraph.forEach { paragraph in
-			let label = UILabel()
-			label.numberOfLines = 0
-			label.font = UIFont.italicSystemFont(ofSize: 14)
-			label.text = "\("🔹") \(paragraph)"
-			stackView.addArrangedSubview(label)
-		}
-		
-		stackViewBottomConstraint?.update(offset: 10)
-	}
-	
 	func set(titleParagraphView: TitleParagraphViewModel<WrappreString, WrappreArrayString>) {
 		setTitle(titleParagraphView.title, textAlignment: titleParagraphView.textAlignment)
 		setParagtash(titleParagraphView.paragraph, textAlignment: titleParagraphView.textAlignment)
 		
-		stackViewBottomConstraint?.update(offset: 10)
+		stackViewBottomConstraint?.update(inset: 10)
 	}
 	
 	override func addSubviews() {

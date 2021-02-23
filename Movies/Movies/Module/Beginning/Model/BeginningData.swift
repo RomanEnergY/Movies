@@ -15,7 +15,7 @@ protocol BeginningDataProtocol {
 
 struct BeginningData: BeginningDataProtocol {
 	var title: String {
-		 return "👋🤩 Привет - Привет!! 😉🤗"
+		 return "👋🤩 Привет!! 😉🤗"
 	}
 	
 	var paragraphs: [TitleParagraphModel] {

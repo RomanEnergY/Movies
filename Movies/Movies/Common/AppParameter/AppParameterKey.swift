@@ -13,6 +13,11 @@ enum AppParameterKey: String, CaseIterable {
 	/// - Bool
 	case isBeginningViewShowedOnce
 	
-	case test1
-	case test2
+	/// Был ли ранее установлен пароль "passwordNumderKey"
+	/// - Bool
+	case isPasswordNumberKeyInstalled
+	
+	/// Значение поля "passwordNumderKey"
+	/// - String
+	case passwordNumberKey
 }

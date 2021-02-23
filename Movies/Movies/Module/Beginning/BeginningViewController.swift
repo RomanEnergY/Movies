@@ -21,11 +21,7 @@ final class BeginningViewController: BaseViewController {
 	// MARK: Private variables
 	
 	private let interactor: BeginningBusinessLogic
-	private var customView: BeginningView {
-		let customView = BeginningView()
-		customView.delegate = self
-		return customView
-	}
+	private var customView = BeginningView()
 	
 	// MARK: Init
 
@@ -45,6 +41,7 @@ final class BeginningViewController: BaseViewController {
 		super.viewDidLoad()
 		
 		view = customView
+		customView.delegate = self
 		interactor.showInitialState()
 	}
 	
@@ -62,8 +59,8 @@ extension BeginningViewController: BeginningViewDelegate {
 extension BeginningViewController: BeginningDisplayLogic {
 	func display(viewState: Beginning.ViewControllerState) {
 		switch viewState {
-			case .displayNextView(let animated):
-				print("go to next view - animated:\(animated)")
+			case .displayNextView:
+				appNavigator.go(module: PasswordBuilder(), mode: .replaceAll(animated: true))
 		}
 	}
 }

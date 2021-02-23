@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BeginningPresentationLogic {
-	func presentNextView(response: Beginning.Response.NextView)
+	func presentNextView()
 }
 
 /// Отвечает за отображение данных модуля Onboarding
@@ -18,7 +18,7 @@ final class BeginningPresenter: BeginningPresentationLogic {
 	// MARK: - Public variables
 	weak var viewController: BeginningDisplayLogic?
 
-	func presentNextView(response: Beginning.Response.NextView) {
-		viewController?.display(viewState: .displayNextView(animated: response.animated))
+	func presentNextView() {
+		viewController?.display(viewState: .displayNextView)
 	}
 }

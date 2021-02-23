@@ -8,14 +8,7 @@
 
 enum Beginning {
 	
-	enum Response {
-		struct NextView {
-			let animated: Bool = true
-		}
-	}
-	
 	enum ViewControllerState {
-		// TODO: Определиться о названии следующего экран
-		case displayNextView(animated: Bool)
+		case displayNextView
 	}
 }

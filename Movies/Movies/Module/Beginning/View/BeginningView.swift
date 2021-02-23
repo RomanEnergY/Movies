@@ -28,13 +28,14 @@ final class BeginningView: BaseView {
 	private let titleLabel = UILabel()
 	private let stackView = UIStackView()
 	private let continueButton = Dev.Button.create(devType: .regular)
+	private var allBarsHeightConstraint: Constraint?
 	
 	weak var delegate: BeginningViewDelegate?
 	
 	override func configure() {
 		super.configure()
 		
-		backgroundColor = .white
+		backgroundColor = Dev.Color.create(colorType: .white)
 		
 		bacgraundImage.image = UIImage(named: "kino")
 		bacgraundImage.alpha = 0.05
@@ -95,13 +96,12 @@ final class BeginningView: BaseView {
 	
 	override func makeConstraints() {
 		bacgraundImage.snp.makeConstraints { (make) in
-			make.top.equalToSuperview().inset(allBarsHeight)
+			allBarsHeightConstraint = make.top.equalToSuperview().constraint
 			make.left.right.bottom.equalToSuperview()
 		}
 		
 		scrollView.snp.makeConstraints { (make) in
-			make.top.equalToSuperview().inset(allBarsHeight)
-			make.left.right.bottom.equalToSuperview()
+			make.edges.equalTo(bacgraundImage)
 		}
 		
 		contentView.snp.makeConstraints { (make) in
@@ -125,13 +125,18 @@ final class BeginningView: BaseView {
 		}
 		
 		continueButton.snp.makeConstraints { make in
-			make.top.equalTo(stackView.snp.bottom)
+			make.top.equalTo(stackView.snp.bottom).offset(10)
 			make.left.right.equalToSuperview().inset(20)
 			make.bottom.equalToSuperview().inset(20)
 			make.height.equalTo(40)
 		}
 		
 		super.makeConstraints()
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		allBarsHeightConstraint?.update(inset: allBarsHeight)
 	}
 	
 	@objc private func continueButtonPressed() {

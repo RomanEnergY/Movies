@@ -10,6 +10,9 @@ import UIKit
 
 enum ColorType: String {
 	
+	/// #FFFFFF = rgb(255,255,255)
+	case white = "#FFFFFF"
+	
 	/// #000000 = rgb(0, 0, 0)
 	case black = "#000000"
 	
@@ -24,4 +27,19 @@ enum ColorType: String {
 	
 	/// #852323 = rgb(133,35,35)
 	case shadowColorImageCinema = "#1B1412"
+	
+	/// #D7E1FA = rgb(215,225,250)
+	case buttonNumberPressed = "#D7E1FA"
+	
+	/// #9AA2B4 = rgb(154,162,180)
+	case buttonNumberDescriptionText = "#9AA2B4"
+	
+	/// #B8BDCA = rgb(184,189,202)
+	case passwordStatusCircleDefault = "#B8BDCA"
+	
+	/// #98C47C = rgb(152,196,124)
+	case passwordStatusCircleActive = "#98C47C"
+	
+	/// #F1938E = rgb(241,147,142)
+	case passwordStatusCircleError = "#F1938E"
 }

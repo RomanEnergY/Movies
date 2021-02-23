@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
 		
-		let router: RouterProtocol = DI.container.resolve(RouterProtocol.self)
-		router.create(window)
+		let appNavigator: AppNavigatorProtocol = DI.container.resolve(AppNavigatorProtocol.self)
+		appNavigator.create(window)
 		
 		window?.makeKeyAndVisible()
 	}

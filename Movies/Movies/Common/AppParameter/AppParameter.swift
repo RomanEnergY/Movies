@@ -10,10 +10,18 @@ import Foundation
 
 protocol AppParameterProtocol {
 	var isBeginningViewShowedOnce: Bool? { get set }
+	var isPasswordNumberKeyInstalled: Bool? { get set }
+	var passwordNumberKey: String? { get set }
 }
 
 class AppParameter: AppParameterProtocol {
 	
 	@AppParameterStorage<Bool>(key: .isBeginningViewShowedOnce)
 	var isBeginningViewShowedOnce
+	
+	@AppParameterStorage<Bool>(key: .isPasswordNumberKeyInstalled)
+	var isPasswordNumberKeyInstalled
+	
+	@AppParameterStorage<String>(key: .passwordNumberKey)
+	var passwordNumberKey
 }

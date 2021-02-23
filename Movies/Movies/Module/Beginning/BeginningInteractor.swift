@@ -42,8 +42,7 @@ final class BeginningInteractor: BeginningBusinessLogic {
 		goNextView()
 	}
 	
-	// TODO: - переход на следующий экран
 	private func goNextView() {
-		presenter.presentNextView(response: Beginning.Response.NextView())
+		presenter.presentNextView()
 	}
 }

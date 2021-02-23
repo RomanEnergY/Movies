@@ -74,19 +74,33 @@
 		7C586F1A25DF014D0079FA9A /* Dev.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F1925DF014D0079FA9A /* Dev.swift */; };
 		7C586F2025DF035E0079FA9A /* ColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F1F25DF035E0079FA9A /* ColorType.swift */; };
 		7C586F2425DF057C0079FA9A /* UIColor+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C586F2325DF057C0079FA9A /* UIColor+Extention.swift */; };
+		7C7BD6F925E465780089BE96 /* KeyBordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD6F825E465780089BE96 /* KeyBordView.swift */; };
+		7C7BD70125E56B4A0089BE96 /* PasswordStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD70025E56B4A0089BE96 /* PasswordStatusView.swift */; };
+		7C7BD70925E572A10089BE96 /* PasswordStatusCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD70825E572A10089BE96 /* PasswordStatusCircleView.swift */; };
+		7C7BD71525E5944C0089BE96 /* PasswordKeyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD71425E5944C0089BE96 /* PasswordKeyProvider.swift */; };
+		7C7BD71925E5A71A0089BE96 /* VerificationProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD71825E5A71A0089BE96 /* VerificationProviderProtocol.swift */; };
+		7C7BD71D25E5AC8E0089BE96 /* VerificationSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD71C25E5AC8E0089BE96 /* VerificationSetProvider.swift */; };
+		7C7BD72125E5AD360089BE96 /* VerificationEntranceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BD72025E5AD360089BE96 /* VerificationEntranceProvider.swift */; };
 		7C81CF6625DD4FB800AA7790 /* AppParameterStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81CF6525DD4FB800AA7790 /* AppParameterStorage.swift */; };
 		7C81CF6A25DD59E400AA7790 /* AppParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81CF6925DD59E400AA7790 /* AppParameter.swift */; };
 		7C867D5D25E2EE75005D4946 /* BeginningData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D5C25E2EE75005D4946 /* BeginningData.swift */; };
 		7C867D6125E2F3CC005D4946 /* TitleParagraphViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D6025E2F3CC005D4946 /* TitleParagraphViewModel.swift */; };
 		7C867D7225E3BE5F005D4946 /* TitleParagraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D7125E3BE5F005D4946 /* TitleParagraphModel.swift */; };
-		7CA22F9D25DC1F4C0037CEFF /* RouterPresentationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA22F9C25DC1F4C0037CEFF /* RouterPresentationMode.swift */; };
+		7C867D7925E41FC2005D4946 /* PasswordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D7825E41FC2005D4946 /* PasswordBuilder.swift */; };
+		7C867D7F25E42008005D4946 /* PasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D7E25E42008005D4946 /* PasswordPresenter.swift */; };
+		7C867D8325E4204A005D4946 /* PasswordInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D8225E4204A005D4946 /* PasswordInteractor.swift */; };
+		7C867D8725E4210E005D4946 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D8625E4210E005D4946 /* PasswordViewController.swift */; };
+		7C867D8B25E42496005D4946 /* PasswordDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D8A25E42496005D4946 /* PasswordDataFlow.swift */; };
+		7C867D9025E4290D005D4946 /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D8F25E4290D005D4946 /* AppNavigator.swift */; };
+		7C867D9425E42958005D4946 /* PresentationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D9325E42958005D4946 /* PresentationMode.swift */; };
+		7C867D9925E42D86005D4946 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867D9825E42D86005D4946 /* PasswordView.swift */; };
+		7C867DA325E45574005D4946 /* ButtonNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C867DA225E45574005D4946 /* ButtonNumber.swift */; };
 		7CBA3EB725DBE15500B62876 /* DI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3EB625DBE15500B62876 /* DI.swift */; };
 		7CBA3ED425DBE35700B62876 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3ECC25DBE35600B62876 /* DIContainer.swift */; };
 		7CBA3ED525DBE35700B62876 /* DIArgumentIteratorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3ECD25DBE35700B62876 /* DIArgumentIteratorImpl.swift */; };
 		7CBA3EE125DBE48A00B62876 /* DIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3EE025DBE48A00B62876 /* DIService.swift */; };
 		7CBA3EE625DBE58600B62876 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3EE525DBE58600B62876 /* Array+Extension.swift */; };
 		7CBA3F1E25DC08EE00B62876 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3F1D25DC08EE00B62876 /* BaseViewController.swift */; };
-		7CBA3F2425DC095F00B62876 /* RouterDismissionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3F2225DC095F00B62876 /* RouterDismissionMode.swift */; };
 		7CBA3F2B25DC0A0B00B62876 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBA3F2A25DC0A0A00B62876 /* ModuleBuilder.swift */; };
 		7CCC4B1B2514BE3300DCD015 /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B192514BE3300DCD015 /* MenuCollectionViewCell.swift */; };
 		7CCC4B1C2514BE3300DCD015 /* MenuCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CCC4B1A2514BE3300DCD015 /* MenuCollectionViewCell.xib */; };
@@ -183,19 +197,33 @@
 		7C586F1925DF014D0079FA9A /* Dev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dev.swift; sourceTree = "<group>"; };
 		7C586F1F25DF035E0079FA9A /* ColorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorType.swift; sourceTree = "<group>"; };
 		7C586F2325DF057C0079FA9A /* UIColor+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extention.swift"; sourceTree = "<group>"; };
+		7C7BD6F825E465780089BE96 /* KeyBordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBordView.swift; sourceTree = "<group>"; };
+		7C7BD70025E56B4A0089BE96 /* PasswordStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStatusView.swift; sourceTree = "<group>"; };
+		7C7BD70825E572A10089BE96 /* PasswordStatusCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStatusCircleView.swift; sourceTree = "<group>"; };
+		7C7BD71425E5944C0089BE96 /* PasswordKeyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordKeyProvider.swift; sourceTree = "<group>"; };
+		7C7BD71825E5A71A0089BE96 /* VerificationProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationProviderProtocol.swift; sourceTree = "<group>"; };
+		7C7BD71C25E5AC8E0089BE96 /* VerificationSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationSetProvider.swift; sourceTree = "<group>"; };
+		7C7BD72025E5AD360089BE96 /* VerificationEntranceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEntranceProvider.swift; sourceTree = "<group>"; };
 		7C81CF6525DD4FB800AA7790 /* AppParameterStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppParameterStorage.swift; sourceTree = "<group>"; };
 		7C81CF6925DD59E400AA7790 /* AppParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppParameter.swift; sourceTree = "<group>"; };
 		7C867D5C25E2EE75005D4946 /* BeginningData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginningData.swift; sourceTree = "<group>"; };
 		7C867D6025E2F3CC005D4946 /* TitleParagraphViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleParagraphViewModel.swift; sourceTree = "<group>"; };
 		7C867D7125E3BE5F005D4946 /* TitleParagraphModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleParagraphModel.swift; sourceTree = "<group>"; };
-		7CA22F9C25DC1F4C0037CEFF /* RouterPresentationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterPresentationMode.swift; sourceTree = "<group>"; };
+		7C867D7825E41FC2005D4946 /* PasswordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordBuilder.swift; sourceTree = "<group>"; };
+		7C867D7E25E42008005D4946 /* PasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPresenter.swift; sourceTree = "<group>"; };
+		7C867D8225E4204A005D4946 /* PasswordInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInteractor.swift; sourceTree = "<group>"; };
+		7C867D8625E4210E005D4946 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		7C867D8A25E42496005D4946 /* PasswordDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordDataFlow.swift; sourceTree = "<group>"; };
+		7C867D8F25E4290D005D4946 /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
+		7C867D9325E42958005D4946 /* PresentationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationMode.swift; sourceTree = "<group>"; };
+		7C867D9825E42D86005D4946 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
+		7C867DA225E45574005D4946 /* ButtonNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNumber.swift; sourceTree = "<group>"; };
 		7CBA3EB625DBE15500B62876 /* DI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DI.swift; sourceTree = "<group>"; };
 		7CBA3ECC25DBE35600B62876 /* DIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		7CBA3ECD25DBE35700B62876 /* DIArgumentIteratorImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIArgumentIteratorImpl.swift; sourceTree = "<group>"; };
 		7CBA3EE025DBE48A00B62876 /* DIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIService.swift; sourceTree = "<group>"; };
 		7CBA3EE525DBE58600B62876 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		7CBA3F1D25DC08EE00B62876 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		7CBA3F2225DC095F00B62876 /* RouterDismissionMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterDismissionMode.swift; sourceTree = "<group>"; };
 		7CBA3F2A25DC0A0A00B62876 /* ModuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		7CCC4B192514BE3300DCD015 /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewCell.swift; sourceTree = "<group>"; };
 		7CCC4B1A2514BE3300DCD015 /* MenuCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -495,8 +523,6 @@
 			isa = PBXGroup;
 			children = (
 				7C2C06312513C47300F3A238 /* Router.swift */,
-				7CBA3F2225DC095F00B62876 /* RouterDismissionMode.swift */,
-				7CA22F9C25DC1F4C0037CEFF /* RouterPresentationMode.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -522,6 +548,7 @@
 		7C5085EB25DC4A48005ACD25 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				7C867D7725E41DFF005D4946 /* Password */,
 				7C50860125DC5186005ACD25 /* Beginning */,
 				7C5085EC25DC4A5C005ACD25 /* Description */,
 			);
@@ -583,6 +610,35 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		7C7BD6FC25E56B100089BE96 /* ButtonKeyBord */ = {
+			isa = PBXGroup;
+			children = (
+				7C7BD6F825E465780089BE96 /* KeyBordView.swift */,
+				7C867DA225E45574005D4946 /* ButtonNumber.swift */,
+			);
+			path = ButtonKeyBord;
+			sourceTree = "<group>";
+		};
+		7C7BD6FF25E56B3E0089BE96 /* PasswordStatus */ = {
+			isa = PBXGroup;
+			children = (
+				7C7BD70025E56B4A0089BE96 /* PasswordStatusView.swift */,
+				7C7BD70825E572A10089BE96 /* PasswordStatusCircleView.swift */,
+			);
+			path = PasswordStatus;
+			sourceTree = "<group>";
+		};
+		7C7BD71325E5942D0089BE96 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				7C7BD71425E5944C0089BE96 /* PasswordKeyProvider.swift */,
+				7C7BD71825E5A71A0089BE96 /* VerificationProviderProtocol.swift */,
+				7C7BD71C25E5AC8E0089BE96 /* VerificationSetProvider.swift */,
+				7C7BD72025E5AD360089BE96 /* VerificationEntranceProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
 		7C867D5B25E2EE45005D4946 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -600,11 +656,45 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		7C867D7725E41DFF005D4946 /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				7C867D7825E41FC2005D4946 /* PasswordBuilder.swift */,
+				7C867D8A25E42496005D4946 /* PasswordDataFlow.swift */,
+				7C867D8225E4204A005D4946 /* PasswordInteractor.swift */,
+				7C867D7E25E42008005D4946 /* PasswordPresenter.swift */,
+				7C867D8625E4210E005D4946 /* PasswordViewController.swift */,
+				7C7BD71325E5942D0089BE96 /* Provider */,
+				7C867D9725E42D79005D4946 /* View */,
+			);
+			path = Password;
+			sourceTree = "<group>";
+		};
+		7C867D8E25E428E8005D4946 /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				7C867D8F25E4290D005D4946 /* AppNavigator.swift */,
+				7C867D9325E42958005D4946 /* PresentationMode.swift */,
+			);
+			path = Navigator;
+			sourceTree = "<group>";
+		};
+		7C867D9725E42D79005D4946 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7C867D9825E42D86005D4946 /* PasswordView.swift */,
+				7C7BD6FF25E56B3E0089BE96 /* PasswordStatus */,
+				7C7BD6FC25E56B100089BE96 /* ButtonKeyBord */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7CBA3EBA25DBE1EF00B62876 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				7C586F1925DF014D0079FA9A /* Dev.swift */,
 				7CBA3F2A25DC0A0A00B62876 /* ModuleBuilder.swift */,
+				7C867D8E25E428E8005D4946 /* Navigator */,
 				7CBA3EE425DBE55700B62876 /* Extensions */,
 				7C1DB40325DDB130006D3D16 /* Logger */,
 				7C26448125DC5B26002FDBDE /* AppParameter */,
@@ -860,14 +950,18 @@
 				7CCC4B352514CED700DCD015 /* MainView.swift in Sources */,
 				7C2C05FE251079B500F3A238 /* textTableViewCell.swift in Sources */,
 				7C26447A25DC5A13002FDBDE /* AppUserDefaultsStorage.swift in Sources */,
+				7C867D8725E4210E005D4946 /* PasswordViewController.swift in Sources */,
 				7C2C06142510A00200F3A238 /* MovieResponseAPI.swift in Sources */,
+				7C7BD72125E5AD360089BE96 /* VerificationEntranceProvider.swift in Sources */,
 				7C50860D25DC5186005ACD25 /* BeginningViewController.swift in Sources */,
 				7CBA3ED525DBE35700B62876 /* DIArgumentIteratorImpl.swift in Sources */,
 				7C0EEBF225E03DAD00E66F2A /* ShadowRoundView.swift in Sources */,
 				7CBA3ED425DBE35700B62876 /* DIContainer.swift in Sources */,
 				7C1DB40925DDC516006D3D16 /* LoggerConsole.swift in Sources */,
+				7C7BD6F925E465780089BE96 /* KeyBordView.swift in Sources */,
 				7C2C060B251079B500F3A238 /* EndPointProtocol.swift in Sources */,
 				7C2C05FA251079B500F3A238 /* DescriptionViewModel.swift in Sources */,
+				7C867D7F25E42008005D4946 /* PasswordPresenter.swift in Sources */,
 				7C586F1A25DF014D0079FA9A /* Dev.swift in Sources */,
 				7C867D6125E2F3CC005D4946 /* TitleParagraphViewModel.swift in Sources */,
 				7C2C05F6251079B500F3A238 /* MainViewModel.swift in Sources */,
@@ -878,6 +972,7 @@
 				7C2C061225109F9F00F3A238 /* ProductionCountrieAPI.swift in Sources */,
 				7C18959525436F3500123104 /* GroupCollectionView.swift in Sources */,
 				7C2C05FC251079B500F3A238 /* ImageTableViewCell.swift in Sources */,
+				7C867D8325E4204A005D4946 /* PasswordInteractor.swift in Sources */,
 				7C2C57B0251F25FC00CF32A1 /* GroupToEndPoint.swift in Sources */,
 				7C5085E625DC3087005ACD25 /* BaseNavigationController.swift in Sources */,
 				7C2C061F251121C400F3A238 /* MovieDesctiptionService.swift in Sources */,
@@ -885,12 +980,16 @@
 				7C2C5799251DFAB300CF32A1 /* GroupCollectionViewCell.swift in Sources */,
 				7C2C061B251112AC00F3A238 /* MovieImageService.swift in Sources */,
 				7C2C05FB251079B500F3A238 /* DescriptionMovieAPI.swift in Sources */,
+				7C867D8B25E42496005D4946 /* PasswordDataFlow.swift in Sources */,
+				7C7BD71925E5A71A0089BE96 /* VerificationProviderProtocol.swift in Sources */,
+				7C867D9425E42958005D4946 /* PresentationMode.swift in Sources */,
 				7C2C05B7251078D300F3A238 /* MoviesMVVM.xcdatamodeld in Sources */,
 				7C50860B25DC5186005ACD25 /* BeginningBuilder.swift in Sources */,
 				7C586F2425DF057C0079FA9A /* UIColor+Extention.swift in Sources */,
 				7C2C57A8251E34EC00CF32A1 /* String+Extention.swift in Sources */,
 				7C2C061025109F8100F3A238 /* GenreAPI.swift in Sources */,
 				7C0EEBF625E060BB00E66F2A /* BeginningItemView.swift in Sources */,
+				7C7BD70925E572A10089BE96 /* PasswordStatusCircleView.swift in Sources */,
 				7CBA3EB725DBE15500B62876 /* DI.swift in Sources */,
 				7C2C062F2513C45D00F3A238 /* AssemblyBuilder.swift in Sources */,
 				7C2C06192511121A00F3A238 /* MovieDataService.swift in Sources */,
@@ -904,17 +1003,21 @@
 				7C50860A25DC5186005ACD25 /* BeginningInteractor.swift in Sources */,
 				7C2C05FD251079B500F3A238 /* DescriptionView.swift in Sources */,
 				7C2C57AC251E3A8900CF32A1 /* Group.swift in Sources */,
-				7CA22F9D25DC1F4C0037CEFF /* RouterPresentationMode.swift in Sources */,
 				7C1DB40525DDB147006D3D16 /* LoggerProtocol.swift in Sources */,
 				7C5085F225DC4B32005ACD25 /* DescriptionIterator.swift in Sources */,
+				7C7BD71D25E5AC8E0089BE96 /* VerificationSetProvider.swift in Sources */,
 				7C2C05AD251078D300F3A238 /* AppDelegate.swift in Sources */,
 				7C50860C25DC5186005ACD25 /* BeginningDataFlow.swift in Sources */,
 				7C40063E253EC579001BCEC4 /* MenuCollectionView.swift in Sources */,
+				7C867D7925E41FC2005D4946 /* PasswordBuilder.swift in Sources */,
 				7C5085F625DC4B87005ACD25 /* DescriptionPresenter.swift in Sources */,
 				7C2C0600251079B500F3A238 /* ParameterEncoding.swift in Sources */,
 				7C2C0604251079B500F3A238 /* MovieImageEndPoint.swift in Sources */,
 				7C5085EE25DC4A9A005ACD25 /* DescriptionBuilder.swift in Sources */,
+				7C867DA325E45574005D4946 /* ButtonNumber.swift in Sources */,
+				7C867D9925E42D86005D4946 /* PasswordView.swift in Sources */,
 				7CBA3EE125DBE48A00B62876 /* DIService.swift in Sources */,
+				7C867D9025E4290D005D4946 /* AppNavigator.swift in Sources */,
 				7C2C0609251079B500F3A238 /* NetworkService.swift in Sources */,
 				7C2C062A2512BC8000F3A238 /* MovieAPI + Extention.swift in Sources */,
 				7C2C0602251079B500F3A238 /* JSONParameterEncoder.swift in Sources */,
@@ -924,10 +1027,11 @@
 				7C2C05AF251078D300F3A238 /* SceneDelegate.swift in Sources */,
 				7CBA3F2B25DC0A0B00B62876 /* ModuleBuilder.swift in Sources */,
 				7CBA3EE625DBE58600B62876 /* Array+Extension.swift in Sources */,
+				7C7BD71525E5944C0089BE96 /* PasswordKeyProvider.swift in Sources */,
+				7C7BD70125E56B4A0089BE96 /* PasswordStatusView.swift in Sources */,
 				7C5085FE25DC4D27005ACD25 /* DescriptionDataFlow.swift in Sources */,
 				7C81CF6A25DD59E400AA7790 /* AppParameter.swift in Sources */,
 				7C2C0607251079B500F3A238 /* HTTPTask.swift in Sources */,
-				7CBA3F2425DC095F00B62876 /* RouterDismissionMode.swift in Sources */,
 				7C2C0608251079B500F3A238 /* HTTPMethod.swift in Sources */,
 				7C586F1625DEEE1E0079FA9A /* BaseButton.swift in Sources */,
 				7C26447625DC5572002FDBDE /* BaseView.swift in Sources */,

@@ -15,22 +15,31 @@ class BaseViewController: UIViewController {
 	
 	// MARK: - private variable
 	
-	private let logger: LoggerProtocol
+	let logger: LoggerProtocol
+	let appNavigator: AppNavigatorProtocol
 	
 	init(
-		logger: LoggerProtocol = DI.container.resolve(LoggerProtocol.self)
+		logger: LoggerProtocol = DI.container.resolve(LoggerProtocol.self),
+		appNavigator: AppNavigatorProtocol = DI.container.resolve(AppNavigatorProtocol.self)
 	) {
 		self.logger = logger
+		self.appNavigator = appNavigator
 		super.init(nibName: nil, bundle: nil)
+		logger.log(.debug, "init: \(self)")
 	}
 	
 	required public init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	deinit {
+		logger.log(.debug, "deinit: \(self)")
+	}
+	
 	override open func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(isHiddenNavigationBar, animated: true)
+		logger.log(.debug, "viewWillAppear: \(self)")
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

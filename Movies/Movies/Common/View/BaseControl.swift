@@ -1,14 +1,14 @@
 //
-//  BaseButton.swift
+//  ButtonNumber.swift
 //  Movies
 //
-//  Created by Roman Zverik on 18.02.2021.
+//  Created by Roman Zverik on 23.02.2021.
 //  Copyright © 2021 ZRS. All rights reserved.
 //
 
 import UIKit
 
-final class BaseButton: UIButton {
+class ButtonNumber: UIControl {
 	
 	//MARK: public variable
 	
@@ -24,32 +24,25 @@ final class BaseButton: UIButton {
 	
 	//MARK: private variable
 	
-	private var buttonBackgroundColor: UIColor {
-		switch self.devType {
-			case .regular:
-				return isHighlighted ? Dev.Color.create(colorType: .regularPressed) : Dev.Color.create(colorType: .regular)
-		}
+	private var colorHighlighted: UIColor {
+		isHighlighted ? Dev.Color.create(colorType: .regularPressed) : Dev.Color.create(colorType: .regular)
 	}
-	private var titleTextColor: UIColor {
-		switch self.devType {
-			case .regular:
-				return Dev.Color.create(colorType: .black)
-		}
+	private var colorTitleText: UIColor {
+		Dev.Color.create(colorType: .black)
 	}
 	private var enabledButtonBackgroundColor: UIColor { UIColor.gray }
 	private var enabledTitleTextColor: UIColor { UIColor.gray }
 	private var touchFrame: CGRect?
-	
+	private let title: String
+	private let descriptionText: String
 	
 	//MARK: inits
 	
-	init(devType: DevType) {
-		self.devType = devType
+	init(title: String, descriptionText: String) {
+		self.title = title
+		self.descriptionText = descriptionText
 		
 		super.init(frame: .zero)
-		
-		self.titleLabel?.lineBreakMode = .byWordWrapping
-		self.titleLabel?.textAlignment = .center
 	}
 	
 	required init?(coder: NSCoder) {
@@ -60,7 +53,6 @@ final class BaseButton: UIButton {
 	
 	override var isHighlighted: Bool {
 		didSet {
-			self.updateTitleTextColor()
 			self.updateBackgroundColor()
 		}
 	}
@@ -90,7 +82,6 @@ final class BaseButton: UIButton {
 	
 	private func updateStyles() {
 		self.updateBorder()
-		self.updateTitleTextColor()
 		self.updateBackgroundColor()
 	}
 	
@@ -103,10 +94,6 @@ final class BaseButton: UIButton {
 				layer.shadowOpacity = 0
 		}
 		self.layer.masksToBounds = false
-	}
-	
-	private func updateTitleTextColor() {
-		titleLabel?.textColor = isEnabled ? titleTextColor : enabledTitleTextColor
 	}
 	
 	private func updateBackgroundColor() {

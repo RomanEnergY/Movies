@@ -43,6 +43,7 @@ class BaseView: UIView {
 		super.init(frame: frame)
 		configure()
 		addSubviews()
+		makeConstraints()
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
@@ -50,14 +51,9 @@ class BaseView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	override func layoutSubviews() {
-		makeConstraints()
-		super.layoutSubviews()
-	}
+	func configure() { }
 	
-	open func configure() { }
+	func addSubviews() { }
 	
-	open func addSubviews() { }
-	
-	open func makeConstraints() { }
+	func makeConstraints() { }
 }
