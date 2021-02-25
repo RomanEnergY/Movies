@@ -34,7 +34,8 @@ final class AppNavigator: AppNavigatorProtocol {
 		self.window = window
 		self.window?.backgroundColor = UIColor.white
 		
-		let rootViewController = BeginningBuilder().build()
+//		let rootViewController = BeginningBuilder().build()
+		let rootViewController = MovieFeedBuilder().build()
 		self.window?.rootViewController = BaseNavigationController(rootViewController: rootViewController)
 		currentController = rootViewController
 		

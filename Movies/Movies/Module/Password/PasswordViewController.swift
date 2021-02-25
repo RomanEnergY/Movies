@@ -50,8 +50,7 @@ extension PasswordViewController: PasswordDisplayLogic {
 			case .updateKeyStatus(let count):
 				customView.updatePasswordKeyStatusView(count: count)
 			case .verificationKeySuccess:
-				// TODO: go to next view
-				print("go to next view")
+				appNavigator.go(module: MovieFeedBuilder(), mode: .replaceAll(animated: true))
 		}
 	}
 }

@@ -42,4 +42,7 @@ enum ColorType: String {
 	
 	/// #F1938E = rgb(241,147,142)
 	case passwordStatusCircleError = "#F1938E"
+	
+	/// #E7E5E5 = rgb(231,229,229)
+	case gray = "#E7E5E5"
 }

@@ -31,5 +31,7 @@ public enum ProjectDI {
 		container.registerSingle(BaseNavigationController.self) { _ in BaseNavigationController() }
 		
 		container.register(PasswordKeyProviderProtocol.self) { _ in PasswordKeyProvider() }
+		container.register(MovieDataServiceProtocol.self) { _ in MovieDataService() }
+		
 	}
 }

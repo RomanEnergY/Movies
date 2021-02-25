@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Group: String {
+enum Group: String, CaseIterable {
 	case trending = "В тренде"
 	case nowPlaying = "Смотрят сейчас"
 	case popular = "Популярные"

@@ -65,6 +65,7 @@ final class PasswordView: BaseView {
 	}
 	
 	override func layoutSubviews() {
+		super.layoutSubviews()
 		allBarsHeightConstraint?.update(inset: allBarsHeight + 50)
 	}
 	
