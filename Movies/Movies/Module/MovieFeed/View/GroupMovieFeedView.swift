@@ -10,13 +10,14 @@ import UIKit
 import SnapKit
 
 protocol GroupMovieFeedViewDelegate: class {
-	func didSelectItemAt(index: Int)
+	func didSelectGroupItemAt(index: Int)
 }
 
 final class GroupMovieFeedView: BaseView {
 	
 	private var data = [String]()
-	private var activeRow: Int = 0
+	private(set) var activeRow: Int = 0
+	private(set) var loadingActiveCell = Set<Int>()
 	private var collectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
 		let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -47,7 +48,7 @@ final class GroupMovieFeedView: BaseView {
 		collectionView.snp.makeConstraints { make in
 			make.top.bottom.equalToSuperview()
 			make.height.equalTo(30)
-			make.left.right.equalToSuperview()
+			make.left.right.equalToSuperview().inset(10)
 		}
 	}
 	
@@ -59,6 +60,16 @@ final class GroupMovieFeedView: BaseView {
 	
 	func select(number: Int) {
 		activeRow = number
+		collectionView.reloadData()
+	}
+	
+	func loading(number: Int) {
+		loadingActiveCell.insert(number)
+		collectionView.reloadData()
+	}
+	
+	func unLoading(number: Int) {
+		loadingActiveCell.remove(number)
 		collectionView.reloadData()
 	}
 	
@@ -78,6 +89,7 @@ extension GroupMovieFeedView: UICollectionViewDataSource {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectCollectionViewCell.reuseIdentifier, for: indexPath) as! SelectCollectionViewCell
 		cell.update(title: data[indexPath.row])
 		cell.update(active: activeRow == indexPath.row)
+		loadingActiveCell.contains(indexPath.row) ? cell.loading(): cell.unLoading()
 		
 		return cell
 	}
@@ -86,8 +98,10 @@ extension GroupMovieFeedView: UICollectionViewDataSource {
 extension GroupMovieFeedView: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if activeRow != indexPath.row {
-			delegate?.didSelectItemAt(index: indexPath.row)
-			collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+			if loadingActiveCell.isEmpty {
+				delegate?.didSelectGroupItemAt(index: indexPath.row)
+				collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+			}
 		}
 	}
 }

@@ -43,17 +43,31 @@ extension MovieFeedViewController: MovieFeedViewDelegate {
 	func selectedGroup(item: Int) {
 		interactor.selectGroup(item: item)
 	}
+	
+	func selectMovie(id: Int) {
+		interactor.selectMovie(id: id)
+	}
+	
+	func fetchingNextPage(index: Int) {
+		interactor.fetchingNextPageGroup(item: index)
+	}
 }
 
 extension MovieFeedViewController: MovieFeedDisplayLogic {
 	func display(viewState: MovieFeed.ViewState) {
 		switch viewState {
 			case .initialSelect(let data):
-				customView.updateSelect(data: data)
+				customView.updateGroup(data: data)
 			case .selectGroup(let number):
-				customView.select(groupNumber: number)
-			case .loading:
-				customView.loading()
+				customView.updateGroup(number: number)
+			case .loading(let number):
+				customView.loading(number: number)
+			case .unLoading(let number):
+				customView.unLoading(number: number)
+			case .removeData:
+				customView.presentRemoveData()
+			case .append(let data):
+				customView.presentAppend(data: data)
 		}
 	}
 }

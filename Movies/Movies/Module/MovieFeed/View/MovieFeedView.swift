@@ -11,6 +11,8 @@ import SnapKit
 
 protocol MovieFeedViewDelegate: class {
 	func selectedGroup(item: Int)
+	func selectMovie(id: Int)
+	func fetchingNextPage(index: Int)
 }
 
 final class MovieFeedView: BaseView {
@@ -18,45 +20,78 @@ final class MovieFeedView: BaseView {
 	weak var delegate: MovieFeedViewDelegate?
 	
 	private var allBarsHeightConstraint: Constraint?
-	private var groupCollectionView = GroupMovieFeedView()
+	private var groupMovieFeedView = GroupMovieFeedView()
+	private var collectionMovieFeedView = CollectionMovieFeedView()
 	
 	override func configure() {
 		backgroundColor = Dev.Color.create(colorType: .white)
 		
-		groupCollectionView.delegate = self
+		groupMovieFeedView.delegate = self
+		collectionMovieFeedView.delegate = self
 	}
 	
 	override func addSubviews() {
-		addSubview(groupCollectionView)
+		addSubview(groupMovieFeedView)
+		addSubview(collectionMovieFeedView)
 	}
 	
 	override func makeConstraints() {
-		groupCollectionView.snp.makeConstraints { make in
+		groupMovieFeedView.snp.makeConstraints { make in
 			allBarsHeightConstraint = make.top.equalToSuperview().constraint
 			make.left.right.equalToSuperview()
+		}
+		
+		collectionMovieFeedView.snp.makeConstraints { make in
+			make.top.equalTo(groupMovieFeedView.snp.bottom)
+			make.left.right.bottom.equalToSuperview()
 		}
 	}
 	
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		allBarsHeightConstraint?.update(inset: allBarsHeight + 20)
+		allBarsHeightConstraint?.update(inset: allBarsHeight)
 	}
 	
-	func updateSelect(data: [String]) {
-		groupCollectionView.update(data: data)
+	func updateGroup(data: [String]) {
+		groupMovieFeedView.update(data: data)
 	}
 	
-	func select(groupNumber: Int) {
-		groupCollectionView.select(number: groupNumber)
+	func updateGroup(number: Int) {
+		groupMovieFeedView.select(number: number)
 	}
 	
-	func loading() {
-		print("MovieFeedView - loading")
+	func loading(number: Int) {
+		groupMovieFeedView.loading(number: number)
+	}
+	
+	func unLoading(number: Int) {
+		groupMovieFeedView.unLoading(number: number)
+	}
+	
+	func presentRemoveData() {
+		collectionMovieFeedView.removeData()
+	}
+	
+	func presentAppend(data: [MainModelMovieProtocol]) {
+		collectionMovieFeedView.append(data: data)
 	}
 }
 
 extension MovieFeedView: GroupMovieFeedViewDelegate {
-	func didSelectItemAt(index: Int) {
+	func didSelectGroupItemAt(index: Int) {
 		delegate?.selectedGroup(item: index)
+	}
+}
+
+extension MovieFeedView: CollectionMovieFeedViewDelegate {
+	func didSelect(id: Int) {
+		delegate?.selectMovie(id: id)
+	}
+	
+	func fetchingNextPage() {
+		if groupMovieFeedView.loadingActiveCell.isEmpty {
+			let actionRow = groupMovieFeedView.activeRow
+			delegate?.fetchingNextPage(index: actionRow)
+		}
 	}
 }

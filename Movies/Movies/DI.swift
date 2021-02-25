@@ -32,6 +32,6 @@ public enum ProjectDI {
 		
 		container.register(PasswordKeyProviderProtocol.self) { _ in PasswordKeyProvider() }
 		container.register(MovieDataServiceProtocol.self) { _ in MovieDataService() }
-		
+		container.register(MovieImageServiceProtocol.self) { _ in MovieImageService() }
 	}
 }

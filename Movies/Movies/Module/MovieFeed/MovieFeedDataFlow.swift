@@ -13,6 +13,9 @@ enum MovieFeed {
 	enum ViewState {
 		case initialSelect(data: [String])
 		case selectGroup(number: Int)
-		case loading
+		case loading(number: Int)
+		case unLoading(number: Int)
+		case removeData
+		case append(data: [MainModelMovieProtocol])
 	}
 }

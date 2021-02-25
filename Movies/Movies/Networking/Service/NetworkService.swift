@@ -18,20 +18,26 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
 	private var urlSessionTask: URLSessionTask?
 	
 	public func request(endPoint: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
-		let session = URLSession.shared
-		do {
-			if let request = try self.buildRequest(from: endPoint) {
-				print("endPoint", endPoint)
-				urlSessionTask = session.dataTask(with: request, completionHandler: { (data, response, error) in
-					completion(data, response, error)
-				})
-			}
-			
-		} catch {
-			completion(nil, nil, error)
-		}
+//		let session = URLSession.shared
+//		do {
+//			if let request = try self.buildRequest(from: endPoint) {
+//				print("endPoint", endPoint)
+//				urlSessionTask = session.dataTask(with: request, completionHandler: { (data, response, error) in
+//					completion(data, response, error)
+//				})
+//			}
+//
+//		} catch {
+//			completion(nil, nil, error)
+//		}
 		
-		self.urlSessionTask?.resume()
+//		self.urlSessionTask?.resume()
+		
+		// TODO: Использование Stub объекта
+		if let file = Bundle.main.url(forResource: "DataMoviesStub", withExtension: "json") {
+			let data = try! Data(contentsOf: file)
+			completion(data, nil, nil)
+		}
 	}
 	
 	public func cancel() {

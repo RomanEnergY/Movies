@@ -11,7 +11,10 @@ import Foundation
 protocol MovieFeedPresentationLogic {
 	func initialSelect(groups: [Group])
 	func showSelectGroup(number: Int)
-	func showLoading()
+	func showLoading(number: Int)
+	func showUnLoading(number: Int)
+	func removeData()
+	func loadingDataAppend(data: [MainModelMovieProtocol])
 }
 
 final class MovieFeedPresenter: MovieFeedPresentationLogic {
@@ -27,7 +30,19 @@ final class MovieFeedPresenter: MovieFeedPresentationLogic {
 		viewController?.display(viewState: .selectGroup(number: number))
 	}
 	
-	func showLoading() {
-		viewController?.display(viewState: .loading)
+	func showLoading(number: Int) {
+		viewController?.display(viewState: .loading(number: number))
+	}
+	
+	func showUnLoading(number: Int) {
+		viewController?.display(viewState: .unLoading(number: number))
+	}
+	
+	func removeData() {
+		viewController?.display(viewState: .removeData)
+	}
+	
+	func loadingDataAppend(data: [MainModelMovieProtocol]) {
+		viewController?.display(viewState: .append(data: data))
 	}
 }

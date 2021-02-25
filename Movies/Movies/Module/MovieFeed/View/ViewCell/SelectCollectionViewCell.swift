@@ -11,20 +11,11 @@ import SnapKit
 
 final class SelectCollectionViewCell: BaseCollectionViewCell {
 	
-	private var widthConstraint: Constraint?
-	private var widthTextLabel: CGFloat = 0.0
+	private let preloader = UIActivityIndicatorView()
 	private let titleLabel = UILabel()
 	private let activeView = UIView()
 	private let activeColor = Dev.Color.create(colorType: .regular)
 	private let notActiveColor = Dev.Color.create(colorType: .white)
-	
-	func update(title: String) {
-		titleLabel.text = title
-	}
-	
-	func update(active: Bool) {
-		activeView.backgroundColor = active == true ? activeColor: notActiveColor
-	}
 	
 	override func configure() {
 		backgroundColor = notActiveColor
@@ -37,11 +28,16 @@ final class SelectCollectionViewCell: BaseCollectionViewCell {
 	}
 	
 	override func addSubviews() {
+		addSubview(preloader)
 		addSubview(titleLabel)
 		addSubview(activeView)
 	}
 	
 	override func makeConstraints() {
+		preloader.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
+		}
+		
 		titleLabel.snp.makeConstraints { make in
 			make.top.equalToSuperview().inset(1)
 			make.centerX.equalToSuperview()
@@ -53,5 +49,23 @@ final class SelectCollectionViewCell: BaseCollectionViewCell {
 			make.width.equalTo(titleLabel.snp.width).offset(20)
 			make.height.equalTo(3)
 		}
+	}
+	
+	func update(title: String) {
+		titleLabel.text = title
+	}
+	
+	func update(active: Bool) {
+		activeView.backgroundColor = active == true ? activeColor: notActiveColor
+	}
+	
+	func loading() {
+		preloader.startAnimating()
+		titleLabel.isEnabled = false
+	}
+	
+	func unLoading() {
+		preloader.stopAnimating()
+		titleLabel.isEnabled = true
 	}
 }
