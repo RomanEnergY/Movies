@@ -10,6 +10,7 @@ import Foundation
 
 //MARK: - MainMovieProtocol
 protocol MainModelMovieProtocol {
+	/// Primery Key Movie
 	var id: Int { get }
 	var title: String { get }
 	var rating: Double { get }

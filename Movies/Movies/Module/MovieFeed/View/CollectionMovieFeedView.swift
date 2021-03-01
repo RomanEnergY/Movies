@@ -9,13 +9,17 @@
 import UIKit
 
 protocol CollectionMovieFeedViewDelegate: class {
+	func loadImage(posterPath: String, indexPath: IndexPath)
 	func didSelect(id: Int)
 	func fetchingNextPage()
 }
 
 final class CollectionMovieFeedView: BaseView {
 	
+	private var indexDataCache = [IndexPath: Data?]()
+	private var indexViewCache = [IndexPath: ActivityImageView]()
 	private var data = [MainModelMovieProtocol]()
+	private let preloader = UIActivityIndicatorView()
 	private var tableView: UITableView = {
 		let view = UITableView()
 		
@@ -40,22 +44,50 @@ final class CollectionMovieFeedView: BaseView {
 	
 	override func addSubviews() {
 		addSubview(tableView)
+		addSubview(preloader)
 	}
 	
 	override func makeConstraints() {
 		tableView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
+		
+		preloader.snp.makeConstraints { make in
+			make.edges.equalTo(tableView)
+		}
+	}
+	
+	func updateImage(indexPath: IndexPath, data: Data?) {
+		DispatchQueue.main.async { [weak self] in
+//			self?.indexDataCache[indexPath] = data
+			self?.indexViewCache[indexPath]?.update(imageData: data)
+		}
+	}
+	
+	func loading() {
+		DispatchQueue.main.async { [weak self] in
+			self?.preloader.startAnimating()
+		}
+	}
+	
+	func unLoading() {
+		DispatchQueue.main.async { [weak self] in
+			self?.preloader.stopAnimating()
+		}
 	}
 	
 	func removeData() {
-		self.data.removeAll()
-		tableView.reloadData()
+		DispatchQueue.main.async { [weak self] in
+			self?.data.removeAll()
+			self?.indexViewCache.removeAll()
+			self?.indexDataCache.removeAll()
+			self?.reloadData()
+		}
 	}
 	
 	func append(data: [MainModelMovieProtocol]) {
 		self.data.append(contentsOf: data)
-		tableView.reloadData()
+		reloadData()
 	}
 	
 	private func registratinCell() {
@@ -63,22 +95,38 @@ final class CollectionMovieFeedView: BaseView {
 		let reuseIdentifier = CollectionTableViewCell.reuseIdentifier
 		tableView.register(typeCell, forCellReuseIdentifier: reuseIdentifier)
 	}
+	
+	private func reloadData() {
+		DispatchQueue.main.async { [weak self] in
+			self?.tableView.reloadData()
+		}
+	}
+	
+	private func reloadRows(at index: IndexPath) {
+		DispatchQueue.main.async { [weak self] in
+			self?.tableView.reloadRows(at: [index], with: .automatic)
+		}
+	}
 }
 
 extension CollectionMovieFeedView: UITableViewDataSource {
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return data.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: CollectionTableViewCell.reuseIdentifier, for: indexPath) as! CollectionTableViewCell
-		cell.update(data: data[indexPath.row])
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionTableViewCell.reuseIdentifier, for: indexPath) as? CollectionTableViewCell else { return UITableViewCell() }
+		
+		cell.delegate = self
+		cell.update(data: data[indexPath.row], indexPath: indexPath)
 		
 		return cell
 	}
 }
 
 extension CollectionMovieFeedView: UITableViewDelegate {
+	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		delegate?.didSelect(id: data[indexPath.row].id)
 	}
@@ -89,6 +137,22 @@ extension CollectionMovieFeedView: UITableViewDelegate {
 		
 		if (contentHeight - offsetY) < frame.height * 2 {
 			delegate?.fetchingNextPage()
+		}
+	}
+}
+
+extension CollectionMovieFeedView: CollectionTableViewCellDelegate {
+	
+	//TODO: Проблема с кешированием
+	func loadImage(cell: CollectionTableViewCell, posterPath: String, indexPath: IndexPath) {
+		if let activityImageView = indexViewCache[indexPath],
+		   let data = indexDataCache[indexPath] {
+			activityImageView.update(imageData: data)
+			
+		}
+		else {
+			indexViewCache[indexPath] = cell.connectImageView()
+			delegate?.loadImage(posterPath: posterPath, indexPath: indexPath)
 		}
 	}
 }

@@ -36,6 +36,15 @@ final class MovieDataService: MovieDataServiceProtocol {
 	
 	//MARK: - private func
 	private func getDataGroup(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
+		
+		// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org/3/
+		// Использование Stub объектов
+		// После прекращения блокировки запросов метод getDataStub(_:) удалить - пользоваться методом getDataRequest(_:)
+		getDataStub(completion)
+//		getDataRequest(completion)
+	}
+	
+	private func getDataRequest(_ completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
 		guard let group = currentGroup else { return }
 		let endPoint = GroupToEndPoint.adapter(group, page: currentPage)
 		
@@ -61,6 +70,23 @@ final class MovieDataService: MovieDataServiceProtocol {
 				print("Error JSONDecoder().decode:", error.localizedDescription)
 				completion(nil)
 			}
+		}
+	}
+	
+	private func getDataStub(_ completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
+		do {
+			guard let file = Bundle.main.url(forResource: "DataMoviesStub", withExtension: "json") else { return }
+			let dataStub = try Data(contentsOf: file)
+			let movieApiResponse = try JSONDecoder().decode(MovieResponseAPI.self, from: dataStub)
+			
+			//TODO: искусственно замедляем ответ
+			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 0.884) {
+				completion(movieApiResponse.movies)
+			}
+			
+		} catch {
+			print("Error JSONDecoder().decode:", error.localizedDescription)
+			completion(nil)
 		}
 	}
 }

@@ -9,10 +9,14 @@
 import Foundation
 
 protocol MovieFeedPresentationLogic {
-	func initialSelect(groups: [Group])
+	func initialGroup(groups: [Group])
+	func showLoadingGroup(number: Int)
+	func showUnLoadingGroup(number: Int)
 	func showSelectGroup(number: Int)
-	func showLoading(number: Int)
-	func showUnLoading(number: Int)
+	
+	func showLoadingCollection()
+	func showUnLoadingCollection()
+	func update(indexPath: IndexPath, imageData: Data?)
 	func removeData()
 	func loadingDataAppend(data: [MainModelMovieProtocol])
 }
@@ -21,28 +25,40 @@ final class MovieFeedPresenter: MovieFeedPresentationLogic {
 	
 	weak var viewController: MovieFeedDisplayLogic?
 	
-	func initialSelect(groups: [Group]) {
+	func initialGroup(groups: [Group]) {
 		let data = groups.map { $0.rawValue }
-		viewController?.display(viewState: .initialSelect(data: data))
+		viewController?.display(viewGroup: .initial(data: data))
+	}
+	
+	func showLoadingGroup(number: Int) {
+		viewController?.display(viewGroup: .loading(number: number))
+	}
+	
+	func showUnLoadingGroup(number: Int) {
+		viewController?.display(viewGroup: .unLoading(number: number))
 	}
 	
 	func showSelectGroup(number: Int) {
-		viewController?.display(viewState: .selectGroup(number: number))
+		viewController?.display(viewGroup: .select(number: number))
 	}
 	
-	func showLoading(number: Int) {
-		viewController?.display(viewState: .loading(number: number))
+	func showLoadingCollection() {
+		viewController?.display(viewCollection: .loading)
 	}
 	
-	func showUnLoading(number: Int) {
-		viewController?.display(viewState: .unLoading(number: number))
+	func showUnLoadingCollection() {
+		viewController?.display(viewCollection: .unLoading)
+	}
+	
+	func update(indexPath: IndexPath, imageData: Data?) {
+		viewController?.display(viewCollection: .updateImage(indexPath: indexPath, data: imageData))
 	}
 	
 	func removeData() {
-		viewController?.display(viewState: .removeData)
+		viewController?.display(viewCollection: .removeData)
 	}
 	
 	func loadingDataAppend(data: [MainModelMovieProtocol]) {
-		viewController?.display(viewState: .append(data: data))
+		viewController?.display(viewCollection: .append(data: data))
 	}
 }

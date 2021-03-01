@@ -11,11 +11,19 @@ import Foundation
 enum MovieFeed {
 	
 	enum ViewState {
-		case initialSelect(data: [String])
-		case selectGroup(number: Int)
-		case loading(number: Int)
-		case unLoading(number: Int)
-		case removeData
-		case append(data: [MainModelMovieProtocol])
+		enum Group {
+			case initial(data: [String])
+			case select(number: Int)
+			case loading(number: Int)
+			case unLoading(number: Int)
+		}
+		
+		enum Collection {
+			case loading
+			case unLoading
+			case updateImage(indexPath: IndexPath, data: Data?)
+			case removeData
+			case append(data: [MainModelMovieProtocol])
+		}
 	}
 }

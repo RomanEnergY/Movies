@@ -11,6 +11,7 @@ import Foundation
 protocol MovieFeedBusinessLogic {
 	func initialState()
 	func selectGroup(item: Int)
+	func loadImage(posterPath: String, indexPath: IndexPath)
 	func selectMovie(id: Int)
 	func fetchingNextPageGroup(item: Int)
 }
@@ -33,26 +34,34 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	}
 	
 	func initialState() {
-		presenter.initialSelect(groups: groupsSelect)
+		presenter.initialGroup(groups: groupsSelect)
 		selectGroup(item: 0)
 	}
 	
 	func selectGroup(item: Int) {
-		presenter.showLoading(number: item)
+		presenter.showLoadingGroup(number: item)
+		presenter.showLoadingCollection()
 		presenter.removeData()
 		
 		movieDataService.getDataNewGroup(group: groupsSelect[item]) { [weak self] mainModelMovie in
-			guard let self = self,
-				  let mainModelMovie = mainModelMovie else { return }
-			DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-				DispatchQueue.main.async {
-					self.presenter.loadingDataAppend(data: mainModelMovie)
-					self.presenter.showUnLoading(number: item)
-				}
+			guard let self = self, let mainModelMovie = mainModelMovie else { return }
+			self.presenter.loadingDataAppend(data: mainModelMovie)
+			self.presenter.showUnLoadingGroup(number: item)
+			self.presenter.showUnLoadingCollection()
+		}
+		presenter.showSelectGroup(number: item)
+	}
+	
+	func loadImage(posterPath: String, indexPath: IndexPath) {
+		movieImageService.getIcon(posterPath: posterPath) { [weak self] result in
+			switch result {
+				case .failure(let error):
+					print(error.localizedDescription)
+					
+				case .success(let data):
+					self?.presenter.update(indexPath: indexPath, imageData: data)
 			}
 		}
-		
-		presenter.showSelectGroup(number: item)
 	}
 	
 	func selectMovie(id: Int) {
@@ -60,16 +69,11 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	}
 	
 	func fetchingNextPageGroup(item: Int) {
-		presenter.showLoading(number: item)
+		presenter.showLoadingGroup(number: item)
 		movieDataService.nextPage { [weak self] mainModelMovie in
-			guard let self = self,
-				  let mainModelMovie = mainModelMovie else { return }
-			DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-				DispatchQueue.main.async {
-					self.presenter.loadingDataAppend(data: mainModelMovie)
-					self.presenter.showUnLoading(number: item)
-				}
-			}
+			guard let self = self, let mainModelMovie = mainModelMovie else { return }
+			self.presenter.loadingDataAppend(data: mainModelMovie)
+			self.presenter.showUnLoadingGroup(number: item)
 		}
 	}
 }

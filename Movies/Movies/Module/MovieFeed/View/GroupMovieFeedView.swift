@@ -24,7 +24,7 @@ final class GroupMovieFeedView: BaseView {
 		collection.showsHorizontalScrollIndicator = false
 		layout.scrollDirection = .horizontal
 		layout.minimumLineSpacing = 8
-		layout.itemSize = CGSize(width: 100, height: 20)
+		layout.itemSize = CGSize(width: 120, height: 20)
 		collection.translatesAutoresizingMaskIntoConstraints = false
 		collection.backgroundColor = .clear
 		
@@ -70,13 +70,19 @@ final class GroupMovieFeedView: BaseView {
 	
 	func unLoading(number: Int) {
 		loadingActiveCell.remove(number)
-		collectionView.reloadData()
+		reloadData()
 	}
 	
 	private func registratinCell() {
 		let typeCell = SelectCollectionViewCell.self
 		let reuseIdentifier = SelectCollectionViewCell.reuseIdentifier
 		collectionView.register(typeCell, forCellWithReuseIdentifier: reuseIdentifier)
+	}
+	
+	private func reloadData() {
+		DispatchQueue.main.async { [weak self] in
+			self?.collectionView.reloadData()
+		}
 	}
 }
 

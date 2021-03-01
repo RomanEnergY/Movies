@@ -11,6 +11,7 @@ import SnapKit
 
 protocol MovieFeedViewDelegate: class {
 	func selectedGroup(item: Int)
+	func loadImage(posterPath: String, indexPath: IndexPath)
 	func selectMovie(id: Int)
 	func fetchingNextPage(index: Int)
 }
@@ -21,10 +22,12 @@ final class MovieFeedView: BaseView {
 	
 	private var allBarsHeightConstraint: Constraint?
 	private var groupMovieFeedView = GroupMovieFeedView()
+	private var delimiterView = UIView()
 	private var collectionMovieFeedView = CollectionMovieFeedView()
 	
 	override func configure() {
 		backgroundColor = Dev.Color.create(colorType: .white)
+		delimiterView.backgroundColor = Dev.Color.create(colorType: .gray)
 		
 		groupMovieFeedView.delegate = self
 		collectionMovieFeedView.delegate = self
@@ -32,6 +35,7 @@ final class MovieFeedView: BaseView {
 	
 	override func addSubviews() {
 		addSubview(groupMovieFeedView)
+		addSubview(delimiterView)
 		addSubview(collectionMovieFeedView)
 	}
 	
@@ -41,8 +45,14 @@ final class MovieFeedView: BaseView {
 			make.left.right.equalToSuperview()
 		}
 		
-		collectionMovieFeedView.snp.makeConstraints { make in
+		delimiterView.snp.makeConstraints { make in
 			make.top.equalTo(groupMovieFeedView.snp.bottom)
+			make.left.right.equalToSuperview()
+			make.height.equalTo(1)
+		}
+		
+		collectionMovieFeedView.snp.makeConstraints { make in
+			make.top.equalTo(delimiterView.snp.bottom)
 			make.left.right.bottom.equalToSuperview()
 		}
 	}
@@ -60,12 +70,24 @@ final class MovieFeedView: BaseView {
 		groupMovieFeedView.select(number: number)
 	}
 	
-	func loading(number: Int) {
+	func loadingGroup(number: Int) {
 		groupMovieFeedView.loading(number: number)
 	}
 	
-	func unLoading(number: Int) {
+	func unLoadingGroup(number: Int) {
 		groupMovieFeedView.unLoading(number: number)
+	}
+	
+	func updateImage(indexPath: IndexPath, data: Data?) {
+		collectionMovieFeedView.updateImage(indexPath: indexPath, data: data)
+	}
+	
+	func loadingCollection() {
+		collectionMovieFeedView.loading()
+	}
+	
+	func unLoadingCollection() {
+		collectionMovieFeedView.unLoading()
 	}
 	
 	func presentRemoveData() {
@@ -84,6 +106,10 @@ extension MovieFeedView: GroupMovieFeedViewDelegate {
 }
 
 extension MovieFeedView: CollectionMovieFeedViewDelegate {
+	func loadImage(posterPath: String, indexPath: IndexPath) {
+		delegate?.loadImage(posterPath: posterPath, indexPath: indexPath)
+	}
+	
 	func didSelect(id: Int) {
 		delegate?.selectMovie(id: id)
 	}

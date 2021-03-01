@@ -23,7 +23,7 @@ enum ColorType: String {
 	case regularPressed = "#76ACCD"
 	
 	/// #001B43 = rgb(0, 27, 67)
-	case regularBorder = "#001B43"
+	case border = "#001B43"
 	
 	/// #852323 = rgb(133,35,35)
 	case shadowColorImageCinema = "#1B1412"
@@ -48,4 +48,7 @@ enum ColorType: String {
 	
 	/// #E7E7E7 = rgb(231,231,231)
 	case preloaderActive = "#E7E7E7"
+	
+	/// #F5F4F4 = rgb(245,244,244)
+	case backgroundImage = "#F5F4F4"
 }

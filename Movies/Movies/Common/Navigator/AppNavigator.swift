@@ -18,13 +18,11 @@ final class AppNavigator: AppNavigatorProtocol {
 	private var window: UIWindow?
 	public var currentController: BaseViewController?
 	let logger: LoggerProtocol
-//	let navigationController: BaseNavigationController
 
-	init(logger: LoggerProtocol = DI.container.resolve(LoggerProtocol.self)
-//		 navigationController: BaseNavigationController = DI.container.resolve(BaseNavigationController.self)
+	init(
+		logger: LoggerProtocol = DI.container.resolve(LoggerProtocol.self)
 	) {
 		self.logger = logger
-//		self.navigationController = navigationController
 	}
 	
 	/// Создает инстанс главного окна приложения и инициализирует первичный экран связанный с переданным 'BaseViewController'
@@ -34,8 +32,7 @@ final class AppNavigator: AppNavigatorProtocol {
 		self.window = window
 		self.window?.backgroundColor = UIColor.white
 		
-//		let rootViewController = BeginningBuilder().build()
-		let rootViewController = MovieFeedBuilder().build()
+		let rootViewController = BeginningBuilder().build()
 		self.window?.rootViewController = BaseNavigationController(rootViewController: rootViewController)
 		currentController = rootViewController
 		

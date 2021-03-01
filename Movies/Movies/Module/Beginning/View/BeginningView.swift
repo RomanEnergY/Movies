@@ -21,10 +21,9 @@ final class BeginningView: BaseView {
 		return BeginningData()
 	}
 	private let bacgraundImage = UIImageView()
-	private let blurEffect = UIBlurEffect()
 	private let scrollView = UIScrollView()
 	private let contentView = UIView()
-	private let shadowRoundView = ShadowRoundView(image: UIImage(named: "Cinema"))
+	private let shadowRoundView = ShadowRoundView()
 	private let titleLabel = UILabel()
 	private let stackView = UIStackView()
 	private let continueButton = Dev.Button.create(devType: .regular)
@@ -40,6 +39,8 @@ final class BeginningView: BaseView {
 		bacgraundImage.image = UIImage(named: "kino")
 		bacgraundImage.alpha = 0.05
 		
+		let imageView = UIImageView(image: UIImage(named: "Cinema"))
+		shadowRoundView.wrap(view: imageView)
 		shadowRoundView.shadowColor = Dev.Color.create(colorType: .shadowColorImageCinema)
 		
 		titleLabel.text = data.title

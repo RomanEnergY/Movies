@@ -9,7 +9,8 @@
 import Foundation
 
 protocol MovieFeedDisplayLogic: class {
-	func display(viewState: MovieFeed.ViewState)
+	func display(viewGroup: MovieFeed.ViewState.Group)
+	func display(viewCollection: MovieFeed.ViewState.Collection)
 }
 
 final class MovieFeedViewController: BaseViewController {
@@ -44,6 +45,10 @@ extension MovieFeedViewController: MovieFeedViewDelegate {
 		interactor.selectGroup(item: item)
 	}
 	
+	func loadImage(posterPath: String, indexPath: IndexPath) {
+		interactor.loadImage(posterPath: posterPath, indexPath: indexPath)
+	}
+	
 	func selectMovie(id: Int) {
 		interactor.selectMovie(id: id)
 	}
@@ -54,16 +59,27 @@ extension MovieFeedViewController: MovieFeedViewDelegate {
 }
 
 extension MovieFeedViewController: MovieFeedDisplayLogic {
-	func display(viewState: MovieFeed.ViewState) {
-		switch viewState {
-			case .initialSelect(let data):
+	func display(viewGroup: MovieFeed.ViewState.Group) {
+		switch viewGroup {
+			case .initial(let data):
 				customView.updateGroup(data: data)
-			case .selectGroup(let number):
+			case .select(let number):
 				customView.updateGroup(number: number)
 			case .loading(let number):
-				customView.loading(number: number)
+				customView.loadingGroup(number: number)
 			case .unLoading(let number):
-				customView.unLoading(number: number)
+				customView.unLoadingGroup(number: number)
+		}
+	}
+	
+	func display(viewCollection: MovieFeed.ViewState.Collection) {
+		switch viewCollection {
+			case .loading:
+				customView.loadingCollection()
+			case .unLoading:
+				customView.unLoadingCollection()
+			case let .updateImage(indexPath, data):
+				customView.updateImage(indexPath: indexPath, data: data)
 			case .removeData:
 				customView.presentRemoveData()
 			case .append(let data):

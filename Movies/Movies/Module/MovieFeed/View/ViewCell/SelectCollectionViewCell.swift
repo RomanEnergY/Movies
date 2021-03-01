@@ -19,7 +19,7 @@ final class SelectCollectionViewCell: BaseCollectionViewCell {
 	
 	override func configure() {
 		backgroundColor = notActiveColor
-		titleLabel.font = UIFont.italicSystemFont(ofSize: 12)
+		titleLabel.font = UIFont.italicSystemFont(ofSize: 14)
 		titleLabel.textAlignment = .center
 		
 		activeView.backgroundColor = notActiveColor
