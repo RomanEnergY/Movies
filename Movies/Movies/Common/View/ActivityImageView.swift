@@ -42,7 +42,7 @@ final class ActivityImageView: BaseView {
 			state == .loading ? preloaderIcon.startAnimating() : preloaderIcon.stopAnimating()
 			preloaderIcon.isHidden = state != .loading
 			titleLabel.isHidden = state != .error
-			reloadButton.isHidden = state != .error
+			reloadButton.isHidden = posterPath == nil ? true : state != .error
 			
 			titleLabel.isHidden = false
 			titleLabel.textColor = .red
@@ -102,10 +102,10 @@ final class ActivityImageView: BaseView {
 	
 	func loading(posterPath: String?) {
 		guard let posterPath = posterPath else { return }
-		setState(mode: .loading)
-		
 		self.posterPath = posterPath
+		
 		// инициализация загрузки изображения
+		setState(mode: .loading)
 		delegate?.loadImage(posterPath: posterPath)
 	}
 	
@@ -124,7 +124,7 @@ final class ActivityImageView: BaseView {
 	//MARK: override function
 	
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-		if state == .error, reloadButton.frame.contains(point) {
+		if !reloadButton.isHidden, reloadButton.frame.contains(point) {
 			return reloadButton
 		}
 		
