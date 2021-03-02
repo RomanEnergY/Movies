@@ -48,7 +48,7 @@ final class BaseButton: UIButton {
 		
 		self.titleLabel?.lineBreakMode = .byWordWrapping
 		self.titleLabel?.textAlignment = .center
-		contentEdgeInsets = UIEdgeInsets(top: 2, left: 10, bottom: 2, right: 10)
+		contentEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
 	}
 	
 	required init?(coder: NSCoder) {

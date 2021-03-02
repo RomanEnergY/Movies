@@ -35,11 +35,13 @@ final class MovieImageService: MovieImageServiceProtocol {
 		else {
 			// если в кэше нет - делаем запрос, кэшируем картинку и возвращаем completion
 			
-			// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org/3/
+			// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org
 			// Использование Stub объектов
 			// После прекращения блокировки запросов метод getDataStub(_:) удалить - пользоваться методом getDataRequest(_:, _:)
-			getDataStub(posterPath, completion)
-			//			getDataRequest(posterPath, completion)
+//			getDataStub(posterPath, completion)
+			
+			// TODO: Начиная с 02.03.2021 запросы не блокируются
+			getDataRequest(posterPath, completion)
 		}
 	}
 	
@@ -56,24 +58,23 @@ final class MovieImageService: MovieImageServiceProtocol {
 		}
 	}
 	
+	// Искусственно замедляем ответ - для тестирования ui компонентов отображающих загрузку данных
+	// В ресурсах проекта есть 3 файла .png - для тестрирования загрузки изображения
+	// Метод может вернуть nil объект - в дальнейшем пользователь должен инициализтровать повторную загрузку картинки
 	private func getDataStub(_ posterPath: String, _ completion: @escaping (Result<Data?, Error>) -> Void) {
 		do {
-			//TODO: искусственно замедляем ответ
-			let random = Int.random(in: 0...4)
 			let timeResult = 1.0
+			let random = Int.random(in: 0...4)
 			
-			guard let file = Bundle.main.url(forResource: "kino\(random)", withExtension: "png") else {
-				print("nil stub image")
-				DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
-					completion(.success(nil))
-				}
-				return
+			let file = Bundle.main.url(forResource: "kino\(random)", withExtension: "png")
+			print(file != nil ? "loading stub image" : "nil stub image")
+			let dataStub: Data? = file != nil ? try Data(contentsOf: file!) : nil
+			
+			if dataStub != nil {
+				imageCache.setObject(dataStub! as NSData, forKey: posterPath as NSString)
 			}
 			
-			print("loading stub image")
-			let dataStub = try Data(contentsOf: file)
-			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) { [weak self] in
-				self?.imageCache.setObject(dataStub as NSData, forKey: posterPath as NSString)
+			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
 				completion(.success(dataStub))
 			}
 			

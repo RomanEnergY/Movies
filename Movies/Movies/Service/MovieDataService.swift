@@ -37,11 +37,13 @@ final class MovieDataService: MovieDataServiceProtocol {
 	//MARK: - private func
 	private func getDataGroup(completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
 		
-		// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org/3/
+		// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org
 		// Использование Stub объектов
 		// После прекращения блокировки запросов метод getDataStub(_:) удалить - пользоваться методом getDataRequest(_:)
-		getDataStub(completion)
-//		getDataRequest(completion)
+//		getDataStub(completion)
+		
+		// TODO: Начиная с 02.03.2021 запросы не блокируются
+		getDataRequest(completion)
 	}
 	
 	private func getDataRequest(_ completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
@@ -73,14 +75,16 @@ final class MovieDataService: MovieDataServiceProtocol {
 		}
 	}
 	
+	//TODO: искусственно замедляем ответ - для тестирования ui компонентов отображающих загрузку данных
 	private func getDataStub(_ completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
 		do {
 			guard let file = Bundle.main.url(forResource: "DataMoviesStub", withExtension: "json") else { return }
+			let timeResult = 1.0
+			
 			let dataStub = try Data(contentsOf: file)
 			let movieApiResponse = try JSONDecoder().decode(MovieResponseAPI.self, from: dataStub)
 			
-			//TODO: искусственно замедляем ответ
-			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 0.884) {
+			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
 				completion(movieApiResponse.movies)
 			}
 			

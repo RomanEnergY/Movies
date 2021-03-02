@@ -46,6 +46,9 @@ enum ColorType: String {
 	/// #E7E5E5 = rgb(231,229,229)
 	case gray = "#E7E5E5"
 	
+	/// #F0EFEF = rgb(240,239,239)
+	case lightGray = "#F0EFEF"
+	
 	/// #E7E7E7 = rgb(231,231,231)
 	case preloaderActive = "#E7E7E7"
 	

@@ -19,6 +19,7 @@ protocol MovieFeedPresentationLogic {
 	func update(posterPath: String, imageData: Data?)
 	func removeData()
 	func loadingDataAppend(data: [MainModelMovieProtocol])
+	func showSelectMovie(data: DescriptionMovieAPI)
 }
 
 final class MovieFeedPresenter: MovieFeedPresentationLogic {
@@ -60,5 +61,9 @@ final class MovieFeedPresenter: MovieFeedPresentationLogic {
 	
 	func loadingDataAppend(data: [MainModelMovieProtocol]) {
 		viewController?.display(viewCollection: .append(data: data))
+	}
+	
+	func showSelectMovie(data: DescriptionMovieAPI) {
+		viewController?.display(viewCollection: .showSelectMovie(data: data))
 	}
 }

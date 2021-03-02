@@ -84,6 +84,9 @@ extension MovieFeedViewController: MovieFeedDisplayLogic {
 				customView.presentRemoveData()
 			case .append(let data):
 				customView.presentAppend(data: data)
+			case .showSelectMovie(let data):
+				print("showSelectMovie:/n\(data)")
+			
 		}
 	}
 }

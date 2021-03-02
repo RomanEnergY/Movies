@@ -16,8 +16,8 @@ protocol CollectionMovieFeedViewDelegate: class {
 
 final class CollectionMovieFeedView: BaseView {
 	
-	private var imageCache = NSCache<NSString, UIImage>() // кэш (forKey: posterPath) -> UIImage
 	private var posterPathDataImageViews = [String: DataImageViewProtocol]()
+//	private var indexPaths = [IndexPath]()
 	private var data = [MainModelMovieProtocol]()
 	private let preloader = UIActivityIndicatorView()
 	private var tableView: UITableView = {
@@ -59,9 +59,6 @@ final class CollectionMovieFeedView: BaseView {
 	
 	func updateImage(posterPath: String, data: Data?) {
 		let image: UIImage? = data != nil ? UIImage(data: data!) : nil
-		if image != nil {	
-			imageCache.setObject(image!, forKey: posterPath as NSString)
-		}
 		posterPathDataImageViews[posterPath]?.update(image: image)
 	}
 	
@@ -86,8 +83,25 @@ final class CollectionMovieFeedView: BaseView {
 	}
 	
 	func append(data: [MainModelMovieProtocol]) {
+		let tempDataEmpty = !self.data.isEmpty
+		var indexs: [IndexPath]?
+		
+		if tempDataEmpty {
+			indexs = [IndexPath]()
+			for i in 0...data.count - 1 {
+				let index = IndexPath(row: self.data.count + i, section: 0)
+				indexs?.append(index)
+			}
+		}
+		
 		self.data.append(contentsOf: data)
-		reloadData()
+		
+		if tempDataEmpty {
+			insertRows(at: indexs ?? [])
+		}
+		else {
+			reloadData()
+		}
 	}
 	
 	private func registratinCell() {
@@ -102,9 +116,9 @@ final class CollectionMovieFeedView: BaseView {
 		}
 	}
 	
-	private func reloadRows(at index: IndexPath) {
+	private func insertRows(at index: [IndexPath]) {
 		DispatchQueue.main.async { [weak self] in
-			self?.tableView.reloadRows(at: [index], with: .automatic)
+			self?.tableView.insertRows(at: index, with: .automatic)
 		}
 	}
 }
@@ -143,14 +157,8 @@ extension CollectionMovieFeedView: UITableViewDelegate {
 
 extension CollectionMovieFeedView: CollectionTableViewCellDelegate {
 	
-	//TODO: Проблема с кешированием
 	func load(dataImageView: DataImageViewProtocol, posterPath: String) {
-		if let image = imageCache.object(forKey: posterPath as NSString) {
-			posterPathDataImageViews[posterPath]?.update(image: image)
-		}
-		else {
-			posterPathDataImageViews[posterPath] = dataImageView
-			delegate?.loadImage(posterPath: posterPath)
-		}
+		posterPathDataImageViews[posterPath] = dataImageView
+		delegate?.loadImage(posterPath: posterPath)
 	}
 }

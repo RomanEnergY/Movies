@@ -28,7 +28,6 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 	
 	//MARK: private variable
 	
-	private var posterPath: String?
 	private let imageView = UIImageView()
 	private let preloaderIcon = UIActivityIndicatorView()
 	private let titleLabel = UILabel()
@@ -37,6 +36,13 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 	//MARK: public variable
 	
 	weak var delegate: ActivityImageViewDelegate?
+	var posterPath: String? {
+		didSet {
+			if posterPath != nil {
+				setState(mode: .loading)
+			}
+		}
+	}
 	private var state: ActivityImageView.State = .initial {
 		didSet {
 			if state == .initial {
@@ -46,10 +52,6 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 			preloaderIcon.isHidden = state != .loading
 			titleLabel.isHidden = state != .error
 			reloadButton.isHidden = posterPath == nil ? true : state != .error
-			
-			titleLabel.isHidden = false
-			titleLabel.textColor = .red
-			titleLabel.text = "\(state)"
 			
 			if state == .loading {
 				if let posterPath = posterPath {
@@ -65,11 +67,11 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 		imageView.backgroundColor = Dev.Color.create(colorType: .backgroundImage)
 		titleLabel.font = UIFont.italicSystemFont(ofSize: 12)
 		titleLabel.textAlignment = .center
-		titleLabel.text = "Ошибка загрузки изображения"
+		titleLabel.text = "Ошибка"
 		titleLabel.numberOfLines = 0
 		
 		reloadButton.setTitle("ПОВТОРИТЬ", for: .normal)
-		reloadButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: 12)
+		reloadButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: 10)
 		reloadButton.addTarget(self, action: #selector(pressedButton), for: .touchUpInside)
 		
 		preloaderIcon.hidesWhenStopped = false
@@ -92,30 +94,18 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 		}
 		
 		titleLabel.snp.makeConstraints { make in
-			make.left.right.equalToSuperview().inset(20)
+			make.left.right.equalToSuperview().inset(5)
 			make.centerY.equalToSuperview()
 		}
 		
 		reloadButton.snp.makeConstraints { make in
 			make.top.equalTo(titleLabel.snp.bottom).offset(5)
 			make.centerX.equalTo(titleLabel)
-			make.height.equalTo(25)
+//			make.height.equalTo(20)
 		}
 	}
 	
 	//MARK: public function
-	
-	func resetState() {
-		if state != .loading {
-			setState(mode: .initial)
-		}
-	}
-	
-	func loading(posterPath: String?) {
-		guard let posterPath = posterPath, state != .loading else { return }
-		self.posterPath = posterPath
-		setState(mode: .loading)
-	}
 	
 	func update(image: UIImage?) {
 		if let image = image {

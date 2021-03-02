@@ -24,6 +24,7 @@ enum MovieFeed {
 			case updateImage(posterPath: String, data: Data?)
 			case removeData
 			case append(data: [MainModelMovieProtocol])
+			case showSelectMovie(data: DescriptionMovieAPI)
 		}
 	}
 }

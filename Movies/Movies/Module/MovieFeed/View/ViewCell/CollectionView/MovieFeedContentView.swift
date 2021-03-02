@@ -38,7 +38,7 @@ final class MovieFeedContentView: BaseView {
 	
 	override func makeConstraints() {
 		titleLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().inset(5).priority(.high)
+			make.top.equalToSuperview().inset(5)
 			make.left.right.equalToSuperview().inset(5)
 		}
 		
@@ -46,7 +46,7 @@ final class MovieFeedContentView: BaseView {
 			make.top.equalTo(titleLabel.snp.bottom)
 			make.left.equalTo(titleLabel.snp.left)
 			make.right.equalTo(titleLabel.snp.right)
-			make.bottom.equalToSuperview().inset(15)
+			make.bottom.lessThanOrEqualToSuperview().inset(15)
 		}
 		
 		releaseDateLabel.snp.makeConstraints { make in
