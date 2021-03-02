@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol CollectionTableViewCellDelegate: class {
-	func loadImage(cell: CollectionTableViewCell, posterPath: String, indexPath: IndexPath)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String)
 }
 
 final class CollectionTableViewCell: BaseTableViewCell {
@@ -21,7 +21,7 @@ final class CollectionTableViewCell: BaseTableViewCell {
 	private let iconShadowView = ShadowRoundView()
 	private let movieFeedContentView = MovieFeedContentView()
 	private let ratingView = MovieFeedRatingView()
-	private var indexPath: IndexPath?
+//	private var indexPath: IndexPath?
 	
 	weak var delegate: CollectionTableViewCellDelegate?
 	
@@ -87,25 +87,16 @@ final class CollectionTableViewCell: BaseTableViewCell {
 	}
 	
 	/// Обновление данных в ячейке и последующая инициализация загрузки изображения
-	func update(data: MainModelMovieProtocol, indexPath: IndexPath) {
-		self.indexPath = indexPath
+	func update(data: MainModelMovieProtocol) {
+//		self.indexPath = indexPath
 		ratingView.update(rating: "\(data.rating)")
 		movieFeedContentView.update(data: data)
 		activityImageView.loading(posterPath: data.iconString)
 	}
-	
-	func update(imageData: Data?) {
-		activityImageView.update(imageData: imageData)
-	}
-	
-	func connectImageView() -> ActivityImageView {
-		return activityImageView
-	}
 }
 
 extension CollectionTableViewCell: ActivityImageViewDelegate {
-	func loadImage(posterPath: String) {
-		guard let indexPath = indexPath else { return }
-		delegate?.loadImage(cell: self, posterPath: posterPath, indexPath: indexPath)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String) {
+		delegate?.load(dataImageView: dataImageView, posterPath: posterPath)
 	}
 }

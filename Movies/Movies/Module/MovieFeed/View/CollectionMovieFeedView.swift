@@ -9,15 +9,15 @@
 import UIKit
 
 protocol CollectionMovieFeedViewDelegate: class {
-	func loadImage(posterPath: String, indexPath: IndexPath)
+	func loadImage(posterPath: String)
 	func didSelect(id: Int)
 	func fetchingNextPage()
 }
 
 final class CollectionMovieFeedView: BaseView {
 	
-	private var indexDataCache = [IndexPath: Data?]()
-	private var indexViewCache = [IndexPath: ActivityImageView]()
+	private var imageCache = NSCache<NSString, UIImage>() // кэш (forKey: posterPath) -> UIImage
+	private var posterPathDataImageViews = [String: DataImageViewProtocol]()
 	private var data = [MainModelMovieProtocol]()
 	private let preloader = UIActivityIndicatorView()
 	private var tableView: UITableView = {
@@ -57,11 +57,12 @@ final class CollectionMovieFeedView: BaseView {
 		}
 	}
 	
-	func updateImage(indexPath: IndexPath, data: Data?) {
-		DispatchQueue.main.async { [weak self] in
-//			self?.indexDataCache[indexPath] = data
-			self?.indexViewCache[indexPath]?.update(imageData: data)
+	func updateImage(posterPath: String, data: Data?) {
+		let image: UIImage? = data != nil ? UIImage(data: data!) : nil
+		if image != nil {	
+			imageCache.setObject(image!, forKey: posterPath as NSString)
 		}
+		posterPathDataImageViews[posterPath]?.update(image: image)
 	}
 	
 	func loading() {
@@ -79,8 +80,7 @@ final class CollectionMovieFeedView: BaseView {
 	func removeData() {
 		DispatchQueue.main.async { [weak self] in
 			self?.data.removeAll()
-			self?.indexViewCache.removeAll()
-			self?.indexDataCache.removeAll()
+			self?.posterPathDataImageViews.removeAll()
 			self?.reloadData()
 		}
 	}
@@ -119,7 +119,7 @@ extension CollectionMovieFeedView: UITableViewDataSource {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionTableViewCell.reuseIdentifier, for: indexPath) as? CollectionTableViewCell else { return UITableViewCell() }
 		
 		cell.delegate = self
-		cell.update(data: data[indexPath.row], indexPath: indexPath)
+		cell.update(data: data[indexPath.row])
 		
 		return cell
 	}
@@ -144,15 +144,13 @@ extension CollectionMovieFeedView: UITableViewDelegate {
 extension CollectionMovieFeedView: CollectionTableViewCellDelegate {
 	
 	//TODO: Проблема с кешированием
-	func loadImage(cell: CollectionTableViewCell, posterPath: String, indexPath: IndexPath) {
-		if let activityImageView = indexViewCache[indexPath],
-		   let data = indexDataCache[indexPath] {
-			activityImageView.update(imageData: data)
-			
+	func load(dataImageView: DataImageViewProtocol, posterPath: String) {
+		if let image = imageCache.object(forKey: posterPath as NSString) {
+			posterPathDataImageViews[posterPath]?.update(image: image)
 		}
 		else {
-			indexViewCache[indexPath] = cell.connectImageView()
-			delegate?.loadImage(posterPath: posterPath, indexPath: indexPath)
+			posterPathDataImageViews[posterPath] = dataImageView
+			delegate?.loadImage(posterPath: posterPath)
 		}
 	}
 }

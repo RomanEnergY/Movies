@@ -10,10 +10,14 @@ import UIKit
 import SnapKit
 
 protocol ActivityImageViewDelegate: class {
-	func loadImage(posterPath: String)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String)
 }
 
-final class ActivityImageView: BaseView {
+protocol DataImageViewProtocol {
+	func update(image: UIImage?)
+}
+
+final class ActivityImageView: BaseView, DataImageViewProtocol {
 	
 	enum State {
 		case initial
@@ -25,7 +29,7 @@ final class ActivityImageView: BaseView {
 	//MARK: private variable
 	
 	private var posterPath: String?
-	private let iconView = UIImageView()
+	private let imageView = UIImageView()
 	private let preloaderIcon = UIActivityIndicatorView()
 	private let titleLabel = UILabel()
 	private let reloadButton = Dev.Button.create(devType: .error)
@@ -36,9 +40,8 @@ final class ActivityImageView: BaseView {
 	private var state: ActivityImageView.State = .initial {
 		didSet {
 			if state == .initial {
-				iconView.image = nil
+				imageView.image = nil
 			}
-			preloaderIcon.isHidden = state != .loading
 			state == .loading ? preloaderIcon.startAnimating() : preloaderIcon.stopAnimating()
 			preloaderIcon.isHidden = state != .loading
 			titleLabel.isHidden = state != .error
@@ -47,13 +50,19 @@ final class ActivityImageView: BaseView {
 			titleLabel.isHidden = false
 			titleLabel.textColor = .red
 			titleLabel.text = "\(state)"
+			
+			if state == .loading {
+				if let posterPath = posterPath {
+					self.delegate?.load(dataImageView: self, posterPath: posterPath)
+				}
+			}
 		}
 	}
 	
 	//MARK: life cycle
 	
 	override func configure() {
-		iconView.backgroundColor = Dev.Color.create(colorType: .backgroundImage)
+		imageView.backgroundColor = Dev.Color.create(colorType: .backgroundImage)
 		titleLabel.font = UIFont.italicSystemFont(ofSize: 12)
 		titleLabel.textAlignment = .center
 		titleLabel.text = "Ошибка загрузки изображения"
@@ -67,14 +76,14 @@ final class ActivityImageView: BaseView {
 	}
 	
 	override func addSubviews() {
-		addSubview(iconView)
-		iconView.addSubview(preloaderIcon)
-		iconView.addSubview(titleLabel)
-		iconView.addSubview(reloadButton)
+		addSubview(imageView)
+		imageView.addSubview(preloaderIcon)
+		imageView.addSubview(titleLabel)
+		imageView.addSubview(reloadButton)
 	}
 	
 	override func makeConstraints() {
-		iconView.snp.makeConstraints { make in
+		imageView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
 		
@@ -97,23 +106,22 @@ final class ActivityImageView: BaseView {
 	//MARK: public function
 	
 	func resetState() {
-		setState(mode: .initial)
+		if state != .loading {
+			setState(mode: .initial)
+		}
 	}
 	
 	func loading(posterPath: String?) {
-		guard let posterPath = posterPath else { return }
+		guard let posterPath = posterPath, state != .loading else { return }
 		self.posterPath = posterPath
-		
-		// инициализация загрузки изображения
 		setState(mode: .loading)
-		delegate?.loadImage(posterPath: posterPath)
 	}
 	
-	func update(imageData: Data?) {
-		if let imageData = imageData {
+	func update(image: UIImage?) {
+		if let image = image {
+			setState(mode: .success)
 			DispatchQueue.main.async { [weak self] in
-				self?.iconView.image = UIImage(data: imageData)
-				self?.setState(mode: self?.iconView.image != nil ? .success : .error)
+				self?.imageView.image = image
 			}
 		}
 		else {
@@ -148,8 +156,6 @@ final class ActivityImageView: BaseView {
 	}
 	
 	@objc private func pressedButton() {
-		guard let posterPath = posterPath else { return }
 		setState(mode: .loading)
-		delegate?.loadImage(posterPath: posterPath)
 	}
 }

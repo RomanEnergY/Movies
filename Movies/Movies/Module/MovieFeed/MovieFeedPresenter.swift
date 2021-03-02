@@ -16,7 +16,7 @@ protocol MovieFeedPresentationLogic {
 	
 	func showLoadingCollection()
 	func showUnLoadingCollection()
-	func update(indexPath: IndexPath, imageData: Data?)
+	func update(posterPath: String, imageData: Data?)
 	func removeData()
 	func loadingDataAppend(data: [MainModelMovieProtocol])
 }
@@ -50,8 +50,8 @@ final class MovieFeedPresenter: MovieFeedPresentationLogic {
 		viewController?.display(viewCollection: .unLoading)
 	}
 	
-	func update(indexPath: IndexPath, imageData: Data?) {
-		viewController?.display(viewCollection: .updateImage(indexPath: indexPath, data: imageData))
+	func update(posterPath: String, imageData: Data?) {
+		viewController?.display(viewCollection: .updateImage(posterPath: posterPath, data: imageData))
 	}
 	
 	func removeData() {

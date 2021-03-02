@@ -11,7 +11,7 @@ import Foundation
 protocol MovieFeedBusinessLogic {
 	func initialState()
 	func selectGroup(item: Int)
-	func loadImage(posterPath: String, indexPath: IndexPath)
+	func loadImage(posterPath: String)
 	func selectMovie(id: Int)
 	func fetchingNextPageGroup(item: Int)
 }
@@ -52,14 +52,14 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 		presenter.showSelectGroup(number: item)
 	}
 	
-	func loadImage(posterPath: String, indexPath: IndexPath) {
+	func loadImage(posterPath: String) {
 		movieImageService.getIcon(posterPath: posterPath) { [weak self] result in
 			switch result {
 				case .failure(let error):
 					print(error.localizedDescription)
 					
 				case .success(let data):
-					self?.presenter.update(indexPath: indexPath, imageData: data)
+					self?.presenter.update(posterPath: posterPath, imageData: data)
 			}
 		}
 	}

@@ -21,7 +21,7 @@ enum MovieFeed {
 		enum Collection {
 			case loading
 			case unLoading
-			case updateImage(indexPath: IndexPath, data: Data?)
+			case updateImage(posterPath: String, data: Data?)
 			case removeData
 			case append(data: [MainModelMovieProtocol])
 		}

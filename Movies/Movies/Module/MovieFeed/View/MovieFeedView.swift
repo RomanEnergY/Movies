@@ -11,7 +11,7 @@ import SnapKit
 
 protocol MovieFeedViewDelegate: class {
 	func selectedGroup(item: Int)
-	func loadImage(posterPath: String, indexPath: IndexPath)
+	func loadImage(posterPath: String)
 	func selectMovie(id: Int)
 	func fetchingNextPage(index: Int)
 }
@@ -78,8 +78,8 @@ final class MovieFeedView: BaseView {
 		groupMovieFeedView.unLoading(number: number)
 	}
 	
-	func updateImage(indexPath: IndexPath, data: Data?) {
-		collectionMovieFeedView.updateImage(indexPath: indexPath, data: data)
+	func updateImage(posterPath: String, data: Data?) {
+		collectionMovieFeedView.updateImage(posterPath: posterPath, data: data)
 	}
 	
 	func loadingCollection() {
@@ -106,8 +106,8 @@ extension MovieFeedView: GroupMovieFeedViewDelegate {
 }
 
 extension MovieFeedView: CollectionMovieFeedViewDelegate {
-	func loadImage(posterPath: String, indexPath: IndexPath) {
-		delegate?.loadImage(posterPath: posterPath, indexPath: indexPath)
+	func loadImage(posterPath: String) {
+		delegate?.loadImage(posterPath: posterPath)
 	}
 	
 	func didSelect(id: Int) {

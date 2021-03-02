@@ -72,7 +72,8 @@ final class MovieImageService: MovieImageServiceProtocol {
 			
 			print("loading stub image")
 			let dataStub = try Data(contentsOf: file)
-			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
+			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) { [weak self] in
+				self?.imageCache.setObject(dataStub as NSData, forKey: posterPath as NSString)
 				completion(.success(dataStub))
 			}
 			
