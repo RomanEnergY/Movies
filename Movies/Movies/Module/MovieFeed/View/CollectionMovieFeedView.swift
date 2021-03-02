@@ -17,7 +17,6 @@ protocol CollectionMovieFeedViewDelegate: class {
 final class CollectionMovieFeedView: BaseView {
 	
 	private var posterPathDataImageViews = [String: DataImageViewProtocol]()
-//	private var indexPaths = [IndexPath]()
 	private var data = [MainModelMovieProtocol]()
 	private let preloader = UIActivityIndicatorView()
 	private var tableView: UITableView = {
@@ -58,8 +57,7 @@ final class CollectionMovieFeedView: BaseView {
 	}
 	
 	func updateImage(posterPath: String, data: Data?) {
-		let image: UIImage? = data != nil ? UIImage(data: data!) : nil
-		posterPathDataImageViews[posterPath]?.update(image: image)
+		posterPathDataImageViews[posterPath]?.update(data: data)
 	}
 	
 	func loading() {

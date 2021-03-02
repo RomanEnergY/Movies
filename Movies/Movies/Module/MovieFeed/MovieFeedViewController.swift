@@ -54,8 +54,8 @@ extension MovieFeedViewController: MovieFeedViewDelegate {
 		display(viewState: .showDescription(movieId: id))
 	}
 	
-	func fetchingNextPage(index: Int) {
-		interactor.fetchingNextPageGroup(item: index)
+	func fetchingNextPage() {
+		interactor.fetchingNextPage()
 	}
 }
 
@@ -91,7 +91,7 @@ extension MovieFeedViewController: MovieFeedDisplayLogic {
 	func display(viewState: MovieFeed.ViewState) {
 		switch viewState {
 			case .showDescription(let movieId):
-				appNavigator.go(module: DescriptionBuilder(config: .init(movieId: movieId)), mode: .push(animated: true))
+				appNavigator.go(module: MovieDescriptionBuilder(config: .init(movieId: movieId)), mode: .push(animated: true))
 		}
 	}
 }

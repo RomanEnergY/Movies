@@ -1,5 +1,5 @@
 //
-//  DescriptionBuilder.swift
+//  MovieDescriptionBuilder.swift
 //  Movies
 //
 //  Created by Roman Zverik on 16.02.2021.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DescriptionBuilder: ModuleBuilder {
+final class MovieDescriptionBuilder: ModuleBuilder {
 	
 	struct Config {
 		let movieId: Int
@@ -25,9 +25,9 @@ final class DescriptionBuilder: ModuleBuilder {
 	}
 	
 	func build() -> BaseViewController {
-		let presenter = DescriptionPresenter()
-		let interactor = DescriptionIterator(presenter: presenter)
-		let controller = DescriptionViewController(movieId: config.movieId, interactor: interactor)
+		let presenter = MovieDescriptionPresenter()
+		let interactor = MovieDescriptionIterator(presenter: presenter)
+		let controller = MovieDescriptionViewController(movieId: config.movieId, interactor: interactor)
 
 		presenter.viewController = controller
 		

@@ -14,7 +14,7 @@ protocol ActivityImageViewDelegate: class {
 }
 
 protocol DataImageViewProtocol {
-	func update(image: UIImage?)
+	func update(data: Data?)
 }
 
 final class ActivityImageView: BaseView, DataImageViewProtocol {
@@ -69,12 +69,15 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 		titleLabel.textAlignment = .center
 		titleLabel.text = "Ошибка"
 		titleLabel.numberOfLines = 0
+		titleLabel.isHidden = true
 		
 		reloadButton.setTitle("ПОВТОРИТЬ", for: .normal)
 		reloadButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: 10)
 		reloadButton.addTarget(self, action: #selector(pressedButton), for: .touchUpInside)
+		reloadButton.isHidden = true
 		
 		preloaderIcon.hidesWhenStopped = false
+		preloaderIcon.isHidden = true
 	}
 	
 	override func addSubviews() {
@@ -101,13 +104,15 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 		reloadButton.snp.makeConstraints { make in
 			make.top.equalTo(titleLabel.snp.bottom).offset(5)
 			make.centerX.equalTo(titleLabel)
-//			make.height.equalTo(20)
+			make.height.equalTo(20)
 		}
 	}
 	
 	//MARK: public function
 	
-	func update(image: UIImage?) {
+	func update(data: Data?) {
+		let image: UIImage? = data != nil ? UIImage(data: data!) : nil
+		
 		if let image = image {
 			setState(mode: .success)
 			DispatchQueue.main.async { [weak self] in

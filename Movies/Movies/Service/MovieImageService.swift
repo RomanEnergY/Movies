@@ -21,8 +21,14 @@ enum MovieImageServiceConst {
 //MARK: - class MovieImageService: MovieImageServiceProtocol
 final class MovieImageService: MovieImageServiceProtocol {
 	//MARK: - private let
-	private var imageCache = NSCache<NSString, NSData>() // кэш (forKey: posterPath) -> data
+	private var imageCache: NSCache<NSString, NSData> // кэш (forKey: posterPath) -> data
 	private let routerImageMovie = NetworkService<MovieImageEndPoint>()
+	
+	init(
+		imageCache: NSCache<NSString, NSData>
+	) {
+		self.imageCache = imageCache
+	}
 	
 	//MARK: - public func MovieImageServiceProtocol
 	public func getIcon(posterPath: String, completion: @escaping (Result<Data?, Error>) -> Void) {

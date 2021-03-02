@@ -8,8 +8,19 @@
 
 import Foundation
 
+protocol DescriptionMovieModelProtocol {
+	var id: Int { get }
+	var title: String { get }
+	var tagline: String { get }
+	var posterPath: String { get }
+	var budget: Int { get }
+	var overview: String { get }
+	var productionCountries: [ProductionCountrieAPI]  { get }
+	var genres: [GenreAPI]  { get }
+}
+
 // Сущность модели данных описания фмльма
-struct DescriptionMovieAPI {
+struct DescriptionMovieAPI: DescriptionMovieModelProtocol {
 	let id: Int
 	let title: String
 	let tagline: String

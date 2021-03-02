@@ -13,7 +13,7 @@ protocol MovieFeedViewDelegate: class {
 	func selectedGroup(item: Int)
 	func loadImage(posterPath: String)
 	func selectMovie(id: Int)
-	func fetchingNextPage(index: Int)
+	func fetchingNextPage()
 }
 
 final class MovieFeedView: BaseView {
@@ -116,8 +116,7 @@ extension MovieFeedView: CollectionMovieFeedViewDelegate {
 	
 	func fetchingNextPage() {
 		if groupMovieFeedView.loadingActiveCell.isEmpty {
-			let actionRow = groupMovieFeedView.activeRow
-			delegate?.fetchingNextPage(index: actionRow)
+			delegate?.fetchingNextPage()
 		}
 	}
 }

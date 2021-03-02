@@ -1,5 +1,5 @@
 //
-//  DescriptionDataFlow.swift
+//  MovieDescriptionDataFlow.swift
 //  Movies
 //
 //  Created by Roman Zverik on 16.02.2021.
@@ -8,11 +8,12 @@
 
 import Foundation
 
-enum Description {
+enum MovieDescription {
 	
 	enum ViewState {
 		case loading
 		case unLoading
-		case update(data: DescriptionMovieAPI)
+		case update(model: DescriptionMovieModelProtocol)
+		case updateImage(data: Data?)
 	}
 }

@@ -22,17 +22,15 @@ public enum ProjectDI {
 		}
 		container.registerSingle(AppUserSettingsProtocol.self) { _ in AppUserDefaultsStorage() }
 		container.registerSingle(AppParameterProtocol.self) { _ in AppParameter() }
-		container.registerSingle(AssemblyBuilderProtocol.self) { _ in AssemblyBuilder() }
-		
-		//TODO заменить Router на AppNavigator
-//		container.registerSingle(RouterProtocol.self) { _ in Router() }
 		container.registerSingle(AppNavigatorProtocol.self) { _ in AppNavigator() }
-		
 		container.registerSingle(BaseNavigationController.self) { _ in BaseNavigationController() }
+		container.registerSingle(NSCache<NSString, NSData>.self) { _ in NSCache<NSString, NSData>() }
 		
 		container.register(PasswordKeyProviderProtocol.self) { _ in PasswordKeyProvider() }
 		container.register(MovieDataServiceProtocol.self) { _ in MovieDataService() }
-		container.register(MovieImageServiceProtocol.self) { _ in MovieImageService() }
+		container.register(MovieImageServiceProtocol.self) { _ in
+			MovieImageService(imageCache: DI.container.resolve(NSCache<NSString, NSData>.self)) }
 		container.register(MovieDesctiptionServiceProtocol.self) { _ in MovieDesctiptionService() }
+		
 	}
 }

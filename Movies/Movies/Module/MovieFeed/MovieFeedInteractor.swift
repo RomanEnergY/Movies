@@ -12,7 +12,7 @@ protocol MovieFeedBusinessLogic {
 	func initialState()
 	func selectGroup(item: Int)
 	func loadImage(posterPath: String)
-	func fetchingNextPageGroup(item: Int)
+	func fetchingNextPage()
 }
 
 final class MovieFeedInteractor: MovieFeedBusinessLogic {
@@ -21,6 +21,7 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	private let movieDataService: MovieDataServiceProtocol
 	private let movieImageService: MovieImageServiceProtocol
 	private let groupsSelect: [Group] = Group.allCases
+	private var tempSelectGroup: Int = 0
 	
 	init(
 		presenter: MovieFeedPresentationLogic,
@@ -34,10 +35,11 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	
 	func initialState() {
 		presenter.initialGroup(groups: groupsSelect)
-		selectGroup(item: 0)
+		selectGroup(item: tempSelectGroup)
 	}
 	
 	func selectGroup(item: Int) {
+		tempSelectGroup = item
 		presenter.showLoadingGroup(number: item)
 		presenter.showLoadingCollection()
 		presenter.removeData()
@@ -63,12 +65,12 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 		}
 	}
 	
-	func fetchingNextPageGroup(item: Int) {
-		presenter.showLoadingGroup(number: item)
+	func fetchingNextPage() {
+		presenter.showLoadingGroup(number: tempSelectGroup)
 		movieDataService.nextPage { [weak self] mainModelMovie in
 			guard let self = self, let mainModelMovie = mainModelMovie else { return }
 			self.presenter.loadingDataAppend(data: mainModelMovie)
-			self.presenter.showUnLoadingGroup(number: item)
+			self.presenter.showUnLoadingGroup(number: self.tempSelectGroup)
 		}
 	}
 }
