@@ -9,16 +9,22 @@
 import Foundation
 
 protocol DescriptionDisplayLogic: class {
-	func display(viewState: Description.ViewControllerState)
+	func display(viewState: Description.ViewState)
 }
 
 final class DescriptionViewController: BaseViewController {
 	
 	// MARK: - private variable
 	
+	private let movieId: Int
 	private let interactor: DescriptionBusinessLogic
+//	private var customView = MovieFeedView()
 	
-	init(interactor: DescriptionBusinessLogic) {
+	init(
+		movieId: Int,
+		interactor: DescriptionBusinessLogic
+	) {
+		self.movieId = movieId
 		self.interactor = interactor
 		super.init()
 	}
@@ -27,12 +33,13 @@ final class DescriptionViewController: BaseViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	
-	
+	override func viewDidLoad() {
+		interactor.load(movieId: movieId)
+	}
 }
 
 extension DescriptionViewController: DescriptionDisplayLogic {
-	func display(viewState: Description.ViewControllerState) {
+	func display(viewState: Description.ViewState) {
 		
 	}
 }

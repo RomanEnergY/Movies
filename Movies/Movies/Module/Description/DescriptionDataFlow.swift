@@ -9,12 +9,10 @@
 import Foundation
 
 enum Description {
-
-	enum ShowWelcomeScreen {
-		struct Response {
-			let immediately: Bool
-		}
-	}
 	
-	enum ViewControllerState {	}
+	enum ViewState {
+		case loading
+		case unLoading
+		case update(data: DescriptionMovieAPI)
+	}
 }

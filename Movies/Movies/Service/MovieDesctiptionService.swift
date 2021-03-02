@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: - MovieDesctiptionServiceProtocol
 protocol MovieDesctiptionServiceProtocol {
-	func getMovieId(id: Int, completion: @escaping (Result<DescriptionMovieAPI?, Error>) -> ())
+	func getMovie(id: Int, completion: @escaping (Result<DescriptionMovieAPI?, Error>) -> ())
 }
 
 //MARK: - MovieDesctiptionService: MovieDesctiptionServiceProtocol
@@ -20,7 +20,7 @@ final class  MovieDesctiptionService: MovieDesctiptionServiceProtocol {
 	private let networkService = NetworkService<MovieDataEndPoint>()
 	
 	//MARK: - public func MovieDesctiptionServiceProtocol
-	public func getMovieId(id: Int, completion: @escaping (Result<DescriptionMovieAPI?, Error>) -> ()) {
+	public func getMovie(id: Int, completion: @escaping (Result<DescriptionMovieAPI?, Error>) -> ()) {
 		networkService.request(endPoint: .movieId(id: id)) { (data, response, error) in
 			if let error = error {
 				completion(.failure(error))
@@ -29,8 +29,9 @@ final class  MovieDesctiptionService: MovieDesctiptionServiceProtocol {
 			
 			do {
 				let dataDecode = try JSONDecoder().decode(DescriptionMovieAPI.self, from: data!)
-				completion(.success(dataDecode))
-				
+				DispatchQueue.main.async {
+					completion(.success(dataDecode))
+				}
 			} catch {
 				completion(.failure(error))
 			}

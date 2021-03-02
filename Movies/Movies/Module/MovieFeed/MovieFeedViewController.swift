@@ -9,6 +9,7 @@
 import Foundation
 
 protocol MovieFeedDisplayLogic: class {
+	func display(viewState: MovieFeed.ViewState)
 	func display(viewGroup: MovieFeed.ViewState.Group)
 	func display(viewCollection: MovieFeed.ViewState.Collection)
 }
@@ -50,7 +51,7 @@ extension MovieFeedViewController: MovieFeedViewDelegate {
 	}
 	
 	func selectMovie(id: Int) {
-		interactor.selectMovie(id: id)
+		display(viewState: .showDescription(movieId: id))
 	}
 	
 	func fetchingNextPage(index: Int) {
@@ -84,9 +85,13 @@ extension MovieFeedViewController: MovieFeedDisplayLogic {
 				customView.presentRemoveData()
 			case .append(let data):
 				customView.presentAppend(data: data)
-			case .showSelectMovie(let data):
-				print("showSelectMovie:/n\(data)")
-			
+		}
+	}
+	
+	func display(viewState: MovieFeed.ViewState) {
+		switch viewState {
+			case .showDescription(let movieId):
+				appNavigator.go(module: DescriptionBuilder(config: .init(movieId: movieId)), mode: .push(animated: true))
 		}
 	}
 }

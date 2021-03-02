@@ -9,7 +9,9 @@
 import Foundation
 
 protocol DescriptionPresentationLogic {
-	
+	func loading()
+	func unLoading()
+	func update(data: DescriptionMovieAPI)
 }
 
 final class DescriptionPresenter: DescriptionPresentationLogic {
@@ -17,4 +19,16 @@ final class DescriptionPresenter: DescriptionPresentationLogic {
 	// MARK: - private variable
 	
 	weak var viewController: DescriptionDisplayLogic?
+	
+	func loading() {
+		viewController?.display(viewState: .loading)
+	}
+	
+	func unLoading() {
+		viewController?.display(viewState: .unLoading)
+	}
+	
+	func update(data: DescriptionMovieAPI) {
+		viewController?.display(viewState: .update(data: data))
+	}
 }

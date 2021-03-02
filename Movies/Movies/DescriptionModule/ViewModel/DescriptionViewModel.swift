@@ -49,7 +49,7 @@ final class DescriptionViewModel: DescriptionViewModelProtocol {
 	
 	//MARK: - private func
 	private func initDescriptionMovie(_ idMovie: Int) {
-		movieDesctiptionService?.getMovieId(id: idMovie) { [weak self] result in
+		movieDesctiptionService?.getMovie(id: idMovie) { [weak self] result in
 			guard let self = self else { return }
 			
 			switch result {

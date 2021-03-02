@@ -623,6 +623,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		7C3D75B825EE9CB3007EC0F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7C492FFA25E6997B00F16A67 /* ViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +658,7 @@
 				7C5085F125DC4B32005ACD25 /* DescriptionIterator.swift */,
 				7C5085F525DC4B87005ACD25 /* DescriptionPresenter.swift */,
 				7C5085F925DC4C08005ACD25 /* DescriptionViewController.swift */,
+				7C3D75B825EE9CB3007EC0F2 /* View */,
 			);
 			path = Description;
 			sourceTree = "<group>";

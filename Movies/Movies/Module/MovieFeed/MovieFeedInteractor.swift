@@ -12,7 +12,6 @@ protocol MovieFeedBusinessLogic {
 	func initialState()
 	func selectGroup(item: Int)
 	func loadImage(posterPath: String)
-	func selectMovie(id: Int)
 	func fetchingNextPageGroup(item: Int)
 }
 
@@ -21,19 +20,16 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	private let presenter: MovieFeedPresentationLogic
 	private let movieDataService: MovieDataServiceProtocol
 	private let movieImageService: MovieImageServiceProtocol
-	private let movieDesctiptionService: MovieDesctiptionServiceProtocol
 	private let groupsSelect: [Group] = Group.allCases
 	
 	init(
 		presenter: MovieFeedPresentationLogic,
 		movieDataService: MovieDataServiceProtocol = DI.container.resolve(MovieDataServiceProtocol.self),
-		movieImageService: MovieImageServiceProtocol = DI.container.resolve(MovieImageServiceProtocol.self),
-		movieDesctiptionService: MovieDesctiptionServiceProtocol = DI.container.resolve(MovieDesctiptionServiceProtocol.self)
+		movieImageService: MovieImageServiceProtocol = DI.container.resolve(MovieImageServiceProtocol.self)
 	) {
 		self.presenter = presenter
 		self.movieDataService = movieDataService
 		self.movieImageService = movieImageService
-		self.movieDesctiptionService = movieDesctiptionService
 	}
 	
 	func initialState() {
@@ -73,19 +69,6 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 			guard let self = self, let mainModelMovie = mainModelMovie else { return }
 			self.presenter.loadingDataAppend(data: mainModelMovie)
 			self.presenter.showUnLoadingGroup(number: item)
-		}
-	}
-	
-	func selectMovie(id: Int) {
-		movieDesctiptionService.getMovieId(id: id) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					print(error.localizedDescription)
-					
-				case .success(let data):
-					guard let data = data else { return }
-					self?.presenter.showSelectMovie(data: data)
-			}
 		}
 	}
 }
