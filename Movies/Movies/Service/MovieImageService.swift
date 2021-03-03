@@ -81,7 +81,7 @@ final class MovieImageService: MovieImageServiceProtocol {
 			}
 			
 			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
-				completion(.success(dataStub))
+				completion(.success(nil))
 			}
 			
 		} catch {

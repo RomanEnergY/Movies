@@ -13,9 +13,8 @@ protocol MovieDescriptionViewDelegate: class {
 	func loadImage(posterPath: String)
 }
 
-final class MovieDescriptionView: BaseView {
+final class MovieDescriptionView: MainBaseView {
 	
-	private var allBarsHeightConstraint: Constraint?
 	private let bacgraundImage = UIImageView()
 	private let activityIndicatorView = UIActivityIndicatorView()
 	private let scrollView = UIScrollView()
@@ -24,6 +23,7 @@ final class MovieDescriptionView: BaseView {
 	private let activityImageView = ActivityImageView()
 	private let titleLabel = UILabel()
 	private let overviewLabel = UILabel()
+	private let releaseDateLabel = UILabel()
 	
 	weak var delegate: MovieDescriptionViewDelegate?
 	
@@ -44,8 +44,11 @@ final class MovieDescriptionView: BaseView {
 		titleLabel.numberOfLines = 0
 		titleLabel.textAlignment = .center
 		
-		overviewLabel.font = UIFont.italicSystemFont(ofSize: 18)
+		overviewLabel.font = UIFont.italicSystemFont(ofSize: 16)
 		overviewLabel.numberOfLines = 0
+		
+		releaseDateLabel.font = UIFont.italicSystemFont(ofSize: 12)
+		releaseDateLabel.textAlignment = .right
 	}
 	
 	override func addSubviews() {
@@ -60,6 +63,7 @@ final class MovieDescriptionView: BaseView {
 		contentView.addSubview(imageShadowRoundView)
 		contentView.addSubview(titleLabel)
 		contentView.addSubview(overviewLabel)
+		contentView.addSubview(releaseDateLabel)
 	}
 	
 	override func makeConstraints() {
@@ -68,6 +72,10 @@ final class MovieDescriptionView: BaseView {
 		bacgraundImage.snp.makeConstraints { (make) in
 			allBarsHeightConstraint = make.top.equalToSuperview().constraint
 			make.left.right.bottom.equalToSuperview()
+		}
+		
+		activityIndicatorView.snp.makeConstraints { (make) in
+			make.edges.equalTo(bacgraundImage)
 		}
 		
 		scrollView.snp.makeConstraints { (make) in
@@ -79,7 +87,7 @@ final class MovieDescriptionView: BaseView {
 		}
 
 		imageShadowRoundView.snp.makeConstraints { make in
-			make.top.equalTo(bacgraundImage.snp.top).offset(20)
+			make.top.equalTo(contentView.snp.top).offset(20)
 			make.centerX.equalToSuperview()
 			make.height.equalTo(Int(UIScreen.main.bounds.width))
 			make.width.equalTo(imageShadowRoundView.snp.height).multipliedBy(0.666) // 2/3
@@ -93,13 +101,13 @@ final class MovieDescriptionView: BaseView {
 		overviewLabel.snp.makeConstraints { make in
 			make.top.equalTo(titleLabel.snp.bottom).offset(10)
 			make.left.right.equalToSuperview().inset(20)
+		}
+		
+		releaseDateLabel.snp.makeConstraints { make in
+			make.top.equalTo(overviewLabel.snp.bottom).offset(10)
+			make.left.right.equalToSuperview().inset(20)
 			make.bottom.equalToSuperview().inset(20)
 		}
-	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		allBarsHeightConstraint?.update(inset: allBarsHeight)
 	}
 	
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -144,6 +152,7 @@ final class MovieDescriptionView: BaseView {
 		activityImageView.posterPath = model.posterPath
 		titleLabel.text = model.title
 		overviewLabel.text = "\t\(model.overview)"
+		releaseDateLabel.text = "Дата выхода: \(model.releaseDate)"
 	}
 	
 	func update(dataImage: Data?) {

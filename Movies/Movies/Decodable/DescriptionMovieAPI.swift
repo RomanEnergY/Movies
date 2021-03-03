@@ -17,6 +17,7 @@ protocol DescriptionMovieModelProtocol {
 	var overview: String { get }
 	var productionCountries: [ProductionCountrieAPI]  { get }
 	var genres: [GenreAPI]  { get }
+	var releaseDate: String { get }
 }
 
 // Сущность модели данных описания фмльма
@@ -29,6 +30,7 @@ struct DescriptionMovieAPI: DescriptionMovieModelProtocol {
 	let overview: String
 	let productionCountries: [ProductionCountrieAPI]
 	let genres: [GenreAPI]
+	let releaseDate: String
 }
 
 extension DescriptionMovieAPI: Decodable {
@@ -42,6 +44,7 @@ extension DescriptionMovieAPI: Decodable {
 		case overview
 		case productionCountries = "production_countries"
 		case genres
+		case releaseDate = "release_date"
 	}
 	
 	init(from decoder: Decoder) throws {
@@ -56,5 +59,6 @@ extension DescriptionMovieAPI: Decodable {
 		
 		productionCountries = try container.decode([ProductionCountrieAPI].self, forKey: .productionCountries)
 		genres = try container.decode([GenreAPI].self, forKey: .genres)
+		releaseDate = try container.decode(String.self, forKey: .releaseDate)
 	}
 }

@@ -29,7 +29,7 @@ extension String {
 	
 	func transformToHexCode() -> String? {
 		var hexCode: String = trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
+		
 		if (hexCode.hasPrefix("#")) {
 			hexCode.remove(at: hexCode.startIndex)
 		}
@@ -38,6 +38,14 @@ extension String {
 			return nil
 		}
 		return hexCode
-
+	}
+	
+	func formatter(dateFormat: String) -> Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+		dateFormatter.locale = Locale(identifier: "ru_RU")
+		dateFormatter.dateFormat = dateFormat
+		
+		return dateFormatter.date(from: self)
 	}
 }

@@ -57,17 +57,6 @@ final class MovieFeedContentView: BaseView {
 	func update(data: MainModelMovieProtocol) {
 		titleLabel.text = data.title
 		overviewLabel.text = "\t\(data.overview)"
-		
-		guard let date = data.releaseDate else { return }
-		releaseDateLabel.text = dateFormatterString(date)
-	}
-	
-	private func dateFormatterString(_ date: Date) -> String {
-		let dateFormatter = DateFormatter()
-		dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-		dateFormatter.locale = Locale(identifier: "ru_RU")
-		dateFormatter.dateFormat = "dd MMM yyyy"
-		
-		return dateFormatter.string(from: date)
+		releaseDateLabel.text = data.releaseDate?.formatter(dateFormat: "dd MMMM yyyy")
 	}
 }

@@ -10,12 +10,7 @@ import Foundation
 
 extension MovieAPI: MainModelMovieProtocol {
 	var releaseDate: Date? {
-		let dateFormatter = DateFormatter()
-		dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-		dateFormatter.dateFormat = "yyyy-MM-dd"
-		let date = dateFormatter.date(from: releaseDateFromString)
-		
-		return date
+		releaseDateFromString.formatter(dateFormat: "yyyy-MM-dd")
 	}
 	
 	var rating: Double { voteAverage }
