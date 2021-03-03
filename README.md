@@ -4,7 +4,6 @@
 - XCode 12.0.1
 - Swift 5.3
 
-<<<<<<< HEAD
 ## Architecture and technology stack
 - UIKit
 - MVVM
@@ -42,7 +41,3 @@
 
 ## Date changes file README.md
 2020/10/15
-=======
-## Main task branch
-Transfer the project to the ARM architecture
->>>>>>> feature/goToProjectArchitectureYARCH
