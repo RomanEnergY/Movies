@@ -85,7 +85,7 @@ final class CollectionTableViewCell: BaseTableViewCell {
 	func update(data: MainModelMovieProtocol) {
 		ratingView.update(rating: "\(data.rating)")
 		movieFeedContentView.update(data: data)
-		activityImageView.posterPath = data.iconString
+		activityImageView.posterPath = data.posterPath
 	}
 }
 

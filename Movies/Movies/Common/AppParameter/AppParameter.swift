@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AppParameterProtocol {
+protocol AppParameterProtocol: class {
 	var isBeginningViewShowedOnce: Bool? { get set }
 	var isPasswordNumberKeyInstalled: Bool? { get set }
 	var passwordNumberKey: String? { get set }

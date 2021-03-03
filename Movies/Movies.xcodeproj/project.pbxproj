@@ -41,7 +41,6 @@
 		7C2C061B251112AC00F3A238 /* MovieImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C061A251112AC00F3A238 /* MovieImageService.swift */; };
 		7C2C061F251121C400F3A238 /* MovieDesctiptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C061E251121C400F3A238 /* MovieDesctiptionService.swift */; };
 		7C2C06222511753800F3A238 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C06212511753800F3A238 /* MainModel.swift */; };
-		7C2C062A2512BC8000F3A238 /* MovieAPI + Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C06292512BC8000F3A238 /* MovieAPI + Extention.swift */; };
 		7C2C57A8251E34EC00CF32A1 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57A7251E34EC00CF32A1 /* String+Extension.swift */; };
 		7C2C57AC251E3A8900CF32A1 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AB251E3A8900CF32A1 /* Group.swift */; };
 		7C2C57B0251F25FC00CF32A1 /* GroupToEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */; };
@@ -170,7 +169,6 @@
 		7C2C061A251112AC00F3A238 /* MovieImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageService.swift; sourceTree = "<group>"; };
 		7C2C061E251121C400F3A238 /* MovieDesctiptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDesctiptionService.swift; sourceTree = "<group>"; };
 		7C2C06212511753800F3A238 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
-		7C2C06292512BC8000F3A238 /* MovieAPI + Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieAPI + Extention.swift"; sourceTree = "<group>"; };
 		7C2C57A7251E34EC00CF32A1 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		7C2C57AB251E3A8900CF32A1 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupToEndPoint.swift; sourceTree = "<group>"; };
@@ -279,14 +277,6 @@
 				FD0D909575FA51858D9D6070 /* Pods_MoviesTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7C04CBE0251D1DAD005D3F2C /* Extention */ = {
-			isa = PBXGroup;
-			children = (
-				7C2C06292512BC8000F3A238 /* MovieAPI + Extention.swift */,
-			);
-			path = Extention;
 			sourceTree = "<group>";
 		};
 		7C1DB40325DDB130006D3D16 /* Logger */ = {
@@ -421,7 +411,6 @@
 		7C2C06202511743000F3A238 /* Decodable */ = {
 			isa = PBXGroup;
 			children = (
-				7C04CBE0251D1DAD005D3F2C /* Extention */,
 				7C2C06132510A00200F3A238 /* MovieResponseAPI.swift */,
 				7C2C05D5251079B400F3A238 /* MovieAPI.swift */,
 				7C2C05DD251079B400F3A238 /* DescriptionMovieAPI.swift */,
@@ -620,13 +609,6 @@
 			children = (
 				7C867D5C25E2EE75005D4946 /* BeginningData.swift */,
 				7C867D6025E2F3CC005D4946 /* TitleParagraphViewModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		7C867D7025E3BE52005D4946 /* Model */ = {
-			isa = PBXGroup;
-			children = (
 				7C867D7125E3BE5F005D4946 /* TitleParagraphModel.swift */,
 			);
 			path = Model;
@@ -676,7 +658,6 @@
 				7C1DB40325DDB130006D3D16 /* Logger */,
 				7C26448125DC5B26002FDBDE /* AppParameter */,
 				7C586F0F25DEECC30079FA9A /* Controllers */,
-				7C867D7025E3BE52005D4946 /* Model */,
 				7C586F1225DEED170079FA9A /* View */,
 			);
 			path = Common;
@@ -994,7 +975,6 @@
 				7C7BD72E25E66E010089BE96 /* MovieFeedInteractor.swift in Sources */,
 				7C867D9025E4290D005D4946 /* AppNavigator.swift in Sources */,
 				7C2C0609251079B500F3A238 /* NetworkService.swift in Sources */,
-				7C2C062A2512BC8000F3A238 /* MovieAPI + Extention.swift in Sources */,
 				7C2C0602251079B500F3A238 /* JSONParameterEncoder.swift in Sources */,
 				7C81CF6625DD4FB800AA7790 /* AppParameterStorage.swift in Sources */,
 				7C50860E25DC5186005ACD25 /* BeginningView.swift in Sources */,

@@ -17,9 +17,6 @@ final class BeginningView: BaseView {
 	
 	// MARK: private var
 	
-	private var data: BeginningDataProtocol {
-		return BeginningData()
-	}
 	private let bacgraundImage = UIImageView()
 	private let scrollView = UIScrollView()
 	private let contentView = UIView()
@@ -43,40 +40,11 @@ final class BeginningView: BaseView {
 		shadowRoundView.wrap(view: imageView)
 		shadowRoundView.shadowColor = Dev.Color.create(colorType: .shadowColorImageCinema)
 		
-		titleLabel.text = data.title
 		titleLabel.font = UIFont.boldSystemFont(ofSize: 21.0)
 		titleLabel.textAlignment = .center
 		titleLabel.numberOfLines = 0
 		
 		stackView.axis = .vertical
-		
-		for i in 0 ... data.paragraphs.count - 1 {
-			var titleFont: UIFont = UIFont.systemFont(ofSize: 16)
-			let paragraphsFont: UIFont = UIFont.italicSystemFont(ofSize: 14)
-			var textAlignment: NSTextAlignment = .natural
-			
-			if i == data.paragraphs.count - 1 {
-				titleFont = UIFont.italicSystemFont(ofSize: 12)
-				textAlignment = .right
-			}
-			
-			let titleFontView = FontTypeViewModel(
-				data: WrappreString(text: data.paragraphs[i].title),
-				font: titleFont)
-			
-			let paragraphsFontView = FontTypeViewModel(
-				data: WrappreArrayString(array: data.paragraphs[i].paragraph),
-				font: paragraphsFont)
-			
-			let titleParagraphFontView = TitleParagraphViewModel(title: titleFontView,
-																 paragraph: paragraphsFontView,
-																 textAlignment: textAlignment)
-			
-			let beginningItemView = BeginningItemView()
-
-			beginningItemView.set(titleParagraphView: titleParagraphFontView)
-			stackView.addArrangedSubview(beginningItemView)
-		}
 		
 		continueButton.setTitle("Send", for: .normal)
 		continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
@@ -138,6 +106,38 @@ final class BeginningView: BaseView {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		allBarsHeightConstraint?.update(inset: allBarsHeight)
+	}
+	
+	func update(data: BeginningDataProtocol) {
+		titleLabel.text = data.title
+		
+		for i in 0 ... data.paragraphs.count - 1 {
+			var titleFont: UIFont = UIFont.systemFont(ofSize: 16)
+			let paragraphsFont: UIFont = UIFont.italicSystemFont(ofSize: 14)
+			var textAlignment: NSTextAlignment = .natural
+			
+			if i == data.paragraphs.count - 1 {
+				titleFont = UIFont.italicSystemFont(ofSize: 12)
+				textAlignment = .right
+			}
+			
+			let titleFontView = FontTypeViewModel(
+				data: WrappreString(text: data.paragraphs[i].title),
+				font: titleFont)
+			
+			let paragraphsFontView = FontTypeViewModel(
+				data: WrappreArrayString(array: data.paragraphs[i].paragraph),
+				font: paragraphsFont)
+			
+			let titleParagraphFontView = TitleParagraphViewModel(title: titleFontView,
+																 paragraph: paragraphsFontView,
+																 textAlignment: textAlignment)
+			
+			let beginningItemView = BeginningItemView()
+
+			beginningItemView.set(titleParagraphView: titleParagraphFontView)
+			stackView.addArrangedSubview(beginningItemView)
+		}
 	}
 	
 	@objc private func continueButtonPressed() {

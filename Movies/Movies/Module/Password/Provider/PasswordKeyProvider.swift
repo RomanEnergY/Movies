@@ -34,6 +34,7 @@ final class PasswordKeyProvider: PasswordKeyProviderProtocol {
 		}
 	}
 	weak var delegate: PasswordKeyProviderDelegate?
+	
 	var verificationProvider: VerificationProviderProtocol? {
 		didSet {
 			verificationProvider?.setFilled(count: countFilled)

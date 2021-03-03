@@ -34,6 +34,7 @@ final class AppNavigator: AppNavigatorProtocol {
 		
 		let rootViewController = BeginningBuilder().build()
 		self.window?.rootViewController = BaseNavigationController(rootViewController: rootViewController)
+		print("root: \(rootViewController)")
 		currentController = rootViewController
 		
 		self.window?.makeKeyAndVisible()
@@ -65,9 +66,10 @@ final class AppNavigator: AppNavigatorProtocol {
 					return
 				}
 				
-				navigationController.setViewControllers([controller], animated: true)
-				logger.log(.info, ".replaceAll(animated:\(animated))")
-							
+				print("old: \(navigationController.viewControllers)")
+				navigationController.setViewControllers([controller], animated: animated)
+				print("root: \(navigationController.viewControllers)")
+				
 			case let .replaceLastVC(with, animated):
 				logger.log(.info, ".replaceController(with:\(with?.description ?? "nil"), animated:\(animated))")
 		}

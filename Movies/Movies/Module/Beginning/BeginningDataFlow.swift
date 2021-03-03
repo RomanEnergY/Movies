@@ -9,6 +9,7 @@
 enum Beginning {
 	
 	enum ViewControllerState {
-		case displayNextView
+		case beginningState(data: BeginningDataProtocol)
+		case nextView
 	}
 }

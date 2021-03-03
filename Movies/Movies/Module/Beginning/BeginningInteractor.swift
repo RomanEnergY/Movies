@@ -9,7 +9,7 @@
 import Foundation
 
 protocol BeginningBusinessLogic {
-	func showInitialState()
+	func initialState(data: BeginningDataProtocol)
 	func setBeginningShowedOnce()
 }
 
@@ -19,26 +19,29 @@ final class BeginningInteractor: BeginningBusinessLogic {
 	// MARK: - Private variables
 	
 	private let presenter: BeginningPresentationLogic
-	private var appParameter: AppParameterProtocol
+	weak var appParameter: AppParameterProtocol?
 	
 	// MARK: - Init
 	
 	init(
-		presenter: BeginningPresentationLogic,
-		appParameter: AppParameterProtocol = DI.container.resolve(AppParameterProtocol.self)
+		presenter: BeginningPresentationLogic
+//		appParameter: AppParameterProtocol = DI.container.resolve(AppParameterProtocol.self)
 	) {
 		self.presenter = presenter
-		self.appParameter = appParameter
+//		self.appParameter = appParameter
 	}
 
-	func showInitialState() {
-		if appParameter.isBeginningViewShowedOnce == true {
+	func initialState(data: BeginningDataProtocol) {
+		if appParameter?.isBeginningViewShowedOnce == true {
 			goNextView()
+		}
+		else {
+			presenter.showeBeginningState(data: data)
 		}
 	}
 
 	func setBeginningShowedOnce() {
-		appParameter.isBeginningViewShowedOnce = true
+		appParameter?.isBeginningViewShowedOnce = true
 		goNextView()
 	}
 	

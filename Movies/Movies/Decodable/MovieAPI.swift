@@ -8,11 +8,22 @@
 
 import Foundation
 
-struct MovieAPI {
+//MARK: - MainMovieProtocol
+protocol MainModelMovieProtocol {
+	/// Primery Key Movie
+	var id: Int { get }
+	var title: String { get }
+	var rating: Double { get }
+	var releaseDate: Date? { get }
+	var overview: String { get }
+	var posterPath: String? { get }
+}
+
+struct MovieAPI: MainModelMovieProtocol {
 	let id: Int
 	let video: Bool
 	let voteCount: Int
-	let voteAverage: Double
+	let rating: Double
 	let title: String
 	let releaseDateFromString: String
 	let originalLanguage: String
@@ -22,6 +33,9 @@ struct MovieAPI {
 	let adult: Bool
 	let overview: String
 	let posterPath: String?
+	var releaseDate: Date? {
+		releaseDateFromString.formatter(dateFormat: "yyyy-MM-dd")
+	}
 }
 
 extension MovieAPI: Decodable {
@@ -30,7 +44,7 @@ extension MovieAPI: Decodable {
 		case id
 		case video
 		case voteCount = "vote_count"
-		case voteAverage = "vote_average"
+		case rating = "vote_average"
 		case title
 		case releaseDateFromString = "release_date"
 		case originalLanguage = "original_language"
@@ -47,7 +61,7 @@ extension MovieAPI: Decodable {
 		id = try movieContainer.decode(Int.self, forKey: .id)
 		video = try movieContainer.decode(Bool.self, forKey: .video)
 		voteCount = try movieContainer.decode(Int.self, forKey: .voteCount)
-		voteAverage = try movieContainer.decode(Double.self, forKey: .voteAverage)
+		rating = try movieContainer.decode(Double.self, forKey: .rating)
 		title = try movieContainer.decode(String.self, forKey: .title)
 		releaseDateFromString = try movieContainer.decode(String.self, forKey: .releaseDateFromString)
 		originalLanguage = try movieContainer.decode(String.self, forKey: .originalLanguage)

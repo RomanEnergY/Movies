@@ -152,7 +152,10 @@ final class MovieDescriptionView: MainBaseView {
 		activityImageView.posterPath = model.posterPath
 		titleLabel.text = model.title
 		overviewLabel.text = "\t\(model.overview)"
-		releaseDateLabel.text = "Дата выхода: \(model.releaseDate)"
+		
+		if let releaseText = model.releaseDate?.formatter(dateFormat: "dd MMMM yyyy") {
+			releaseDateLabel.text = "Дата выхода: \(releaseText)"
+		}
 	}
 	
 	func update(dataImage: Data?) {

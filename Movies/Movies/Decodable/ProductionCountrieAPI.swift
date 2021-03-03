@@ -20,7 +20,6 @@ extension ProductionCountrieAPI: Decodable {
 	
 	init(from decoder: Decoder) throws {
 		let genreContainer = try decoder.container(keyedBy: ProductionCountrieCodingKeys.self)
-		
 		name = try genreContainer.decode(String.self, forKey: .name)
 	}
 }

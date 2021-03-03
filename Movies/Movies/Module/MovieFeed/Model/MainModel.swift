@@ -8,17 +8,6 @@
 
 import Foundation
 
-//MARK: - MainMovieProtocol
-protocol MainModelMovieProtocol {
-	/// Primery Key Movie
-	var id: Int { get }
-	var title: String { get }
-	var rating: Double { get }
-	var releaseDate: Date? { get }
-	var iconString: String? { get }
-	var overview: String { get }
-}
-
 //MARK: - MainModelProtocol
 protocol MainModelProtocol {
 	var groups: [Group] { get }

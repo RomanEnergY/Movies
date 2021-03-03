@@ -30,12 +30,18 @@ enum MovieDataEndPoint: EndPointProtocol {
 	
 	public var path: String {
 		switch self {
-			case .trending(let timeWindows, _): return "trending/movie/\(timeWindows.rawValue)"
-			case .nowPlaying(page: _): return "movie/now_playing"
-			case .popular(page: _): return "movie/popular"
-			case .topRated(page: _): return "movie/top_rated"
-			case .upcoming(page: _): return "movie/upcoming"
-			case .movieId(let id): return "movie/\(id)"
+			case .trending(let timeWindows, _):
+				return "trending/movie/\(timeWindows.rawValue)"
+			case .nowPlaying:
+				return "movie/now_playing"
+			case .popular:
+				return "movie/popular"
+			case .topRated:
+				return "movie/top_rated"
+			case .upcoming:
+				return "movie/upcoming"
+			case .movieId(let id):
+				return "movie/\(id)"
 		}
 	}
 	
@@ -49,7 +55,8 @@ enum MovieDataEndPoint: EndPointProtocol {
 				 .nowPlaying(let page),
 				 .popular(let page),
 				 .topRated(let page),
-				 .upcoming(let page): return getDefaultRequestParameters(page)
+				 .upcoming(let page):
+				return getDefaultRequestParameters(page)
 				
 			case .movieId: return .requestParameters(bodyParameters: nil,
 													 urlParameters: [ "api_key": NetworkData.APIKey,

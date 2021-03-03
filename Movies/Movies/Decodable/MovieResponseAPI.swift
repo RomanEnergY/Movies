@@ -24,7 +24,6 @@ extension MovieResponseAPI: Decodable {
 	
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: MovieApiResponseCodingKeys.self)
-		
 		currentPage = try container.decode(Int.self, forKey: .currentPage)
 		totalPage = try container.decode(Int.self, forKey: .totalPage)
 		movies = try container.decode([MovieAPI].self, forKey: .movies)

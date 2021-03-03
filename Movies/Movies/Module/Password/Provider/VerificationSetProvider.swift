@@ -16,7 +16,8 @@ final class VerificationSetProvider: VerificationProviderProtocol {
 	private var secondKey = ""
 	private var isFilledFirstKey = true
 	private var countFilled = 5
-	var delegate: PasswordKeyProviderDelegate?
+	
+	weak var delegate: PasswordKeyProviderDelegate?
 	
 	// MAKR: - public variable
 	
@@ -70,6 +71,5 @@ final class VerificationSetProvider: VerificationProviderProtocol {
 		else {
 			password += key.rawValue
 		}
-		
 	}
 }

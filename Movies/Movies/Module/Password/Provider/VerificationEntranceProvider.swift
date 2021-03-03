@@ -15,7 +15,8 @@ final class VerificationEntranceProvider: VerificationProviderProtocol {
 	private var tempKey = ""
 	private var countFilled = 5
 	private let password: String
-	var delegate: PasswordKeyProviderDelegate?
+	
+	weak var delegate: PasswordKeyProviderDelegate?
 	
 	init(password: String) {
 		self.password = password

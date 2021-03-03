@@ -9,12 +9,26 @@
 import Foundation
 
 final class BeginningBuilder: ModuleBuilder {
-	required init() { }
+	
+	
+	struct Config {
+		let data: BeginningDataProtocol
+	}
+	
+	private let config: Config
+	
+	required init() {
+		self.config = Config(data: BeginningData())
+	}
+	
+	init(config: Config) {
+		self.config = config
+	}
 
 	func build() -> BaseViewController {
 		let presenter = BeginningPresenter()
 		let interactor = BeginningInteractor(presenter: presenter)
-		let controller = BeginningViewController(interactor: interactor)
+		let controller = BeginningViewController(data: config.data, interactor: interactor)
 
 		presenter.viewController = controller
 		return controller

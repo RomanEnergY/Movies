@@ -48,6 +48,5 @@ final class PasswordPresenter: PasswordPresentationLogic {
 	
 	func verificationKeySuccess() {
 		viewController?.display(viewState: .verificationKeySuccess)
-
 	}
 }

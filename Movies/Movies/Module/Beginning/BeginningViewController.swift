@@ -20,12 +20,17 @@ final class BeginningViewController: BaseViewController {
 
 	// MARK: Private variables
 	
+	private let data: BeginningDataProtocol
 	private let interactor: BeginningBusinessLogic
-	private var customView = BeginningView()
+	private let customView = BeginningView()
 	
 	// MARK: Init
 
-	init(interactor: BeginningBusinessLogic) {
+	init(
+		data: BeginningDataProtocol,
+		interactor: BeginningBusinessLogic
+	) {
+		self.data = data
 		self.interactor = interactor
 		super.init()
 		isHiddenNavigationBar = true
@@ -42,7 +47,7 @@ final class BeginningViewController: BaseViewController {
 		
 		view = customView
 		customView.delegate = self
-		interactor.showInitialState()
+		interactor.initialState(data: data)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +64,9 @@ extension BeginningViewController: BeginningViewDelegate {
 extension BeginningViewController: BeginningDisplayLogic {
 	func display(viewState: Beginning.ViewControllerState) {
 		switch viewState {
-			case .displayNextView:
+			case .beginningState(let data):
+				customView.update(data: data)
+			case .nextView:
 				appNavigator.go(module: PasswordBuilder(), mode: .replaceAll(animated: true))
 		}
 	}

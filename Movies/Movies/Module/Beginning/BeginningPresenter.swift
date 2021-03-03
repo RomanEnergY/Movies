@@ -9,6 +9,7 @@
 import UIKit
 
 protocol BeginningPresentationLogic {
+	func showeBeginningState(data: BeginningDataProtocol)
 	func presentNextView()
 }
 
@@ -18,7 +19,11 @@ final class BeginningPresenter: BeginningPresentationLogic {
 	// MARK: - Public variables
 	weak var viewController: BeginningDisplayLogic?
 
+	func showeBeginningState(data: BeginningDataProtocol) {
+		viewController?.display(viewState: .beginningState(data: data))
+	}
+	
 	func presentNextView() {
-		viewController?.display(viewState: .displayNextView)
+		viewController?.display(viewState: .nextView)
 	}
 }

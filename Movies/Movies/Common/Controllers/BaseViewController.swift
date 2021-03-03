@@ -33,7 +33,7 @@ class BaseViewController: UIViewController {
 	}
 	
 	deinit {
-		logger.log(.debug, "deinit: \(self)")
+		logger.log(.error, "deinit: \(self)")
 	}
 	
 	override open func viewWillAppear(_ animated: Bool) {
