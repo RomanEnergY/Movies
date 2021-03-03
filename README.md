@@ -1,10 +1,10 @@
-# MoviesGO
-If you are a movie fan, welcome to Movies GO
+# Movies
 
 ## Requirements
 - XCode 12.0.1
 - Swift 5.3
 
+<<<<<<< HEAD
 ## Architecture and technology stack
 - UIKit
 - MVVM
@@ -42,3 +42,7 @@ If you are a movie fan, welcome to Movies GO
 
 ## Date changes file README.md
 2020/10/15
+=======
+## Main task branch
+Transfer the project to the ARM architecture
+>>>>>>> feature/goToProjectArchitectureYARCH
