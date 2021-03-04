@@ -25,6 +25,8 @@ class BaseViewController: UIViewController {
 		self.logger = logger
 		self.appNavigator = appNavigator
 		super.init(nibName: nil, bundle: nil)
+		
+		isModalInPresentation = true
 		logger.log(.debug, "init: \(self)")
 	}
 	
@@ -38,12 +40,15 @@ class BaseViewController: UIViewController {
 	
 	override open func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		appNavigator.setCurrentController(view: self)
 		navigationController?.setNavigationBarHidden(isHiddenNavigationBar, animated: true)
 		logger.log(.debug, "viewWillAppear: \(self)")
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		
 		logger.log(.debug, "viewDidAppear: \(self)")
 	}
 	
@@ -53,5 +58,18 @@ class BaseViewController: UIViewController {
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		logger.log(.debug, "viewDidDisappear: \(self)")
+	}
+	
+	override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+		appNavigator.go(module: DevMenuBuilder(), mode: .modalWithNavigation(animated: true))
+	}
+	
+	override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+		// Получаем vc который находился за vc который будет закрываться
+		if let viewController = (presentingViewController as? BaseNavigationController)?.viewControllers.last as? BaseViewController {
+			appNavigator.setCurrentController(view: viewController)
+		}
+		
+		super.dismiss(animated: flag, completion: completion)
 	}
 }

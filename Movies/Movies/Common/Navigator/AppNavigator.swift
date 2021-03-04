@@ -11,14 +11,16 @@ import UIKit
 protocol AppNavigatorProtocol {
 	func create(_ window: UIWindow?)
 	func go(module: ModuleBuilder, mode: PresentationMode)
-	func popToRoot()
+	func setCurrentController(view: BaseViewController)
 }
 
 final class AppNavigator: AppNavigatorProtocol {
+	
+	private let logger: LoggerProtocol
 	private var window: UIWindow?
-	public var currentController: BaseViewController?
-	let logger: LoggerProtocol
-
+	private var modalRootViewController: BaseViewController?
+	private weak var currentController: BaseViewController?
+	
 	init(
 		logger: LoggerProtocol = DI.container.resolve(LoggerProtocol.self)
 	) {
@@ -53,11 +55,12 @@ final class AppNavigator: AppNavigatorProtocol {
 				navigationController.pushViewController(controller, animated: animated)
 				
 			case .modal(let animated):
-				logger.log(.info, ".modal(animated:\(animated))")
+				logger.log(.error, "no impl - .modal(animated:\(animated))")
 				
 			case .modalWithNavigation(let animated):
-				logger.log(.info, ".modalWithNavigation(animated:\(animated))")
-				break
+				
+				let navigationController = BaseNavigationController(rootViewController: controller)
+				currentController?.present(navigationController, animated: animated)
 				
 			case .replaceAll(let animated):
 				guard let navigationController = window?.rootViewController as? BaseNavigationController else {
@@ -65,14 +68,15 @@ final class AppNavigator: AppNavigatorProtocol {
 					return
 				}
 				
+				currentController = controller
 				navigationController.setViewControllers([controller], animated: animated)
 				
 			case let .replaceLastVC(with, animated):
-				logger.log(.info, ".replaceController(with:\(with?.description ?? "nil"), animated:\(animated))")
+				logger.log(.error, "no impl - .replaceLastVC(with:\(with?.description ?? "nil"), animated:\(animated))")
 		}
 	}
 	
-	func popToRoot() {
-		logger.log(.info, "popToRoot")
+	func setCurrentController(view: BaseViewController) {
+		currentController = view
 	}
 }

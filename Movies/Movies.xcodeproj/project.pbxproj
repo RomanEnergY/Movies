@@ -112,6 +112,12 @@
 		7CCC4B60251A8D6A00DCD015 /* MockMainMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B5F251A8D6A00DCD015 /* MockMainMovie.swift */; };
 		7CCC4B64251A8DE500DCD015 /* MockMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B63251A8DE500DCD015 /* MockMainViewModel.swift */; };
 		7CCC4B6A251A8E7C00DCD015 /* MockAssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCC4B69251A8E7C00DCD015 /* MockAssemblyBuilder.swift */; };
+		7CD120A725F0DEC700392058 /* DevMenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD120A625F0DEC700392058 /* DevMenuBuilder.swift */; };
+		7CD120C025F152D200392058 /* DevMenuInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD120BF25F152D200392058 /* DevMenuInteractor.swift */; };
+		7CD120CA25F1535F00392058 /* DevMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD120C925F1535F00392058 /* DevMenuPresenter.swift */; };
+		7CD120CE25F1539B00392058 /* DevMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD120CD25F1539B00392058 /* DevMenuViewController.swift */; };
+		7CD120D225F1548900392058 /* DevMenuDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD120D125F1548900392058 /* DevMenuDataFlow.swift */; };
+		7CD120D725F1576F00392058 /* DevMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD120D625F1576F00392058 /* DevMenuView.swift */; };
 		7CD99E3725E98DF3004D5B92 /* MovieFeedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD99E3625E98DF3004D5B92 /* MovieFeedContentView.swift */; };
 		7CD99E3D25E9A03D004D5B92 /* MovieFeedRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD99E3C25E9A03D004D5B92 /* MovieFeedRatingView.swift */; };
 		7CED366A25E69E15000FA7C0 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED366925E69E15000FA7C0 /* BaseCollectionViewCell.swift */; };
@@ -240,6 +246,12 @@
 		7CCC4B5F251A8D6A00DCD015 /* MockMainMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainMovie.swift; sourceTree = "<group>"; };
 		7CCC4B63251A8DE500DCD015 /* MockMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainViewModel.swift; sourceTree = "<group>"; };
 		7CCC4B69251A8E7C00DCD015 /* MockAssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAssemblyBuilder.swift; sourceTree = "<group>"; };
+		7CD120A625F0DEC700392058 /* DevMenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuBuilder.swift; sourceTree = "<group>"; };
+		7CD120BF25F152D200392058 /* DevMenuInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuInteractor.swift; sourceTree = "<group>"; };
+		7CD120C925F1535F00392058 /* DevMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuPresenter.swift; sourceTree = "<group>"; };
+		7CD120CD25F1539B00392058 /* DevMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuViewController.swift; sourceTree = "<group>"; };
+		7CD120D125F1548900392058 /* DevMenuDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuDataFlow.swift; sourceTree = "<group>"; };
+		7CD120D625F1576F00392058 /* DevMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuView.swift; sourceTree = "<group>"; };
 		7CD99E3625E98DF3004D5B92 /* MovieFeedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFeedContentView.swift; sourceTree = "<group>"; };
 		7CD99E3C25E9A03D004D5B92 /* MovieFeedRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFeedRatingView.swift; sourceTree = "<group>"; };
 		7CED366925E69E15000FA7C0 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -487,6 +499,7 @@
 		7C5085EB25DC4A48005ACD25 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				7CD120A525F0DE9D00392058 /* DevMenu */,
 				7C50860125DC5186005ACD25 /* Beginning */,
 				7C867D7725E41DFF005D4946 /* Password */,
 				7C7BD72425E66C6C0089BE96 /* MovieFeed */,
@@ -693,6 +706,27 @@
 				7CCC4B5F251A8D6A00DCD015 /* MockMainMovie.swift */,
 			);
 			path = MainModuleTests;
+			sourceTree = "<group>";
+		};
+		7CD120A525F0DE9D00392058 /* DevMenu */ = {
+			isa = PBXGroup;
+			children = (
+				7CD120A625F0DEC700392058 /* DevMenuBuilder.swift */,
+				7CD120D125F1548900392058 /* DevMenuDataFlow.swift */,
+				7CD120BF25F152D200392058 /* DevMenuInteractor.swift */,
+				7CD120C925F1535F00392058 /* DevMenuPresenter.swift */,
+				7CD120CD25F1539B00392058 /* DevMenuViewController.swift */,
+				7CD120D525F1575C00392058 /* View */,
+			);
+			path = DevMenu;
+			sourceTree = "<group>";
+		};
+		7CD120D525F1575C00392058 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7CD120D625F1576F00392058 /* DevMenuView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B07CA5316D00DF6E53ECE436 /* Pods */ = {
@@ -903,11 +937,13 @@
 				7C50860925DC5186005ACD25 /* BeginningPresenter.swift in Sources */,
 				7C26447A25DC5A13002FDBDE /* AppUserDefaultsStorage.swift in Sources */,
 				7C867D8725E4210E005D4946 /* PasswordViewController.swift in Sources */,
+				7CD120C025F152D200392058 /* DevMenuInteractor.swift in Sources */,
 				7C2C06142510A00200F3A238 /* MovieResponseAPI.swift in Sources */,
 				7C7BD72125E5AD360089BE96 /* VerificationEntranceProvider.swift in Sources */,
 				7C50860D25DC5186005ACD25 /* BeginningViewController.swift in Sources */,
 				7C7BD73A25E66E540089BE96 /* MovieFeedViewController.swift in Sources */,
 				7CBA3ED525DBE35700B62876 /* DIArgumentIteratorImpl.swift in Sources */,
+				7CD120A725F0DEC700392058 /* DevMenuBuilder.swift in Sources */,
 				7C0EEBF225E03DAD00E66F2A /* ShadowRoundView.swift in Sources */,
 				7CBA3ED425DBE35700B62876 /* DIContainer.swift in Sources */,
 				7C1DB40925DDC516006D3D16 /* LoggerConsole.swift in Sources */,
@@ -940,6 +976,7 @@
 				7C2C05B7251078D300F3A238 /* MoviesMVVM.xcdatamodeld in Sources */,
 				7C50860B25DC5186005ACD25 /* BeginningBuilder.swift in Sources */,
 				7C586F2425DF057C0079FA9A /* UIColor+Extension.swift in Sources */,
+				7CD120D725F1576F00392058 /* DevMenuView.swift in Sources */,
 				7C2C57A8251E34EC00CF32A1 /* String+Extension.swift in Sources */,
 				7C2C061025109F8100F3A238 /* GenreAPI.swift in Sources */,
 				7C3D75CC25EEA869007EC0F2 /* MovieDescriptionView.swift in Sources */,
@@ -958,6 +995,7 @@
 				7C50860A25DC5186005ACD25 /* BeginningInteractor.swift in Sources */,
 				7C2C57AC251E3A8900CF32A1 /* Group.swift in Sources */,
 				7C1DB40525DDB147006D3D16 /* LoggerProtocol.swift in Sources */,
+				7CD120D225F1548900392058 /* DevMenuDataFlow.swift in Sources */,
 				7C5085F225DC4B32005ACD25 /* MovieDescriptionIterator.swift in Sources */,
 				7C7BD71D25E5AC8E0089BE96 /* VerificationSetProvider.swift in Sources */,
 				7C2C05AD251078D300F3A238 /* AppDelegate.swift in Sources */,
@@ -965,6 +1003,7 @@
 				7C50860C25DC5186005ACD25 /* BeginningDataFlow.swift in Sources */,
 				7C867D7925E41FC2005D4946 /* PasswordBuilder.swift in Sources */,
 				7C5085F625DC4B87005ACD25 /* MovieDescriptionPresenter.swift in Sources */,
+				7CD120CE25F1539B00392058 /* DevMenuViewController.swift in Sources */,
 				7C2C0600251079B500F3A238 /* ParameterEncoding.swift in Sources */,
 				7C2C0604251079B500F3A238 /* MovieImageEndPoint.swift in Sources */,
 				7C4FDB2025E836ED005A9955 /* CollectionMovieFeedView.swift in Sources */,
@@ -975,6 +1014,7 @@
 				7C7BD72E25E66E010089BE96 /* MovieFeedInteractor.swift in Sources */,
 				7C867D9025E4290D005D4946 /* AppNavigator.swift in Sources */,
 				7C2C0609251079B500F3A238 /* NetworkService.swift in Sources */,
+				7CD120CA25F1535F00392058 /* DevMenuPresenter.swift in Sources */,
 				7C2C0602251079B500F3A238 /* JSONParameterEncoder.swift in Sources */,
 				7C81CF6625DD4FB800AA7790 /* AppParameterStorage.swift in Sources */,
 				7C50860E25DC5186005ACD25 /* BeginningView.swift in Sources */,

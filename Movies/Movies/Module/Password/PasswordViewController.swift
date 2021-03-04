@@ -6,7 +6,7 @@
 //  Copyright © 2021 ZRS. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol PasswordDisplayLogic: class {
 	func display(viewState: Password.ViewState)
