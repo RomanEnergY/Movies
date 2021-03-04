@@ -48,6 +48,9 @@ final class BeginningView: BaseView {
 		
 		continueButton.setTitle("Send", for: .normal)
 		continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
+		
+		bacgraundImage.isHidden = true
+		contentView.isHidden = true
 	}
 	
 	override func addSubviews() {
@@ -138,6 +141,9 @@ final class BeginningView: BaseView {
 			beginningItemView.set(titleParagraphView: titleParagraphFontView)
 			stackView.addArrangedSubview(beginningItemView)
 		}
+		
+		bacgraundImage.isHidden = true
+		contentView.isHidden = true
 	}
 	
 	@objc private func continueButtonPressed() {
