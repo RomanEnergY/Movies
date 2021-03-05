@@ -15,7 +15,8 @@ protocol DevMenuViewDelegate: class {
 final class DevMenuView: BaseView {
 	
 	private let titleLabet = UILabel()
-	
+	private let tableView = Dev.Table.create()
+		
 	weak var delegate: DevMenuViewDelegate?
 	
 	override func configure() {

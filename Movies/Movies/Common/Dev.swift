@@ -44,4 +44,19 @@ enum Dev {
 		}
 	}
 	
+	struct Table {
+		static func create() -> UITableView {
+			let tableView = UITableView()
+			
+			if #available(iOS 11.0, *) {
+				tableView.contentInsetAdjustmentBehavior = .never
+			}
+			
+			tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+			tableView.rowHeight = UITableView.automaticDimension
+			tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+			
+			return tableView
+		}
+	}
 }
