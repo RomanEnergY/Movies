@@ -142,8 +142,8 @@ final class BeginningView: BaseView {
 			stackView.addArrangedSubview(beginningItemView)
 		}
 		
-		bacgraundImage.isHidden = true
-		contentView.isHidden = true
+		bacgraundImage.isHidden = false
+		contentView.isHidden = false
 	}
 	
 	@objc private func continueButtonPressed() {
