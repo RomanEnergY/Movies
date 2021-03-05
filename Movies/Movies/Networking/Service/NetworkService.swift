@@ -10,24 +10,29 @@ import Foundation
 
 protocol NetworkServiceProtocol: class {
 	associatedtype EndPoint: EndPointProtocol
-	func request(endPoint: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ())
+	func request(endPoint: EndPoint, completion: @escaping (Result<Data?, Error>) -> ())
 	func cancel()
 }
 
 final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
 	private var urlSessionTask: URLSessionTask?
 	
-	public func request(endPoint: EndPoint, completion: @escaping (_ data: Data?,_ response: URLResponse?,_ error: Error?) -> ()) {
+	public func request(endPoint: EndPoint, completion: @escaping (Result<Data?, Error>) -> ()) {
 		let session = URLSession.shared
 		do {
 			if let request = try self.buildRequest(from: endPoint) {
 				urlSessionTask = session.dataTask(with: request, completionHandler: { (data, response, error) in
-					completion(data, response, error)
+					if let error = error {
+						completion(.failure(error))
+					}
+					else {
+						completion(.success(data))
+					}
 				})
 			}
 			
 		} catch {
-			completion(nil, nil, error)
+			completion(.failure(error))
 		}
 		
 		self.urlSessionTask?.resume()

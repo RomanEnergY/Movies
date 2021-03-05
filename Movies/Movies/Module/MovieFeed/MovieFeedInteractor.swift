@@ -40,17 +40,27 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	
 	func selectGroup(item: Int) {
 		tempSelectGroup = item
-		presenter.showLoadingGroup(number: item)
-		presenter.showLoadingCollection()
 		presenter.removeData()
-		
-		movieDataService.getDataNewGroup(group: groupsSelect[item]) { [weak self] mainModelMovie in
-			guard let self = self, let mainModelMovie = mainModelMovie else { return }
-			self.presenter.loadingDataAppend(data: mainModelMovie)
-			self.presenter.showUnLoadingGroup(number: item)
-			self.presenter.showUnLoadingCollection()
-		}
+		presenter.showLoadingCollection()
 		presenter.showSelectGroup(number: item)
+		presenter.showLoadingGroup(number: item)
+		
+		movieDataService.getDataNewGroup(group: groupsSelect[item]) { [weak self] result in
+			self?.presenter.showUnLoadingGroup(number: item)
+			self?.presenter.showUnLoadingCollection()
+			
+			switch result {
+				case .failure(let error):
+					print(error.localizedDescription)
+				case .success(let model):
+					if let model = model {
+						self?.presenter.loadingDataAppend(data: model)
+					}
+					else {
+						print("Data nil")
+					}
+			}
+		}
 	}
 	
 	func loadImage(posterPath: String) {
@@ -58,7 +68,6 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 			switch result {
 				case .failure(let error):
 					print(error.localizedDescription)
-					
 				case .success(let data):
 					self?.presenter.update(posterPath: posterPath, imageData: data)
 			}
@@ -66,11 +75,22 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 	}
 	
 	func fetchingNextPage() {
-		presenter.showLoadingGroup(number: tempSelectGroup)
-		movieDataService.nextPage { [weak self] mainModelMovie in
-			guard let self = self, let mainModelMovie = mainModelMovie else { return }
-			self.presenter.loadingDataAppend(data: mainModelMovie)
-			self.presenter.showUnLoadingGroup(number: self.tempSelectGroup)
+		let selectGroup = tempSelectGroup
+		presenter.showLoadingGroup(number: selectGroup)
+		
+		movieDataService.nextPage { [weak self] result in
+			self?.presenter.showUnLoadingGroup(number: selectGroup)
+			switch result {
+				case .failure(let error):
+					print(error.localizedDescription)
+				case .success(let model):
+					if let model = model {
+						self?.presenter.loadingDataAppend(data: model)
+					}
+					else {
+						print("Data nil")
+					}
+			}
 		}
 	}
 }

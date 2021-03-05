@@ -40,21 +40,24 @@ final class  MovieDesctiptionService: MovieDesctiptionServiceProtocol {
 	}
 	
 	private func getDataRequest(_ id: Int, _ completion: @escaping (Result<DescriptionMovieModelProtocol?, Error>) -> ()) {
-		networkService.request(endPoint: .movieId(id: id)) { [weak self] (data, response, error) in
-			if let error = error {
-				completion(.failure(error))
-				return
-			}
-			
-			do {
-				let descriptionMovie = try JSONDecoder().decode(DescriptionMovieAPI.self, from: data!)
-				self?.logger.log(.requestStub, "descriptionMovie: \(descriptionMovie)")
-				
-				DispatchQueue.main.async {
-					completion(.success(descriptionMovie))
-				}
-			} catch {
-				completion(.failure(error))
+		networkService.request(endPoint: .movieId(id: id)) { [weak self] result in
+			switch result {
+				case .failure(let error):
+					completion(.failure(error))
+				case .success(let data):
+					if let data = data {
+						do {
+							let descriptionMovie = try JSONDecoder().decode(DescriptionMovieAPI.self, from: data)
+							self?.logger.log(.requestStub, "descriptionMovie: \(descriptionMovie)")
+							completion(.success(descriptionMovie))
+						}
+						catch {
+							completion(.failure(error))
+						}
+					}
+					else {
+						completion(.success(nil))
+					}
 			}
 		}
 	}

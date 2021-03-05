@@ -23,7 +23,7 @@ final class MovieImageService: MovieImageServiceProtocol {
 	//MARK: - private let
 	private let logger: LoggerProtocol
 	private var imageCache: NSCache<NSString, NSData> // кэш (forKey: posterPath) -> data
-	private let routerImageMovie = NetworkService<MovieImageEndPoint>()
+	private let networkService = NetworkService<MovieImageEndPoint>()
 	
 	init(
 		imageCache: NSCache<NSString, NSData>,
@@ -55,15 +55,20 @@ final class MovieImageService: MovieImageServiceProtocol {
 	}
 	
 	private func getDataRequest(_ posterPath: String, _ completion: @escaping (Result<Data?, Error>) -> Void) {
-		routerImageMovie.request(endPoint: .image(whith: MovieImageServiceConst.whith, posterPath: posterPath)) { [weak self] (data, response, error) in
-			if let error = error {
-				completion(.failure(error))
-				return
-			}
-			if let imageData = data {
-				self?.logger.log(.request, "imageData: \(imageData)")
-				self?.imageCache.setObject(imageData as NSData, forKey: posterPath as NSString)
-				completion(.success(imageData))
+		networkService.request(endPoint: .image(whith: MovieImageServiceConst.whith, posterPath: posterPath)) { [weak self] result in
+			switch result {
+				case .failure(let error):
+					completion(.failure(error))
+				case .success(let data):
+					self?.logger.log(.request, "imageData: \(String(describing: data))")
+					if let imageData = data {
+						self?.imageCache.setObject(imageData as NSData, forKey: posterPath as NSString)
+						completion(.success(imageData))
+					}
+					else {
+						completion(.success(nil))
+					}
+				
 			}
 		}
 	}
