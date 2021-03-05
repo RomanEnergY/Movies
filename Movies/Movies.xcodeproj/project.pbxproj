@@ -44,6 +44,7 @@
 		7C2C57A8251E34EC00CF32A1 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57A7251E34EC00CF32A1 /* String+Extension.swift */; };
 		7C2C57AC251E3A8900CF32A1 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AB251E3A8900CF32A1 /* Group.swift */; };
 		7C2C57B0251F25FC00CF32A1 /* GroupToEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */; };
+		7C30756725F280C300F05B14 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C30756625F280C300F05B14 /* ErrorView.swift */; };
 		7C39DAD425E97FEF0053F66D /* ActivityImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C39DAD325E97FEF0053F66D /* ActivityImageView.swift */; };
 		7C3D75B025EE3EFD007EC0F2 /* kino1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C3D75AD25EE3EFD007EC0F2 /* kino1.png */; };
 		7C3D75B125EE3EFD007EC0F2 /* kino2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C3D75AE25EE3EFD007EC0F2 /* kino2.png */; };
@@ -178,6 +179,7 @@
 		7C2C57A7251E34EC00CF32A1 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		7C2C57AB251E3A8900CF32A1 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7C2C57AF251F25FC00CF32A1 /* GroupToEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupToEndPoint.swift; sourceTree = "<group>"; };
+		7C30756625F280C300F05B14 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		7C39DAD325E97FEF0053F66D /* ActivityImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityImageView.swift; sourceTree = "<group>"; };
 		7C3D75AD25EE3EFD007EC0F2 /* kino1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kino1.png; sourceTree = "<group>"; };
 		7C3D75AE25EE3EFD007EC0F2 /* kino2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kino2.png; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 			children = (
 				7C39DAD325E97FEF0053F66D /* ActivityImageView.swift */,
 				7C0EEBF125E03DAD00E66F2A /* ShadowRoundView.swift */,
+				7C30756625F280C300F05B14 /* ErrorView.swift */,
 				7C30FD0C25E9619A00705B5B /* BaseView */,
 			);
 			path = View;
@@ -1011,6 +1014,7 @@
 				7C867DA325E45574005D4946 /* ButtonNumber.swift in Sources */,
 				7C867D9925E42D86005D4946 /* PasswordView.swift in Sources */,
 				7CBA3EE125DBE48A00B62876 /* DIService.swift in Sources */,
+				7C30756725F280C300F05B14 /* ErrorView.swift in Sources */,
 				7C7BD72E25E66E010089BE96 /* MovieFeedInteractor.swift in Sources */,
 				7C867D9025E4290D005D4946 /* AppNavigator.swift in Sources */,
 				7C2C0609251079B500F3A238 /* NetworkService.swift in Sources */,

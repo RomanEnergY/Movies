@@ -9,16 +9,17 @@
 import UIKit
 
 protocol CollectionMovieFeedViewDelegate: class {
-	func loadImage(posterPath: String)
+	func loadImage(posterPath: String, reload: Bool)
 	func didSelect(id: Int)
 	func fetchingNextPage()
 }
 
 final class CollectionMovieFeedView: BaseView {
 	
+	// MARK: - private var
+	
 	private var posterPathDataImageViews = [String: DataImageViewProtocol]()
 	private var data = [MainModelMovieProtocol]()
-	private let preloader = UIActivityIndicatorView()
 	private var tableView: UITableView = {
 		let view = UITableView()
 		
@@ -29,6 +30,8 @@ final class CollectionMovieFeedView: BaseView {
 	}()
 	
 	weak var delegate: CollectionMovieFeedViewDelegate?
+	
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -43,41 +46,24 @@ final class CollectionMovieFeedView: BaseView {
 	
 	override func addSubviews() {
 		addSubview(tableView)
-		addSubview(preloader)
 	}
 	
 	override func makeConstraints() {
 		tableView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
-		
-		preloader.snp.makeConstraints { make in
-			make.edges.equalTo(tableView)
-		}
 	}
+	
+	//MARK: - public function
 	
 	func updateImage(posterPath: String, data: Data?) {
 		posterPathDataImageViews[posterPath]?.update(data: data)
 	}
 	
-	func loading() {
-		DispatchQueue.main.async { [weak self] in
-			self?.preloader.startAnimating()
-		}
-	}
-	
-	func unLoading() {
-		DispatchQueue.main.async { [weak self] in
-			self?.preloader.stopAnimating()
-		}
-	}
-	
 	func removeData() {
-		DispatchQueue.main.async { [weak self] in
-			self?.data.removeAll()
-			self?.posterPathDataImageViews.removeAll()
-			self?.reloadData()
-		}
+		data.removeAll()
+		posterPathDataImageViews.removeAll()
+		reloadData()
 	}
 	
 	func append(data: [MainModelMovieProtocol]) {
@@ -102,6 +88,12 @@ final class CollectionMovieFeedView: BaseView {
 		}
 	}
 	
+	func loadingError(text: String) {
+		tableView.isHidden = true
+	}
+	
+	//MARK: - private function
+	
 	private func registratinCell() {
 		let typeCell = CollectionTableViewCell.self
 		let reuseIdentifier = CollectionTableViewCell.reuseIdentifier
@@ -109,20 +101,15 @@ final class CollectionMovieFeedView: BaseView {
 	}
 	
 	private func reloadData() {
-		DispatchQueue.main.async { [weak self] in
-			self?.tableView.reloadData()
-		}
+		tableView.reloadData()
 	}
 	
 	private func insertRows(at index: [IndexPath]) {
-		DispatchQueue.main.async { [weak self] in
-			self?.tableView.insertRows(at: index, with: .automatic)
-		}
+		tableView.insertRows(at: index, with: .automatic)
 	}
 }
 
 extension CollectionMovieFeedView: UITableViewDataSource {
-	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return data.count
 	}
@@ -138,7 +125,6 @@ extension CollectionMovieFeedView: UITableViewDataSource {
 }
 
 extension CollectionMovieFeedView: UITableViewDelegate {
-	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		delegate?.didSelect(id: data[indexPath.row].id)
 	}
@@ -154,9 +140,8 @@ extension CollectionMovieFeedView: UITableViewDelegate {
 }
 
 extension CollectionMovieFeedView: CollectionTableViewCellDelegate {
-	
-	func load(dataImageView: DataImageViewProtocol, posterPath: String) {
+	func load(dataImageView: DataImageViewProtocol, posterPath: String, reload: Bool) {
 		posterPathDataImageViews[posterPath] = dataImageView
-		delegate?.loadImage(posterPath: posterPath)
+		delegate?.loadImage(posterPath: posterPath, reload: reload)
 	}
 }

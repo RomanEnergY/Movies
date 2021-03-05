@@ -41,23 +41,25 @@ final class  MovieDesctiptionService: MovieDesctiptionServiceProtocol {
 	
 	private func getDataRequest(_ id: Int, _ completion: @escaping (Result<DescriptionMovieModelProtocol?, Error>) -> ()) {
 		networkService.request(endPoint: .movieId(id: id)) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					completion(.failure(error))
-				case .success(let data):
-					if let data = data {
-						do {
-							let descriptionMovie = try JSONDecoder().decode(DescriptionMovieAPI.self, from: data)
-							self?.logger.log(.requestStub, "descriptionMovie: \(descriptionMovie)")
-							completion(.success(descriptionMovie))
+			DispatchQueue.main.async {
+				switch result {
+					case .failure(let error):
+						completion(.failure(error))
+					case .success(let data):
+						if let data = data {
+							do {
+								let descriptionMovie = try JSONDecoder().decode(DescriptionMovieAPI.self, from: data)
+								self?.logger.log(.requestStub, "descriptionMovie: \(descriptionMovie)")
+								completion(.success(descriptionMovie))
+							}
+							catch {
+								completion(.failure(error))
+							}
 						}
-						catch {
-							completion(.failure(error))
+						else {
+							completion(.success(nil))
 						}
-					}
-					else {
-						completion(.success(nil))
-					}
+				}
 			}
 		}
 	}
@@ -75,12 +77,16 @@ final class  MovieDesctiptionService: MovieDesctiptionServiceProtocol {
 			logger.log(.requestStub, "descriptionMovieStub: \(descriptionMovieStub)")
 			
 			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
-				completion(.success(descriptionMovieStub))
+				DispatchQueue.main.async {
+					completion(.success(descriptionMovieStub))
+				}
 			}
 			
 		} catch {
 			print("Error JSONDecoder().decode:", error.localizedDescription)
-			completion(.failure(error))
+			DispatchQueue.main.async {
+				completion(.failure(error))
+			}
 		}
 	}
 }

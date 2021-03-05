@@ -10,10 +10,12 @@ import UIKit
 import SnapKit
 
 protocol CollectionTableViewCellDelegate: class {
-	func load(dataImageView: DataImageViewProtocol, posterPath: String)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String, reload: Bool)
 }
 
 final class CollectionTableViewCell: BaseTableViewCell {
+	
+	// MARK: - private var
 	
 	private let contentCellView = UIView()
 	private let contentCellShadowView = ShadowRoundView()
@@ -22,11 +24,11 @@ final class CollectionTableViewCell: BaseTableViewCell {
 	private let movieFeedContentView = MovieFeedContentView()
 	private let ratingView = MovieFeedRatingView()
 	
+	// MARK: - public weak var
+	
 	weak var delegate: CollectionTableViewCellDelegate?
 	
-	override func prepareForReuse() {
-		activityImageView.viewWillAppear()
-	}
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		super.configure()
@@ -85,6 +87,14 @@ final class CollectionTableViewCell: BaseTableViewCell {
 		}
 	}
 	
+	// MARK: - override function
+	
+	override func prepareForReuse() {
+		activityImageView.viewWillAppear()
+	}
+	
+	//MARK: - public function
+	
 	/// Обновление данных в ячейке и последующая инициализация загрузки изображения
 	func update(data: MainModelMovieProtocol) {
 		ratingView.update(rating: "\(data.rating)")
@@ -94,7 +104,7 @@ final class CollectionTableViewCell: BaseTableViewCell {
 }
 
 extension CollectionTableViewCell: ActivityImageViewDelegate {
-	func load(dataImageView: DataImageViewProtocol, posterPath: String) {
-		delegate?.load(dataImageView: dataImageView, posterPath: posterPath)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String, reload: Bool) {
+		delegate?.load(dataImageView: dataImageView, posterPath: posterPath, reload: reload)
 	}
 }

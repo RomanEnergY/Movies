@@ -10,11 +10,12 @@ import UIKit
 import SnapKit
 
 protocol MovieDescriptionViewDelegate: class {
-	func loadImage(posterPath: String)
+	func loadImage(posterPath: String, reload: Bool)
 }
 
 final class MovieDescriptionView: MainBaseView {
 	
+	private let errorView = ErrorView()
 	private let bacgraundImage = UIImageView()
 	private let activityIndicatorView = UIActivityIndicatorView()
 	private let scrollView = UIScrollView()
@@ -49,6 +50,8 @@ final class MovieDescriptionView: MainBaseView {
 		
 		releaseDateLabel.font = UIFont.italicSystemFont(ofSize: 12)
 		releaseDateLabel.textAlignment = .right
+		
+		errorView.isHidden = true
 	}
 	
 	override func addSubviews() {
@@ -57,6 +60,7 @@ final class MovieDescriptionView: MainBaseView {
 		addSubview(bacgraundImage)
 		addSubview(activityIndicatorView)
 		addSubview(scrollView)
+		addSubview(errorView)
 		
 		scrollView.addSubview(contentView)
 		
@@ -80,6 +84,10 @@ final class MovieDescriptionView: MainBaseView {
 		
 		scrollView.snp.makeConstraints { (make) in
 			make.edges.equalTo(bacgraundImage)
+		}
+		
+		errorView.snp.makeConstraints { make in
+			make.center.equalToSuperview()
 		}
 		
 		contentView.snp.makeConstraints { (make) in
@@ -112,8 +120,8 @@ final class MovieDescriptionView: MainBaseView {
 	
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		if imageShadowRoundView.frame.contains(point) {
-			let deltaPoint = CGPoint(x: imageShadowRoundView.frame.minX + bacgraundImage.frame.minX,
-									 y: imageShadowRoundView.frame.minY + bacgraundImage.frame.minY)
+			let deltaPoint = CGPoint(x: imageShadowRoundView.frame.minX + bacgraundImage.frame.minX - scrollView.contentOffset.x,
+									 y: imageShadowRoundView.frame.minY + bacgraundImage.frame.minY - scrollView.contentOffset.y)
 			
 			let pointImage = CGPoint(x: point.x - deltaPoint.x,
 									 y: point.y - deltaPoint.y)
@@ -133,20 +141,19 @@ final class MovieDescriptionView: MainBaseView {
 
 	
 	func loading() {
-		DispatchQueue.main.async { [weak self] in
-			self?.scrollView.isHidden = true
-			self?.activityIndicatorView.isHidden = false
-		}
+		scrollView.isHidden = true
+		activityIndicatorView.startAnimating()
 	}
 	
 	func unLoading() {
-		DispatchQueue.main.async { [weak self] in
-			self?.scrollView.isHidden = false
-			self?.activityIndicatorView.isHidden = true
-		}
+		activityIndicatorView.stopAnimating()
 	}
 	
 	func update(model: DescriptionMovieModelProtocol) {
+		activityIndicatorView.isHidden = true
+		errorView.isHidden = true
+		
+		scrollView.isHidden = false
 		activityImageView.posterPath = model.posterPath
 		titleLabel.text = model.title
 		overviewLabel.text = "\t\(model.overview)"
@@ -157,12 +164,24 @@ final class MovieDescriptionView: MainBaseView {
 	}
 	
 	func update(dataImage: Data?) {
+		activityIndicatorView.isHidden = true
+		errorView.isHidden = true
+		
+		scrollView.isHidden = false
 		activityImageView.update(data: dataImage)
+	}
+	
+	func loadingServiceError(text: String) {
+		activityIndicatorView.isHidden = true
+		scrollView.isHidden = true
+		
+		errorView.isHidden = false
+		errorView.update(text: text)
 	}
 }
 
 extension MovieDescriptionView: ActivityImageViewDelegate {
-	func load(dataImageView: DataImageViewProtocol, posterPath: String) {
-		delegate?.loadImage(posterPath: posterPath)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String, reload: Bool) {
+		delegate?.loadImage(posterPath: posterPath, reload: reload)
 	}
 }

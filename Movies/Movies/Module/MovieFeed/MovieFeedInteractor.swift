@@ -10,9 +10,16 @@ import Foundation
 
 protocol MovieFeedBusinessLogic {
 	func initialState()
-	func selectGroup(item: Int)
-	func loadImage(posterPath: String)
+	func selectGroup(item: Int, delay: Int)
+	func loadImage(posterPath: String, reload: Bool)
 	func fetchingNextPage()
+	func reload()
+}
+
+extension MovieFeedBusinessLogic {
+	func selectGroup(item: Int, delay: Int = 0) {
+		selectGroup(item: item, delay: delay)
+	}
 }
 
 final class MovieFeedInteractor: MovieFeedBusinessLogic {
@@ -38,38 +45,45 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 		selectGroup(item: tempSelectGroup)
 	}
 	
-	func selectGroup(item: Int) {
+	func selectGroup(item: Int, delay: Int = 0) {
 		tempSelectGroup = item
 		presenter.removeData()
 		presenter.showLoadingCollection()
 		presenter.showSelectGroup(number: item)
 		presenter.showLoadingGroup(number: item)
 		
-		movieDataService.getDataNewGroup(group: groupsSelect[item]) { [weak self] result in
-			self?.presenter.showUnLoadingGroup(number: item)
-			self?.presenter.showUnLoadingCollection()
-			
-			switch result {
-				case .failure(let error):
-					print(error.localizedDescription)
-				case .success(let model):
-					if let model = model {
-						self?.presenter.loadingDataAppend(data: model)
-					}
-					else {
-						print("Data nil")
-					}
+		let group = groupsSelect[item]
+		DispatchQueue.global().asyncAfter(deadline: .now() + TimeInterval(delay)) { [weak self] in
+			self?.movieDataService.getDataNewGroup(group: group) { result in
+				self?.presenter.showUnLoadingGroup(number: item)
+				self?.presenter.showUnLoadingCollection()
+				
+				switch result {
+					case .failure(let error):
+						self?.presenter.loadingServiceError(text: error.localizedDescription)
+					case .success(let model):
+						if let model = model {
+							self?.presenter.loadingDataAppend(data: model)
+						}
+						else {
+							print("Data nil")
+						}
+				}
 			}
 		}
 	}
 	
-	func loadImage(posterPath: String) {
-		movieImageService.getIcon(posterPath: posterPath) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					print(error.localizedDescription)
-				case .success(let data):
-					self?.presenter.update(posterPath: posterPath, imageData: data)
+	func loadImage(posterPath: String, reload: Bool) {
+		// если это повторная загрзка изображения - запрос сделать через 2 секунды
+		let delay = reload ? 2 : 0
+		DispatchQueue.global().asyncAfter(deadline: .now() + TimeInterval(delay)) { [weak self] in
+			self?.movieImageService.getIcon(posterPath: posterPath) { result in
+				switch result {
+					case .failure(let error):
+						print(error.localizedDescription)
+					case .success(let data):
+						self?.presenter.update(posterPath: posterPath, imageData: data)
+				}
 			}
 		}
 	}
@@ -92,5 +106,10 @@ final class MovieFeedInteractor: MovieFeedBusinessLogic {
 					}
 			}
 		}
+	}
+	
+	func reload() {
+		//  повторяем запрос через 2 секунды
+		selectGroup(item: tempSelectGroup, delay: 1)
 	}
 }

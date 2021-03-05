@@ -46,8 +46,8 @@ extension MovieFeedViewController: MovieFeedViewDelegate {
 		interactor.selectGroup(item: item)
 	}
 	
-	func loadImage(posterPath: String) {
-		interactor.loadImage(posterPath: posterPath)
+	func loadImage(posterPath: String, reload: Bool) {
+		interactor.loadImage(posterPath: posterPath, reload: reload)
 	}
 	
 	func selectMovie(id: Int) {
@@ -85,6 +85,14 @@ extension MovieFeedViewController: MovieFeedDisplayLogic {
 				customView.presentRemoveData()
 			case .append(let data):
 				customView.presentAppend(data: data)
+			case .loadingServiceError(let text):
+				showAlert(text: text,
+						  actionReload: { [weak self] action in
+							self?.interactor.reload()
+						  },
+						  actionCancel: { [weak self] action in
+							self?.customView.loadingServiceError(text: text)
+						  })
 		}
 	}
 	

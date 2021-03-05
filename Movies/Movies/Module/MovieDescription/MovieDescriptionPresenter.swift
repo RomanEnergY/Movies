@@ -13,6 +13,7 @@ protocol MovieDescriptionPresentationLogic {
 	func unLoading()
 	func update(descriptionModel: DescriptionMovieModelProtocol)
 	func update(dataImage: Data?)
+	func loadingServiceError(text: String)
 }
 
 final class MovieDescriptionPresenter: MovieDescriptionPresentationLogic {
@@ -35,5 +36,9 @@ final class MovieDescriptionPresenter: MovieDescriptionPresentationLogic {
 	
 	func update(dataImage: Data?) {
 		viewController?.display(viewState: .updateImage(data: dataImage))
+	}
+	
+	func loadingServiceError(text: String) {
+		viewController?.display(viewState: .loadingServiceError(text: text))
 	}
 }

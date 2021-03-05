@@ -41,8 +41,8 @@ final class MovieDescriptionViewController: BaseViewController {
 }
 
 extension MovieDescriptionViewController: MovieDescriptionViewDelegate {
-	func loadImage(posterPath: String) {
-		interactor.loadImage(posterPath: posterPath)
+	func loadImage(posterPath: String, reload: Bool) {
+		interactor.loadImage(posterPath: posterPath, reload: reload)
 	}
 }
 
@@ -57,6 +57,14 @@ extension MovieDescriptionViewController: MovieDescriptionDisplayLogic {
 				customView.update(model: model)
 			case .updateImage(let data):
 				customView.update(dataImage: data)
+			case .loadingServiceError(let text):
+				showAlert(text: text,
+						  actionReload: { [weak self] action in
+							self?.interactor.reload()
+						  },
+						  actionCancel: { [weak self] action in
+							self?.customView.loadingServiceError(text: text)
+						  })
 		}
 	}
 }

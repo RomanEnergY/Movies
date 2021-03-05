@@ -15,6 +15,8 @@ protocol GroupMovieFeedViewDelegate: class {
 
 final class GroupMovieFeedView: BaseView {
 	
+	// MARK: - private var
+	
 	private var data = [String]()
 	private(set) var activeRow: Int = 0
 	private(set) var loadingActiveCell = Set<Int>()
@@ -30,7 +32,12 @@ final class GroupMovieFeedView: BaseView {
 		
 		return collection
 	}()
+	
+	// MARK: - public weak var
+	
 	weak var delegate: GroupMovieFeedViewDelegate?
+	
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		backgroundColor = Dev.Color.create(colorType: .white)
@@ -51,6 +58,8 @@ final class GroupMovieFeedView: BaseView {
 			make.left.right.equalToSuperview().inset(10)
 		}
 	}
+	
+	// MARK: - public function
 	
 	func update(data: [String]) {
 		self.data = data
@@ -73,6 +82,8 @@ final class GroupMovieFeedView: BaseView {
 		reloadData()
 	}
 	
+	// MARK: - private function
+	
 	private func registratinCell() {
 		let typeCell = SelectCollectionViewCell.self
 		let reuseIdentifier = SelectCollectionViewCell.reuseIdentifier
@@ -80,9 +91,7 @@ final class GroupMovieFeedView: BaseView {
 	}
 	
 	private func reloadData() {
-		DispatchQueue.main.async { [weak self] in
-			self?.collectionView.reloadData()
-		}
+		collectionView.reloadData()
 	}
 }
 

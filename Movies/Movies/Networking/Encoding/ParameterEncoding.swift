@@ -18,4 +18,12 @@ public enum NetworkError: String, Error {
 	case parametersNil = "Parameters were nil."
 	case encodingFailed = "Parameters encoding failed."
 	case missingURL = "URL is nil."
+	case testError = "Test error"
+}
+
+extension NetworkError: LocalizedError {
+	public var errorDescription: String? {
+		return NSLocalizedString(self.rawValue, comment: "")
+	}
+	
 }

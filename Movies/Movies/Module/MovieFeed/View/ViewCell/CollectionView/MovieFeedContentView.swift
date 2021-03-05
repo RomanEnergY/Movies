@@ -11,9 +11,13 @@ import SnapKit
 
 final class MovieFeedContentView: BaseView {
 	
+	// MARK: - private var
+	
 	private let titleLabel = UILabel()
 	private let overviewLabel = UILabel()
 	private let releaseDateLabel = UILabel()
+	
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		titleLabel.textAlignment = .center
@@ -53,6 +57,8 @@ final class MovieFeedContentView: BaseView {
 			make.bottom.right.equalToSuperview()
 		}
 	}
+	
+	//MARK: - public function
 	
 	func update(data: MainModelMovieProtocol) {
 		titleLabel.text = data.title

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol ActivityImageViewDelegate: class {
-	func load(dataImageView: DataImageViewProtocol, posterPath: String)
+	func load(dataImageView: DataImageViewProtocol, posterPath: String, reload: Bool)
 }
 
 protocol DataImageViewProtocol {
@@ -32,6 +32,7 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 	private let preloaderIcon = UIActivityIndicatorView()
 	private let titleLabel = UILabel()
 	private let reloadButton = Dev.Button.create(devType: .error)
+	private var isReload = false
 	
 	//MARK: public variable
 	
@@ -56,7 +57,13 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 			if state == .loading {
 				imageView.image = nil
 				if let posterPath = posterPath {
-					self.delegate?.load(dataImageView: self, posterPath: posterPath)
+					if isReload {
+						self.delegate?.load(dataImageView: self, posterPath: posterPath, reload: true)
+						isReload = false
+					}
+					else {
+						self.delegate?.load(dataImageView: self, posterPath: posterPath, reload: false)
+					}
 				}
 			}
 		}
@@ -156,6 +163,7 @@ final class ActivityImageView: BaseView, DataImageViewProtocol {
 	}
 	
 	@objc private func pressedButton() {
+		isReload = true
 		setState(mode: .loading)
 	}
 }

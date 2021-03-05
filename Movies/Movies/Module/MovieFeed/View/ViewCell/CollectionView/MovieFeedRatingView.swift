@@ -10,7 +10,11 @@ import UIKit
 
 final class MovieFeedRatingView: BaseView {
 	
+	// MARK: - private var
+	
 	private let ratingLabel = UILabel()
+	
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		backgroundColor = Dev.Color.create(colorType: .white)
@@ -28,6 +32,8 @@ final class MovieFeedRatingView: BaseView {
 			make.edges.equalToSuperview().inset(5)
 		}
 	}
+	
+	//MARK: - public function
 	
 	func update(rating: String) {
 		ratingLabel.text = rating

@@ -11,11 +11,15 @@ import SnapKit
 
 final class SelectCollectionViewCell: BaseCollectionViewCell {
 	
+	// MARK: - private var
+	
 	private let preloader = UIActivityIndicatorView()
 	private let titleLabel = UILabel()
 	private let activeView = UIView()
 	private let activeColor = Dev.Color.create(colorType: .regular)
 	private let notActiveColor = Dev.Color.create(colorType: .white)
+	
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		backgroundColor = notActiveColor
@@ -50,6 +54,8 @@ final class SelectCollectionViewCell: BaseCollectionViewCell {
 			make.height.equalTo(3)
 		}
 	}
+	
+	//MARK: - public function
 	
 	func update(title: String) {
 		titleLabel.text = title

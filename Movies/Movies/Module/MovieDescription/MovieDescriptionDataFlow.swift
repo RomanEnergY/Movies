@@ -15,5 +15,6 @@ enum MovieDescription {
 		case unLoading
 		case update(model: DescriptionMovieModelProtocol)
 		case updateImage(data: Data?)
+		case loadingServiceError(text: String)
 	}
 }

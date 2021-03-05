@@ -11,19 +11,27 @@ import SnapKit
 
 protocol MovieFeedViewDelegate: class {
 	func selectedGroup(item: Int)
-	func loadImage(posterPath: String)
+	func loadImage(posterPath: String, reload: Bool)
 	func selectMovie(id: Int)
 	func fetchingNextPage()
 }
 
 final class MovieFeedView: BaseView {
 	
-	weak var delegate: MovieFeedViewDelegate?
+	// MARK: - private var
 	
 	private var allBarsHeightConstraint: Constraint?
+	private let preloader = UIActivityIndicatorView()
+	private let errorView = ErrorView()
 	private var groupMovieFeedView = GroupMovieFeedView()
 	private var delimiterView = UIView()
 	private var collectionMovieFeedView = CollectionMovieFeedView()
+	
+	// MARK: - public weak var
+	
+	weak var delegate: MovieFeedViewDelegate?
+
+	// MARK: - BaseView Lifecycle
 	
 	override func configure() {
 		backgroundColor = Dev.Color.create(colorType: .white)
@@ -31,12 +39,16 @@ final class MovieFeedView: BaseView {
 		
 		groupMovieFeedView.delegate = self
 		collectionMovieFeedView.delegate = self
+		
+		errorView.isHidden = true
 	}
 	
 	override func addSubviews() {
 		addSubview(groupMovieFeedView)
 		addSubview(delimiterView)
 		addSubview(collectionMovieFeedView)
+		addSubview(errorView)
+		addSubview(preloader)
 	}
 	
 	override func makeConstraints() {
@@ -55,12 +67,24 @@ final class MovieFeedView: BaseView {
 			make.top.equalTo(delimiterView.snp.bottom)
 			make.left.right.bottom.equalToSuperview()
 		}
+		
+		errorView.snp.makeConstraints { make in
+			make.center.equalToSuperview()
+		}
+		
+		preloader.snp.makeConstraints { make in
+			make.center.equalToSuperview()
+		}
 	}
+	
+	// MARK: - override function
 	
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		allBarsHeightConstraint?.update(inset: allBarsHeight)
 	}
+	
+	// MARK: - public function
 	
 	func updateGroup(data: [String]) {
 		groupMovieFeedView.update(data: data)
@@ -83,19 +107,29 @@ final class MovieFeedView: BaseView {
 	}
 	
 	func loadingCollection() {
-		collectionMovieFeedView.loading()
+		preloader.startAnimating()
 	}
 	
 	func unLoadingCollection() {
-		collectionMovieFeedView.unLoading()
+		preloader.stopAnimating()
 	}
 	
 	func presentRemoveData() {
+		errorView.isHidden = true
+		collectionMovieFeedView.isHidden = false
 		collectionMovieFeedView.removeData()
 	}
 	
 	func presentAppend(data: [MainModelMovieProtocol]) {
+		errorView.isHidden = true
+		collectionMovieFeedView.isHidden = false
 		collectionMovieFeedView.append(data: data)
+	}
+	
+	func loadingServiceError(text: String) {
+		collectionMovieFeedView.isHidden = true
+		errorView.isHidden = false
+		errorView.update(text: text)
 	}
 }
 
@@ -106,8 +140,8 @@ extension MovieFeedView: GroupMovieFeedViewDelegate {
 }
 
 extension MovieFeedView: CollectionMovieFeedViewDelegate {
-	func loadImage(posterPath: String) {
-		delegate?.loadImage(posterPath: posterPath)
+	func loadImage(posterPath: String, reload: Bool) {
+		delegate?.loadImage(posterPath: posterPath, reload: reload)
 	}
 	
 	func didSelect(id: Int) {

@@ -47,10 +47,10 @@ final class MovieDataService: MovieDataServiceProtocol {
 		// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org
 		// Использование Stub объектов
 		// После прекращения блокировки запросов метод getDataStub(_:) удалить - пользоваться методом getDataRequest(_:)
-		//		getDataStub(completion)
+		getDataStub(completion)
 		
 		// TODO: Начиная с 02.03.2021 запросы не блокируются
-		getDataRequest(completion)
+//		getDataRequest(completion)
 	}
 	
 	private func getDataRequest(_ completion: @escaping (Result<[MainModelMovieProtocol]?, Error>) -> ()) {
@@ -58,32 +58,38 @@ final class MovieDataService: MovieDataServiceProtocol {
 		let endPoint = GroupToEndPoint.adapter(group, page: currentPage)
 		
 		networkService.request(endPoint: endPoint) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					completion(.failure(error))
-				case .success(let data):
-					if let data = data {
-						do {
-							let movieApiResponse = try JSONDecoder().decode(MovieResponseAPI.self, from: data)
-							self?.logger.log(.request, "movieApiResponse: \(movieApiResponse)")
-							completion(.success(movieApiResponse.movies))
+			DispatchQueue.main.async {
+				switch result {
+					case .failure(let error):
+						completion(.failure(error))
+					case .success(let data):
+						if let data = data {
+							do {
+								let movieApiResponse = try JSONDecoder().decode(MovieResponseAPI.self, from: data)
+								self?.logger.log(.request, "movieApiResponse: \(movieApiResponse)")
+								completion(.success(movieApiResponse.movies))
+							}
+							catch {
+								print("Error JSONDecoder().decode:", error.localizedDescription)
+								completion(.failure(error))
+							}
 						}
-						catch {
-							print("Error JSONDecoder().decode:", error.localizedDescription)
-							completion(.failure(error))
+						else {
+							completion(.success(nil))
 						}
-					}
-					else {
-						completion(.success(nil))
-					}
+				}
 			}
 		}
 	}
 	
 	//TODO: искусственно замедляем ответ - для тестирования ui компонентов отображающих загрузку данных
-	private func getDataStub(_ completion: @escaping ([MainModelMovieProtocol]?) -> ()) {
+	private func getDataStub(_ completion: @escaping (Result<[MainModelMovieProtocol]?, Error>) -> ()) {
 		do {
-			guard let file = Bundle.main.url(forResource: "DataMoviesStub", withExtension: "json") else { return }
+			guard let file = Bundle.main.url(forResource: "DataMoviesStub", withExtension: "json") else {
+				print("Error Bundle.main.url - forResource")
+				return
+			}
+			
 			let timeResult = 1.0
 			
 			let dataStub = try Data(contentsOf: file)
@@ -91,12 +97,16 @@ final class MovieDataService: MovieDataServiceProtocol {
 			logger.log(.requestStub, "movieApiResponseStub: \(movieApiResponse)")
 			
 			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
-				completion(movieApiResponse.movies)
+				DispatchQueue.main.async {
+					completion(.success(movieApiResponse.movies))
+				}
 			}
 			
 		} catch {
 			print("Error JSONDecoder().decode:", error.localizedDescription)
-			completion(nil)
+			DispatchQueue.main.async {
+				completion(.failure(error))
+			}
 		}
 	}
 }

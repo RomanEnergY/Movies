@@ -38,8 +38,9 @@ final class MovieImageService: MovieImageServiceProtocol {
 		
 		// проверяем наличия в кэше данных об ранее загруженной картинке
 		if let imageCacheNSData = imageCache.object(forKey: posterPath as NSString) {
-			completion(.success(imageCacheNSData as Data))
-			
+			DispatchQueue.main.async {
+				completion(.success(imageCacheNSData as Data))
+			}
 		}
 		else {
 			// если в кэше нет - делаем запрос, кэшируем картинку и возвращаем completion
@@ -56,19 +57,20 @@ final class MovieImageService: MovieImageServiceProtocol {
 	
 	private func getDataRequest(_ posterPath: String, _ completion: @escaping (Result<Data?, Error>) -> Void) {
 		networkService.request(endPoint: .image(whith: MovieImageServiceConst.whith, posterPath: posterPath)) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					completion(.failure(error))
-				case .success(let data):
-					self?.logger.log(.request, "imageData: \(String(describing: data))")
-					if let imageData = data {
-						self?.imageCache.setObject(imageData as NSData, forKey: posterPath as NSString)
-						completion(.success(imageData))
-					}
-					else {
+			DispatchQueue.main.async {
+				switch result {
+					case .failure:
 						completion(.success(nil))
-					}
-				
+					case .success(let data):
+						self?.logger.log(.request, "imageData: \(String(describing: data))")
+						if let imageData = data {
+							self?.imageCache.setObject(imageData as NSData, forKey: posterPath as NSString)
+							completion(.success(imageData))
+						}
+						else {
+							completion(.success(nil))
+						}
+				}
 			}
 		}
 	}
@@ -90,12 +92,16 @@ final class MovieImageService: MovieImageServiceProtocol {
 			}
 			
 			DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + timeResult) {
-				completion(.success(imageDataStub))
+				DispatchQueue.main.async {
+					completion(.success(imageDataStub))
+				}
 			}
 			
 		} catch {
 			print("Error JSONDecoder().decode:", error.localizedDescription)
-			completion(.failure(error))
+			DispatchQueue.main.async {
+				completion(.failure(error))
+			}
 		}
 	}
 }

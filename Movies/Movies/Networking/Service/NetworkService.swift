@@ -30,12 +30,16 @@ final class NetworkService<EndPoint: EndPointProtocol>: NetworkServiceProtocol {
 					}
 				})
 			}
-			
+
 		} catch {
 			completion(.failure(error))
 		}
-		
+
 		self.urlSessionTask?.resume()
+		
+//		DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + TimeInterval(0.084)) {
+//			completion(.failure(NetworkError.testError))
+//		}
 	}
 	
 	public func cancel() {

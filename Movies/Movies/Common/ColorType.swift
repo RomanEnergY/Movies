@@ -54,4 +54,10 @@ enum ColorType: String {
 	
 	/// #F5F4F4 = rgb(245,244,244)
 	case backgroundImage = "#F5F4F4"
+	
+	/// #CCCCCC = rgb(245,244,244)
+	case backgroundError = "#CCCCCC"
+	
+	/// #F0F2F0 = rgb(245,244,244)
+	case foregroundError = "#F0F2F0"
 }

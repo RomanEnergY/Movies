@@ -9,8 +9,15 @@
 import Foundation
 
 protocol MovieDescriptionBusinessLogic {
-	func load(movieId: Int)
-	func loadImage(posterPath: String)
+	func load(movieId: Int, delay: Int)
+	func loadImage(posterPath: String, reload: Bool)
+	func reload()
+}
+
+extension MovieDescriptionBusinessLogic {
+	func load(movieId: Int, delay: Int = 0) {
+		load(movieId: movieId, delay: delay)
+	}
 }
 
 final class MovieDescriptionIterator: MovieDescriptionBusinessLogic {
@@ -20,6 +27,7 @@ final class MovieDescriptionIterator: MovieDescriptionBusinessLogic {
 	private let movieDesctiptionService: MovieDesctiptionServiceProtocol
 	private let movieImageService: MovieImageServiceProtocol
 	private let presenter: MovieDescriptionPresentationLogic
+	private var tempMovieId = 0
 	
 	init(
 		presenter: MovieDescriptionPresentationLogic,
@@ -31,32 +39,46 @@ final class MovieDescriptionIterator: MovieDescriptionBusinessLogic {
 		self.movieImageService = movieImageService
 	}
 	
-	func load(movieId: Int) {
+	func load(movieId: Int, delay: Int = 0) {
+		tempMovieId = movieId
 		presenter.loading()
-		movieDesctiptionService.getMovie(id: movieId) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					print(error.localizedDescription)
-					
-				case .success(let data):
-					guard let data = data else { return }
-					DispatchQueue.main.async {
-						self?.presenter.unLoading()
-						self?.presenter.update(descriptionModel: data)
-					}
+		
+		DispatchQueue.global().asyncAfter(deadline: .now() + TimeInterval(delay)) { [weak self] in
+			self?.movieDesctiptionService.getMovie(id: movieId) { result in
+				self?.presenter.unLoading()
+				switch result {
+					case .failure(let error):
+						self?.presenter.loadingServiceError(text: error.localizedDescription)
+						
+					case .success(let data):
+						if let data = data {
+							self?.presenter.update(descriptionModel: data)
+						}
+						else {
+							print("Data nil")
+						}
+				}
 			}
 		}
 	}
 	
-	func loadImage(posterPath: String) {
-		movieImageService.getIcon(posterPath: posterPath) { [weak self] result in
-			switch result {
-				case .failure(let error):
-					print(error.localizedDescription)
-					
-				case .success(let data):
-					self?.presenter.update(dataImage: data)
+	func loadImage(posterPath: String, reload: Bool) {
+		// если это повторная загрзка изображения - запрос сделать через 2 секунды
+		let delay = reload ? 2 : 0
+		DispatchQueue.global().asyncAfter(deadline: .now() + TimeInterval(delay)) { [weak self] in
+			self?.movieImageService.getIcon(posterPath: posterPath) { result in
+				switch result {
+					case .failure(let error):
+						print(error.localizedDescription)
+						
+					case .success(let data):
+						self?.presenter.update(dataImage: data)
+				}
 			}
 		}
+	}
+	
+	func reload() {
+		load(movieId: tempMovieId, delay: 2)
 	}
 }

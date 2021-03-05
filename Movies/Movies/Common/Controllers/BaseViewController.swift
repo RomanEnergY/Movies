@@ -72,4 +72,11 @@ class BaseViewController: UIViewController {
 		
 		super.dismiss(animated: flag, completion: completion)
 	}
+	
+	func showAlert(text: String, actionReload: ((UIAlertAction) -> ())? = nil, actionCancel: ((UIAlertAction) -> ())? = nil) {
+		let alert = UIAlertController(title: "Ошибка", message: text, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Повторить", style: .default, handler: actionReload))
+		alert.addAction(UIAlertAction(title: "Отмена", style: .destructive, handler: actionCancel))
+		present(alert, animated: true)
+	}
 }
