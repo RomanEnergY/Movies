@@ -24,7 +24,6 @@ final class BeginningView: BaseView {
 	private let titleLabel = UILabel()
 	private let stackView = UIStackView()
 	private let continueButton = Dev.Button.create(devType: .regular)
-	private var allBarsHeightConstraint: Constraint?
 	
 	weak var delegate: BeginningViewDelegate?
 	
@@ -68,7 +67,7 @@ final class BeginningView: BaseView {
 	
 	override func makeConstraints() {
 		bacgraundImage.snp.makeConstraints { (make) in
-			allBarsHeightConstraint = make.top.equalToSuperview().constraint
+			make.top.equalTo(safeAreaLayoutGuide.snp.top)
 			make.left.right.bottom.equalToSuperview()
 		}
 		
@@ -104,11 +103,6 @@ final class BeginningView: BaseView {
 		}
 		
 		super.makeConstraints()
-	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		allBarsHeightConstraint?.update(inset: allBarsHeight)
 	}
 	
 	func update(data: BeginningDataProtocol) {

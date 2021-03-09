@@ -9,12 +9,17 @@
 import Foundation
 
 protocol AppParameterProtocol: class {
+	var count: Int { get }
 	var isBeginningViewShowedOnce: Bool? { get set }
 	var isPasswordNumberKeyInstalled: Bool? { get set }
 	var passwordNumberKey: String? { get set }
 }
 
 class AppParameter: AppParameterProtocol {
+	
+	var count: Int {
+		AppParameterKey.AllCases().count
+	}
 	
 	@AppParameterStorage<Bool>(key: .isBeginningViewShowedOnce)
 	var isBeginningViewShowedOnce

@@ -12,6 +12,7 @@ protocol AppNavigatorProtocol {
 	func create(_ window: UIWindow?)
 	func go(module: ModuleBuilder, mode: PresentationMode)
 	func setCurrentController(view: BaseViewController)
+	func modalNavigationControllerClose()
 }
 
 final class AppNavigator: AppNavigatorProtocol {
@@ -19,6 +20,7 @@ final class AppNavigator: AppNavigatorProtocol {
 	private let logger: LoggerProtocol
 	private var window: UIWindow?
 	private var modalRootViewController: BaseViewController?
+	private var modalNavigationController: BaseNavigationController?
 	private weak var currentController: BaseViewController?
 	
 	init(
@@ -46,25 +48,39 @@ final class AppNavigator: AppNavigatorProtocol {
 		
 		switch mode {
 			case .push(let animated):
-				guard let navigationController = window?.rootViewController as? BaseNavigationController else {
-					logger.log(.error, "\(#fileID): \(#function) - error not BaseNavigationController")
+				var navigationController: BaseNavigationController? = nil
+				
+				if let modalNavigationController = modalNavigationController {
+					navigationController = modalNavigationController
+				}
+				else if let rootNavigationController = window?.rootViewController as? BaseNavigationController {
+					navigationController = rootNavigationController
+				}
+				
+				guard let navController = navigationController else {
+					logger.log(.error, "this not navigationController")
 					return
 				}
 				
 				currentController = controller
-				navigationController.pushViewController(controller, animated: animated)
+				navController.pushViewController(controller, animated: animated)
 				
 			case .modal(let animated):
-				logger.log(.error, "no impl - .modal(animated:\(animated))")
+				logger.log(.error, "no impl - .modal(animated:\(animated)) - \(controller)")
 				
 			case .modalWithNavigation(let animated):
 				
-				let navigationController = BaseNavigationController(rootViewController: controller)
-				currentController?.present(navigationController, animated: animated)
+				if modalNavigationController != nil {
+					logger.log(.error, "repetition modalNavigationController forbidden")
+						return
+				}
+				
+				modalNavigationController = BaseNavigationController(rootViewController: controller)
+				currentController?.present(modalNavigationController!, animated: animated)
 				
 			case .replaceAll(let animated):
 				guard let navigationController = window?.rootViewController as? BaseNavigationController else {
-					logger.log(.error, "\(#fileID): \(#function) - error not BaseNavigationController")
+					logger.log(.error, "this not rootNavigationController")
 					return
 				}
 				
@@ -78,5 +94,9 @@ final class AppNavigator: AppNavigatorProtocol {
 	
 	func setCurrentController(view: BaseViewController) {
 		currentController = view
+	}
+	
+	func modalNavigationControllerClose() {
+		modalNavigationController = nil
 	}
 }

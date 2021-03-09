@@ -20,7 +20,6 @@ final class MovieFeedView: BaseView {
 	
 	// MARK: - private var
 	
-	private var allBarsHeightConstraint: Constraint?
 	private let preloader = UIActivityIndicatorView()
 	private let errorView = ErrorView()
 	private var groupMovieFeedView = GroupMovieFeedView()
@@ -53,7 +52,7 @@ final class MovieFeedView: BaseView {
 	
 	override func makeConstraints() {
 		groupMovieFeedView.snp.makeConstraints { make in
-			allBarsHeightConstraint = make.top.equalToSuperview().constraint
+			make.top.equalTo(safeAreaLayoutGuide.snp.top)
 			make.left.right.equalToSuperview()
 		}
 		
@@ -75,13 +74,6 @@ final class MovieFeedView: BaseView {
 		preloader.snp.makeConstraints { make in
 			make.center.equalToSuperview()
 		}
-	}
-	
-	// MARK: - override function
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		allBarsHeightConstraint?.update(inset: allBarsHeight)
 	}
 	
 	// MARK: - public function

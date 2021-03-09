@@ -13,7 +13,7 @@ protocol MovieDescriptionViewDelegate: class {
 	func loadImage(posterPath: String, reload: Bool)
 }
 
-final class MovieDescriptionView: MainBaseView {
+final class MovieDescriptionView: BaseView {
 	
 	private let errorView = ErrorView()
 	private let bacgraundImage = UIImageView()
@@ -74,7 +74,7 @@ final class MovieDescriptionView: MainBaseView {
 		super.makeConstraints()
 		
 		bacgraundImage.snp.makeConstraints { (make) in
-			allBarsHeightConstraint = make.top.equalToSuperview().constraint
+			make.top.equalTo(safeAreaLayoutGuide.snp.top)
 			make.left.right.bottom.equalToSuperview()
 		}
 		

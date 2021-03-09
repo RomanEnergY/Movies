@@ -11,6 +11,7 @@ import Foundation
 enum DevMenu {
 	
 	enum ViewState {
-		
+		case goNextModal(module: ModuleBuilder)
+		case goNextPush(module: ModuleBuilder)
 	}
 }

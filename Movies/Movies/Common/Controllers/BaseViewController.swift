@@ -67,6 +67,7 @@ class BaseViewController: UIViewController {
 	override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
 		// Получаем vc который находился за vc который будет закрываться
 		if let viewController = (presentingViewController as? BaseNavigationController)?.viewControllers.last as? BaseViewController {
+			appNavigator.modalNavigationControllerClose()
 			appNavigator.setCurrentController(view: viewController)
 		}
 		

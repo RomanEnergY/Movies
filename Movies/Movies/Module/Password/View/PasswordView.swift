@@ -31,7 +31,6 @@ final class PasswordView: BaseView {
 	
 	// MARK: - private variable
 	
-	private var allBarsHeightConstraint: Constraint?
 	private let passwordStatusView = PasswordStatusView()
 	private let keyBordView = KeyBordView()
 	
@@ -53,7 +52,7 @@ final class PasswordView: BaseView {
 	
 	override func makeConstraints() {
 		passwordStatusView.snp.makeConstraints { make in
-			allBarsHeightConstraint = make.top.equalToSuperview().constraint
+			make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(50)
 			make.left.right.equalToSuperview().inset(20)
 		}
 		
@@ -62,11 +61,6 @@ final class PasswordView: BaseView {
 			make.top.equalToSuperview().inset(height * 0.5)
 			make.left.right.bottom.equalToSuperview().inset(20)
 		}
-	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		allBarsHeightConstraint?.update(inset: allBarsHeight + 50)
 	}
 	
 	// MARK: - public function

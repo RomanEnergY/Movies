@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DevMenuViewDisplayLogic: class {
-	
+	func display(viewState: DevMenu.ViewState)
 }
 
 final class DevMenuViewController: BaseViewController {
@@ -43,19 +43,28 @@ final class DevMenuViewController: BaseViewController {
 		super.viewWillAppear(animated)
 	}
 	
-	override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-		logger.log(.warning, "Вызов DevMenu из DevMenu запрещен! 😇")
-	}
-	
 	@objc private func closeButtonPressed() {
 		dismiss(animated: true)
 	}
 }
 
 extension DevMenuViewController: DevMenuViewDelegate {
+	func goNextModal(module: ModuleBuilder) {
+		display(viewState: .goNextModal(module: module))
+	}
 	
+	func goNextPush(module: ModuleBuilder) {
+		display(viewState: .goNextPush(module: module))
+	}
 }
 
 extension DevMenuViewController: DevMenuViewDisplayLogic {
-	
+	func display(viewState: DevMenu.ViewState) {
+		switch viewState {
+			case .goNextModal(let module):
+				appNavigator.go(module: module, mode: .modal(animated: true))
+			case .goNextPush(let module):
+				appNavigator.go(module: module, mode: .push(animated: true))
+		}
+	}
 }

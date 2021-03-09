@@ -47,10 +47,10 @@ final class MovieDataService: MovieDataServiceProtocol {
 		// TODO: Блокировка запросов с 25.02.2021 со стороны российских серверов на домен https://api.themoviedb.org
 		// Использование Stub объектов
 		// После прекращения блокировки запросов метод getDataStub(_:) удалить - пользоваться методом getDataRequest(_:)
-		getDataStub(completion)
+//		getDataStub(completion)
 		
 		// TODO: Начиная с 02.03.2021 запросы не блокируются
-//		getDataRequest(completion)
+		getDataRequest(completion)
 	}
 	
 	private func getDataRequest(_ completion: @escaping (Result<[MainModelMovieProtocol]?, Error>) -> ()) {
